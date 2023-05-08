@@ -156,7 +156,7 @@ public class Main extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaComunidades = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        TablaGraficos = new javax.swing.JTable();
+        tablaGraficos = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaMunicipios = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -215,7 +215,7 @@ public class Main extends javax.swing.JFrame {
         });
 
 
-        TablaGraficos.setModel(new javax.swing.table.DefaultTableModel(
+        tablaGraficos.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
                         {"Mapa Electoral"},
                         {"Faldon Mapa"},
@@ -226,9 +226,9 @@ public class Main extends javax.swing.JFrame {
                         "GRAFICOS"
                 }
         ));
-        jScrollPane3.setViewportView(TablaGraficos);
-        if (TablaGraficos.getColumnModel().getColumnCount() > 0) {
-            TablaGraficos.getColumnModel().getColumn(0).setResizable(false);
+        jScrollPane3.setViewportView(tablaGraficos);
+        if (tablaGraficos.getColumnModel().getColumnCount() > 0) {
+            tablaGraficos.getColumnModel().getColumn(0).setResizable(false);
         }
 
         jButton1.setBackground(new java.awt.Color(153, 255, 153));
@@ -340,7 +340,7 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saleEvent() {
-        if(TablaGraficos.getSelectedRow() == 3){
+        if(tablaGraficos.getSelectedRow() == 3){
             
         }
     }
@@ -387,7 +387,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 
-        if (TablaGraficos.getSelectedRow() == 3) {
+        if (tablaGraficos.getSelectedRow() == 3) {
             int selectedRow = -1;
             if (tablaMunicipios.getSelectedRow() != -1) {
                 selectedRow = tablaMunicipios.getSelectedRow();
@@ -416,7 +416,7 @@ public class Main extends javax.swing.JFrame {
                 }
                 System.out.println(codigo);
             }
-        }else if(TablaGraficos.getSelectedRow() == 1){
+        }else if(tablaGraficos.getSelectedRow() == 1){
             int selectedRow = -1;
             if (tablaMunicipios.getSelectedRow() != -1) {
                 selectedRow = tablaMunicipios.getSelectedRow();
@@ -535,7 +535,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TablaGraficos;
+    private javax.swing.JTable tablaGraficos;
     private javax.swing.JComboBox<String> comboDatos;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
