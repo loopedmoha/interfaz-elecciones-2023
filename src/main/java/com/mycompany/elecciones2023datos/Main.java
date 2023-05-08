@@ -196,18 +196,21 @@ public class Main extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tablaComunidades);
 
         tablaComunidades.getSelectionModel().addListSelectionListener(e -> {
+            String codAutonomia;
             if (((String) Objects.requireNonNull(comboDatos.getSelectedItem())).endsWith("AUTONOMICAS")) {
                 int selectedRow = tablaComunidades.getSelectedRow();
-
                 if (selectedRow != -1) {
                     loadSelectedAutonomicas((String) tablaComunidades.getValueAt(selectedRow, 0));
-
+                    codAutonomia = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
+                    graficosController.selectedAutonomicas(codAutonomia);
                 }
                 showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
             } else {
                 int selectedRow = tablaComunidades.getSelectedRow();
                 if (selectedRow != -1) {
                     loadSelectedMunicipales((String) tablaComunidades.getValueAt(selectedRow, 0));
+                    codAutonomia = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
+                    graficosController.selectedMunicipales(codAutonomia);
                 }
                 showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
 
@@ -340,8 +343,8 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saleEvent() {
-        if(TablaGraficos.getSelectedRow() == 3){
-            
+        if (TablaGraficos.getSelectedRow() == 3) {
+
         }
     }
 
@@ -395,28 +398,28 @@ public class Main extends javax.swing.JFrame {
                 if (selectedDb.equals("DATOS AUTONOMICAS") || selectedDb.equals("SONDEO AUTONOMICAS")) {
                     System.out.println("ENTRA AUTO");
 
-                    graficosController.entraLateralAutonomica(codigo);
+                    graficosController.entraLateralAutonomicas(codigo);
                 } else {
                     System.out.println("ENTRA MUNI");
 
-                    graficosController.entraLateralMunicipal(codigo);
+                    graficosController.entraLateralMunicipales(codigo);
                 }
                 System.out.println(codigo);
-            }else {
+            } else {
                 selectedRow = tablaComunidades.getSelectedRow();
                 var codigo = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
                 if (selectedDb.equals("DATOS AUTONOMICAS") || selectedDb.equals("SONDEO AUTONOMICAS")) {
                     System.out.println("ENTRA AUTO");
 
-                    graficosController.entraLateralAutonomica(codigo);
+                    graficosController.entraLateralAutonomicas(codigo);
                 } else {
                     System.out.println("ENTRA MUNI");
 
-                    graficosController.entraLateralMunicipal(codigo);
+                    graficosController.entraLateralMunicipales(codigo);
                 }
                 System.out.println(codigo);
             }
-        }else if(TablaGraficos.getSelectedRow() == 1){
+        } else if (TablaGraficos.getSelectedRow() == 1) {
             int selectedRow = -1;
             if (tablaMunicipios.getSelectedRow() != -1) {
                 selectedRow = tablaMunicipios.getSelectedRow();
@@ -428,23 +431,25 @@ public class Main extends javax.swing.JFrame {
                 } else {
                     System.out.println("ENTRA MUNI");
 
-                    graficosController.entraLateralMunicipal(codigo);
+                    graficosController.entraLateralMunicipales(codigo);
                 }
                 System.out.println(codigo);
-            }else {
+            } else {
                 selectedRow = tablaComunidades.getSelectedRow();
                 var codigo = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
                 if (selectedDb.equals("DATOS AUTONOMICAS") || selectedDb.equals("SONDEO AUTONOMICAS")) {
                     System.out.println("ENTRA AUTO");
 
-                    graficosController.entraLateralAutonomica(codigo);
+                    graficosController.entraLateralAutonomicas(codigo);
                 } else {
                     System.out.println("ENTRA MUNI");
 
-                    graficosController.entraLateralMunicipal(codigo);
+                    graficosController.entraLateralMunicipales(codigo);
                 }
                 System.out.println(codigo);
             }
+        } else if (TablaGraficos.getSelectedRow() == 0) {
+            graficosController.loadArcoAutonomicas();
         }
 
 

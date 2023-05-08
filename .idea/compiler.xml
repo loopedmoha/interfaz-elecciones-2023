@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Elecciones2023DATOS" />
+        <module name="interfaz-elecciones-2023" />
       </profile>
     </annotationProcessing>
   </component>

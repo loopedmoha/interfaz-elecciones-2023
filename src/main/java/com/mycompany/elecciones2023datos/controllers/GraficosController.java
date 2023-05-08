@@ -18,35 +18,35 @@ public class GraficosController {
     }
 
 
-    public void entraLateralAutonomica(String codigo) {
+    public void entraLateralAutonomicas(String codigo) {
         String res = null;
         try {
-            res = clienteApi.entraLateralAutonomica(codigo).execute().body();
+            res = clienteApi.entraLateralAutonomicas(codigo).execute().body();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         System.out.println(res);
     }
 
-    public void entraLateralMunicipal(String codigo) {
+    public void entraLateralMunicipales(String codigo) {
         try {
-            clienteApi.entraLateralMunicipal(codigo).execute();
+            clienteApi.entraLateralMunicipales(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void saleLateralAutonomica(String codigo) {
+    public void saleLateralAutonomicas(String codigo) {
         try {
-            clienteApi.saleLateralAutonomica(codigo).execute();
+            clienteApi.saleLateralAutonomicas(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void saleLateralMunicipal(String codigo) {
+    public void saleLateralMunicipales(String codigo) {
         try {
-            clienteApi.saleLateralMunicipal(codigo).execute();
+            clienteApi.saleLateralMunicipales(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -54,16 +54,51 @@ public class GraficosController {
 
     public void entraFaldonAuto() {
         try {
-            clienteApi.entraFaldonAutonomico().execute();
+            clienteApi.entraFaldonAutonomicas().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
     public void saleFaldonAuto() {
         try {
-            clienteApi.saleFaldonAutonomico().execute();
+            clienteApi.saleFaldonAutonomicas().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+    public void loadArcoAutonomicas() {
+        try {
+            clienteApi.loadArcoAutonomicas().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadArcoMunicipales() {
+        try {
+            clienteApi.loadArcoMunicipales().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void selectedAutonomicas(String codigo) {
+        try {
+            clienteApi.selectedAutonomicas(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void selectedMunicipales(String codigo) {
+        try {
+            clienteApi.selectedMunicipales(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

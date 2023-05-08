@@ -39,33 +39,49 @@ public interface IClienteApi {
      ****************LATERAL
      */
     @GET("/autonomicas/carmen/{codigo}/entra")
-    Call<String> entraLateralAutonomica(@Path("codigo") String codigo);
+    Call<String> entraLateralAutonomicas(@Path("codigo") String codigo);
 
     @GET("/municipales/carmen/{codigo}/entra")
-    Call<String> entraLateralMunicipal(@Path("codigo") String codigo);
+    Call<String> entraLateralMunicipales(@Path("codigo") String codigo);
 
 
     @GET("/autonomicas/carmen/{codigo}/actualiza")
-    Call<String> actualizaLateralAutonomica(@Path("codigo") String codigo);
+    Call<String> actualizaLateralAutonomicas(@Path("codigo") String codigo);
 
     @GET("/municipales/carmen/{codigo}/actualiza")
-    Call<String> actualizaLateralMunicipal(@Path("codigo") String codigo);
+    Call<String> actualizaLateralMunicipales(@Path("codigo") String codigo);
 
 
     @GET("/autonomicas/carmen/{codigo}/sale")
-    Call<String> saleLateralAutonomica(@Path("codigo") String codigo);
+    Call<String> saleLateralAutonomicas(@Path("codigo") String codigo);
 
-    @GET("/municipales/carmen/{codigo}/entra")
-    Call<String> saleLateralMunicipal(@Path("codigo") String codigo);
+    @GET("/municipales/carmen/{codigo}/sale")
+    Call<String> saleLateralMunicipales(@Path("codigo") String codigo);
 
     /*
      ****************LATERAL
      */
 
 
-    @GET("/autonomicas/carmen/carton/entra")
-    Call<String> entraFaldonAutonomico();
+    @GET("/autonomicas/carmen/faldon/entra")
+    Call<String> entraFaldonAutonomicas();
 
-    @GET("/autonomicas/carmen/carton/sale")
-    Call<String> saleFaldonAutonomico();
+    @GET("/autonomicas/carmen/faldon/sale")
+    Call<String> saleFaldonAutonomicas();
+
+    /*
+     **************** CARTONES ARCOS
+     */
+    @GET("/autonomicas/arco/load")
+    Call<String> loadArcoAutonomicas();
+
+    @GET("/municipales/arco/load")
+    Call<String> loadArcoMunicipales();
+
+    @GET("/autonomicas/circunscripciones/selected/{codigo}")
+    Call<String> selectedAutonomicas(@Path("codigo") String codigo);
+
+    @GET("/municipales/circunscripciones/selected/{codigo}")
+    Call<String> selectedMunicipales(@Path("codigo") String codigo);
+
 }
