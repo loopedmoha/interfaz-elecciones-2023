@@ -18,35 +18,81 @@ public class GraficosController {
     }
 
 
-    public void entraLateralAutonomicas(String codigo) {
-        String res = null;
+    public void entraLateralAutonomicas() {
         try {
-            res = clienteApi.entraLateralAutonomicas(codigo).execute().body();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(res);
-    }
-
-    public void entraLateralMunicipales(String codigo) {
-        try {
-            clienteApi.entraLateralMunicipales(codigo).execute();
+            clienteApi.entraLateralAutonomicas().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void saleLateralAutonomicas(String codigo) {
+    public void entraLateralMunicipales() {
         try {
-            clienteApi.saleLateralAutonomicas(codigo).execute();
+            clienteApi.entraLateralMunicipales().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void saleLateralMunicipales(String codigo) {
+    public void despliegaLateralAutonomicas(String codigo) {
         try {
-            clienteApi.saleLateralMunicipales(codigo).execute();
+            clienteApi.despliegaLateralAutonomicas(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void despliegaLateralMunicipales(String codigo) {
+        try {
+            clienteApi.despliegaLateralMunicipales(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void repliegaLateralAutonomicas(String codigo) {
+        try {
+            clienteApi.repliegaLateralAutonomicas(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void repliegaLateralMunicipales(String codigo) {
+        try {
+            clienteApi.repliegaLateralMunicipales(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void actualizaLateralAutonomicas(String codigo) {
+        try {
+            clienteApi.actualizaUnoLateralAutonomicas(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void actualizaLateralMunicipales(String codigo) {
+        try {
+            clienteApi.actualizaUnoLateralMunicipales(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleLateralAutonomicas() {
+        try {
+            clienteApi.saleLateralAutonomicas().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleLateralMunicipales() {
+        try {
+            clienteApi.saleLateralMunicipales().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

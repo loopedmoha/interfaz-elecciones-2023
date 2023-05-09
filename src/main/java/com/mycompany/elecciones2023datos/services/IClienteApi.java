@@ -38,25 +38,43 @@ public interface IClienteApi {
     /*
      ****************LATERAL
      */
-    @GET("/autonomicas/carmen/{codigo}/entra")
-    Call<String> entraLateralAutonomicas(@Path("codigo") String codigo);
+    @GET("/autonomicas/carmen/lateral/entra")
+    Call<String> entraLateralAutonomicas();
 
-    @GET("/municipales/carmen/{codigo}/entra")
-    Call<String> entraLateralMunicipales(@Path("codigo") String codigo);
+    @GET("/municipales/carmen/lateral/entra")
+    Call<String> entraLateralMunicipales();
+
+    @GET("/autonomicas/carmen/lateral/{codigo}/despliega")
+    Call<String> despliegaLateralAutonomicas(@Path("codigo") String codigo);
+
+    @GET("/municipales/carmen/lateral/{codigo}/despliega")
+    Call<String> despliegaLateralMunicipales(@Path("codigo") String codigo);
+
+    @GET("/autonomicas/carmen/lateral/{codigo}/repliega")
+    Call<String> repliegaLateralAutonomicas(@Path("codigo") String codigo);
+
+    @GET("/municipales/carmen/lateral/{codigo}/repliega")
+    Call<String> repliegaLateralMunicipales(@Path("codigo") String codigo);
 
 
-    @GET("/autonomicas/carmen/{codigo}/actualiza")
+    @GET("/autonomicas/carmen/lateral/actualiza")
     Call<String> actualizaLateralAutonomicas(@Path("codigo") String codigo);
 
-    @GET("/municipales/carmen/{codigo}/actualiza")
-    Call<String> actualizaLateralMunicipales(@Path("codigo") String codigo);
+    @GET("/municipales/carmen/lateral/actualiza")
+    Call<String> actualizaLateralMunicipales();
+
+    @GET("/autonomicas/carmen/lateral/{codigo}/actualiza")
+    Call<String> actualizaUnoLateralAutonomicas(@Path("codigo") String codigo);
+
+    @GET("/municipales/carmen/lateral/{codigo}/actualiza")
+    Call<String> actualizaUnoLateralMunicipales(@Path("codigo") String codigo);
 
 
-    @GET("/autonomicas/carmen/{codigo}/sale")
-    Call<String> saleLateralAutonomicas(@Path("codigo") String codigo);
+    @GET("/autonomicas/carmen/lateral/sale")
+    Call<String> saleLateralAutonomicas();
 
-    @GET("/municipales/carmen/{codigo}/sale")
-    Call<String> saleLateralMunicipales(@Path("codigo") String codigo);
+    @GET("/municipales/carmen/lateral/sale")
+    Call<String> saleLateralMunicipales();
 
     /*
      ****************LATERAL

@@ -38,6 +38,8 @@ public class Main extends javax.swing.JFrame {
 
     GraficosController graficosController = new GraficosController();
 
+    private boolean lateralIn = false;
+
 
     /**
      * Creates new form Main
@@ -156,10 +158,10 @@ public class Main extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaComunidades = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        TablaGraficos = new javax.swing.JTable();
+        tablaGraficos = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaMunicipios = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        entra = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         comboDatos = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
@@ -202,6 +204,7 @@ public class Main extends javax.swing.JFrame {
                 if (selectedRow != -1) {
                     loadSelectedAutonomicas((String) tablaComunidades.getValueAt(selectedRow, 0));
                     codAutonomia = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
+                    //TODO:Hacer un switch aqui para distinguir con qué datos actualizamos: Oficiales A o M, Sondeo A o M
                     graficosController.selectedAutonomicas(codAutonomia);
                 }
                 showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
@@ -210,6 +213,7 @@ public class Main extends javax.swing.JFrame {
                 if (selectedRow != -1) {
                     loadSelectedMunicipales((String) tablaComunidades.getValueAt(selectedRow, 0));
                     codAutonomia = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
+                    //TODO:Hacer un switch aqui para distinguir con qué datos actualizamos: Oficiales A o M, Sondeo A o M
                     graficosController.selectedMunicipales(codAutonomia);
                 }
                 showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
@@ -218,7 +222,7 @@ public class Main extends javax.swing.JFrame {
         });
 
 
-        TablaGraficos.setModel(new javax.swing.table.DefaultTableModel(
+        tablaGraficos.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
                         {"Mapa Electoral"},
                         {"Faldon Mapa"},
@@ -229,16 +233,16 @@ public class Main extends javax.swing.JFrame {
                         "GRAFICOS"
                 }
         ));
-        jScrollPane3.setViewportView(TablaGraficos);
-        if (TablaGraficos.getColumnModel().getColumnCount() > 0) {
-            TablaGraficos.getColumnModel().getColumn(0).setResizable(false);
+        jScrollPane3.setViewportView(tablaGraficos);
+        if (tablaGraficos.getColumnModel().getColumnCount() > 0) {
+            tablaGraficos.getColumnModel().getColumn(0).setResizable(false);
         }
 
-        jButton1.setBackground(new java.awt.Color(153, 255, 153));
-        jButton1.setText("ENTRA");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        entra.setBackground(new java.awt.Color(153, 255, 153));
+        entra.setText("ENTRA");
+        entra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                entraActionPerformed(evt);
             }
         });
 
@@ -247,8 +251,8 @@ public class Main extends javax.swing.JFrame {
         jButton2.addActionListener(e -> saleEvent());
 
         comboDatos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        comboDatos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"SONDEO AUTONOMICAS", "DATOS AUTONOMICAS", "SONDEO MUNICIPALES", "DATOS MUNICIPALES"}));
-        selectedDb = "SONDEO AUTONOMICAS";
+        comboDatos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"OFICIALES MUNICIPALES", "OFICIALES AUTONOMICAS", "SONDEO MUNICIPALES", "SONDEO AUTONOMICAS"}));
+        selectedDb = "OFICIALES MUNICIPALES";
         comboDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboDatosActionPerformed(evt);
@@ -286,7 +290,7 @@ public class Main extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jButton5)
                                                 .addGap(260, 260, 260)
-                                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(entra, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(45, 45, 45)
                                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -326,7 +330,7 @@ public class Main extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(31, 31, 31)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(entra, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -343,7 +347,7 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saleEvent() {
-        if (TablaGraficos.getSelectedRow() == 3) {
+        if (tablaGraficos.getSelectedRow() == 3) {
 
         }
     }
@@ -388,77 +392,201 @@ public class Main extends javax.swing.JFrame {
         jScrollPane4.setViewportView(tablaMunicipios);
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-
-        if (TablaGraficos.getSelectedRow() == 3) {
-            int selectedRow = -1;
-            if (tablaMunicipios.getSelectedRow() != -1) {
-                selectedRow = tablaMunicipios.getSelectedRow();
-                var codigo = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
-                if (selectedDb.equals("DATOS AUTONOMICAS") || selectedDb.equals("SONDEO AUTONOMICAS")) {
-                    System.out.println("ENTRA AUTO");
-
-                    graficosController.entraLateralAutonomicas(codigo);
-                } else {
-                    System.out.println("ENTRA MUNI");
-
-                    graficosController.entraLateralMunicipales(codigo);
+    private void entraActionPerformed(java.awt.event.ActionEvent evt) {
+        switch (comboDatos.getSelectedIndex()) {
+            //OFICIALES MUNICIPALES
+            case 0 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> {
+                            String codCCAA = null;
+                            if (tablaComunidades.getSelectedRow() != -1) {
+                                codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+                                graficosController.actualizaLateralMunicipales(codCCAA);
+                            }
+                            if (!lateralIn) {
+                                graficosController.entraLateralMunicipales();
+                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                                lateralIn = true;
+                            } else {
+                                if (codCCAA != null) {
+                                    graficosController.despliegaLateralMunicipales(codCCAA);
+                                }
+                            }
+                        }
+                        default -> System.out.println("Default");
+                    }
                 }
-                System.out.println(codigo);
-            } else {
-                selectedRow = tablaComunidades.getSelectedRow();
-                var codigo = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
-                if (selectedDb.equals("DATOS AUTONOMICAS") || selectedDb.equals("SONDEO AUTONOMICAS")) {
-                    System.out.println("ENTRA AUTO");
-
-                    graficosController.entraLateralAutonomicas(codigo);
-                } else {
-                    System.out.println("ENTRA MUNI");
-
-                    graficosController.entraLateralMunicipales(codigo);
-                }
-                System.out.println(codigo);
             }
-        } else if (TablaGraficos.getSelectedRow() == 1) {
-            int selectedRow = -1;
-            if (tablaMunicipios.getSelectedRow() != -1) {
-                selectedRow = tablaMunicipios.getSelectedRow();
-                var codigo = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
-                if (selectedDb.equals("DATOS AUTONOMICAS") || selectedDb.equals("SONDEO AUTONOMICAS")) {
-                    System.out.println("ENTRA AUTO");
-
-                    graficosController.entraFaldonAuto();
-                } else {
-                    System.out.println("ENTRA MUNI");
-
-                    graficosController.entraLateralMunicipales(codigo);
+            //OFICIALES AUTONOMICAS
+            case 1 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> System.out.println(3);
+                        default -> System.out.println("Default");
+                    }
                 }
-                System.out.println(codigo);
-            } else {
-                selectedRow = tablaComunidades.getSelectedRow();
-                var codigo = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
-                if (selectedDb.equals("DATOS AUTONOMICAS") || selectedDb.equals("SONDEO AUTONOMICAS")) {
-                    System.out.println("ENTRA AUTO");
-
-                    graficosController.entraLateralAutonomicas(codigo);
-                } else {
-                    System.out.println("ENTRA MUNI");
-
-                    graficosController.entraLateralMunicipales(codigo);
-                }
-                System.out.println(codigo);
             }
-        } else if (TablaGraficos.getSelectedRow() == 0) {
-            graficosController.loadArcoAutonomicas();
+            //SONDEO MUNICIPALES
+            case 2 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> System.out.println(3);
+                        default -> System.out.println("Default");
+                    }
+                }
+            }
+            //SONDEO AUTONOMICAS
+            case 3 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> System.out.println(3);
+                        default -> System.out.println("Default");
+                    }
+                }
+            }
+            default -> System.out.println("Default");
         }
 
+        // if (tablaGraficos.getSelectedRow() == 3) {
+        //     int selectedRow = -1;
+        //     if (tablaMunicipios.getSelectedRow() != -1) {
+        //         selectedRow = tablaMunicipios.getSelectedRow();
+        //         var codigo = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
+        //         if (selectedDb.equals("DATOS AUTONOMICAS") || selectedDb.equals("SONDEO AUTONOMICAS")) {
+        //             System.out.println("ENTRA AUTO");
+//
+        //             graficosController.entraLateralAutonomicas();
+        //         } else {
+        //             System.out.println("ENTRA MUNI");
+//
+        //             graficosController.entraLateralMunicipales();
+        //         }
+        //         System.out.println(codigo);
+        //     } else {
+        //         selectedRow = tablaComunidades.getSelectedRow();
+        //         var codigo = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
+        //         if (selectedDb.equals("DATOS AUTONOMICAS") || selectedDb.equals("SONDEO AUTONOMICAS")) {
+        //             System.out.println("ENTRA AUTO");
+//
+        //             graficosController.entraLateralAutonomicas();
+        //         } else {
+        //             System.out.println("ENTRA MUNI");
+//
+        //             graficosController.entraLateralMunicipales();
+        //         }
+        //         System.out.println(codigo);
+        //     }
+        // } else if (tablaGraficos.getSelectedRow() == 1) {
+        //     int selectedRow = -1;
+        //     if (tablaMunicipios.getSelectedRow() != -1) {
+        //         selectedRow = tablaMunicipios.getSelectedRow();
+        //         var codigo = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
+        //         if (selectedDb.equals("DATOS AUTONOMICAS") || selectedDb.equals("SONDEO AUTONOMICAS")) {
+        //             System.out.println("ENTRA AUTO");
+//
+        //             graficosController.entraFaldonAuto();
+        //         } else {
+        //             System.out.println("ENTRA MUNI");
+//
+        //             graficosController.entraLateralMunicipales();
+        //         }
+        //         System.out.println(codigo);
+        //     } else {
+        //         selectedRow = tablaComunidades.getSelectedRow();
+        //         var codigo = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
+        //         if (selectedDb.equals("DATOS AUTONOMICAS") || selectedDb.equals("SONDEO AUTONOMICAS")) {
+        //             System.out.println("ENTRA AUTO");
+//
+        //             graficosController.entraLateralAutonomicas();
+        //         } else {
+        //             System.out.println("ENTRA MUNI");
+//
+        //             graficosController.entraLateralMunicipales();
+        //         }
+        //         System.out.println(codigo);
+        //     }
+        // } else if (tablaGraficos.getSelectedRow() == 0) {
+        //     graficosController.loadArcoAutonomicas();
+        // }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+
+    }//GEN-LAST:event_entraActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        switch (comboDatos.getSelectedIndex()) {
+            //OFICIALES MUNICIPALES
+            case 0 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> {
+                            if (lateralIn) {
+                                graficosController.saleLateralMunicipales();
+                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                                lateralIn = false;
+                            }
+                        }
+                        default -> System.out.println("Default");
+                    }
+                }
+            }
+            //OFICIALES AUTONOMICAS
+            case 1 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> System.out.println(3);
+                        default -> System.out.println("Default");
+                    }
+                }
+            }
+            //SONDEO MUNICIPALES
+            case 2 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> System.out.println(3);
+                        default -> System.out.println("Default");
+                    }
+                }
+            }
+            //SONDEO AUTONOMICAS
+            case 3 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> System.out.println(3);
+                        default -> System.out.println("Default");
+                    }
+                }
+            }
+            default -> System.out.println("Default");
+        }
 
 
+        //Parte de colocación del botón
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         int screenWidth = gd.getDisplayMode().getWidth();
         int screenHeight = gd.getDisplayMode().getHeight();
@@ -540,9 +668,9 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TablaGraficos;
+    private javax.swing.JTable tablaGraficos;
     private javax.swing.JComboBox<String> comboDatos;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton entra;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
