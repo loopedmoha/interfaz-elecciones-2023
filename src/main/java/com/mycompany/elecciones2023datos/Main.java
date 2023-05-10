@@ -9,9 +9,6 @@ import com.mycompany.elecciones2023datos.controllers.GraficosController;
 import com.mycompany.elecciones2023datos.model.Circunscripcion;
 import com.mycompany.elecciones2023datos.model.CpData;
 import com.mycompany.elecciones2023datos.services.IClienteApi;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -19,9 +16,6 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -31,7 +25,6 @@ import javax.swing.table.DefaultTableModel;
  * @author Fede
  */
 public class Main extends javax.swing.JFrame {
-    //PRUEBA
 
     Retrofit retrofit;
     IClienteApi clienteApi;
@@ -54,24 +47,7 @@ public class Main extends javax.swing.JFrame {
 
     public void initCircunscripcionesAutonomicas() {
         try {
-            var autonomiasCall = clienteApi.getAllCircunscripciones();
-            var autonomiasFuture = new CompletableFuture<List<Circunscripcion>>();
-            autonomiasCall.enqueue(new Callback<List<Circunscripcion>>() {
-                @Override
-                public void onResponse(Call<List<Circunscripcion>> call, Response<List<Circunscripcion>> response) {
-                    if (response.isSuccessful()) {
-                        autonomiasFuture.complete(response.body());
-                    } else {
-                        autonomiasFuture.completeExceptionally(new RuntimeException("Unexpected Response"));
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<Circunscripcion>> call, Throwable throwable) {
-                    autonomiasFuture.completeExceptionally(new RuntimeException("Unexpected Response"));
-                }
-            });
-            var autonomias = autonomiasFuture.get();
+            var autonomias = clienteApi.getAllCircunscripciones().execute().body();
             autonomias.stream()
                     .map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> circunscripcionesAutonomicas.put(auto, null));
             for (Circunscripcion autonomia : autonomias) {
@@ -86,10 +62,6 @@ public class Main extends javax.swing.JFrame {
 
         } catch (IOException e) {
             System.err.println(e.getMessage());
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -160,11 +132,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         retrofit = new Retrofit.Builder().baseUrl("http://localhost:9090").addConverterFactory(GsonConverterFactory.create()).build();
         clienteApi = retrofit.create(IClienteApi.class);
-        long startTime = System.currentTimeMillis();
-
         initCircunscripcionesAutonomicas();
-        long endTime = System.currentTimeMillis();
-        System.out.println(endTime-startTime);
         initCircunscripcionesMunicipales();
         initComponents();
         Tablas();
@@ -228,9 +196,8 @@ public class Main extends javax.swing.JFrame {
 
         //tablaComunidades.getTableHeader().setResizingAllowed(false);
         jScrollPane2.setViewportView(tablaComunidades);
-        tablaComunidades.getSelectionModel().addListSelectionListener(e -> {
-            long start = System.currentTimeMillis();
 
+        tablaComunidades.getSelectionModel().addListSelectionListener(e -> {
             String codAutonomia;
             if (((String) Objects.requireNonNull(comboDatos.getSelectedItem())).endsWith("AUTONOMICAS")) {
                 int selectedRow = tablaComunidades.getSelectedRow();
@@ -252,10 +219,8 @@ public class Main extends javax.swing.JFrame {
                 showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
 
             }
-            long end = System.currentTimeMillis();
-            System.out.println(end-start);
-
         });
+
 
         tablaGraficos.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
@@ -383,14 +348,13 @@ public class Main extends javax.swing.JFrame {
             System.out.println(selectedDb);
         });
         pack();
-    }
+    }// </editor-fold>//GEN-END:initComponents
 
     private void saleEvent() {
         if (tablaGraficos.getSelectedRow() == 3) {
 
         }
     }
-
 
     private void loadSelectedAutonomicas(String cod) {
         DefaultTableModel tableModel = new DefaultTableModel();
@@ -645,9 +609,9 @@ public class Main extends javax.swing.JFrame {
 
     private void comboDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDatosActionPerformed
         // TODO add your handling code here:
-        
+
        /* String selectedOption = comboDatos.getSelectedItem().toString();
-        
+
         if (selectedOption.equals("SONDEO AUTONÓMICAS") || selectedOption.equals("SONDEO MUNICIPALES")) {
             jScrollPane4.setVisible(false);
         } else {
