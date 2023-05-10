@@ -4,46 +4,178 @@
  */
 package com.mycompany.elecciones2023datos;
 
-import java.awt.Dimension;
+import com.mycompany.elecciones2023datos.DTO.CarmenDTO;
+import com.mycompany.elecciones2023datos.controllers.GraficosController;
+import com.mycompany.elecciones2023datos.model.Circunscripcion;
+import com.mycompany.elecciones2023datos.model.CpData;
+import com.mycompany.elecciones2023datos.services.IClienteApi;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTable;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
  * @author Fede
  */
 public class Main extends javax.swing.JFrame {
+    //PRUEBA
+
+    Retrofit retrofit;
+    IClienteApi clienteApi;
+
+    Map<String, List<Circunscripcion>> circunscripcionesAutonomicas = new HashMap<>();
+    Map<String, List<Circunscripcion>> cicunscripcionesMunicipales = new HashMap<>();
+    Map<String, String> nombreCodigo = new HashMap<>();
+    Map<String, String> nombreCodigoMunicipal = new HashMap<>();
+
+    String selectedDb = "";
+
+    GraficosController graficosController = new GraficosController();
+
+    private boolean lateralIn = false;
+
 
     /**
      * Creates new form Main
      */
-    public Main() {
-        initComponents();
-     
-        
-        Tablas();
-        
-        
+
+    public void initCircunscripcionesAutonomicas() {
+        try {
+            var autonomiasCall = clienteApi.getAllCircunscripciones();
+            var autonomiasFuture = new CompletableFuture<List<Circunscripcion>>();
+            autonomiasCall.enqueue(new Callback<List<Circunscripcion>>() {
+                @Override
+                public void onResponse(Call<List<Circunscripcion>> call, Response<List<Circunscripcion>> response) {
+                    if (response.isSuccessful()) {
+                        autonomiasFuture.complete(response.body());
+                    } else {
+                        autonomiasFuture.completeExceptionally(new RuntimeException("Unexpected Response"));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Circunscripcion>> call, Throwable throwable) {
+                    autonomiasFuture.completeExceptionally(new RuntimeException("Unexpected Response"));
+                }
+            });
+            var autonomias = autonomiasFuture.get();
+            autonomias.stream()
+                    .map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> circunscripcionesAutonomicas.put(auto, null));
+            for (Circunscripcion autonomia : autonomias) {
+                var auxList = clienteApi.getCircunscripcionesByAutonomia(autonomia.getCodigo()).execute().body();
+                nombreCodigo.put(autonomia.getNombreCircunscripcion(), autonomia.getCodigo());
+                auxList.forEach(x -> {
+                    nombreCodigoMunicipal.put(x.getNombreCircunscripcion(), x.getCodigo());
+                });
+                circunscripcionesAutonomicas.put(autonomia.getNombreCircunscripcion(), auxList);
+            }
+
+
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private void Tablas(){
-        
+    public void initCircunscripcionesMunicipales() {
+        try {
+            var autonomias = clienteApi.getAllCircunscripciones().execute().body();
+            autonomias.stream()
+                    .map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> cicunscripcionesMunicipales.put(auto, null));
+            for (Circunscripcion autonomia : autonomias) {
+                var auxList = clienteApi.getMunicipiosByCodigo(autonomia.getCodigo()).execute().body();
+                for (Circunscripcion circunscripcion : auxList) {
+                    nombreCodigoMunicipal.put(circunscripcion.getNombreCircunscripcion(), circunscripcion.getCodigo());
+                }
+                cicunscripcionesMunicipales.put(autonomia.getNombreCircunscripcion(), auxList);
+            }
+
+
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
     }
-    
+
+    public void showDataTable(String nombre) {
+        //Solo hay seleccioanda una autonomia
+        try {
+            CarmenDTO carmenDTO = clienteApi.getCarmenDto(nombreCodigo.get(nombre)).execute().body();
+            List<CpData> datos = CpData.fromCarmenDto(carmenDTO);
+            printData(datos);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    public void showDataTableMunicipio(String nombre) {
+        try {
+            CarmenDTO carmenDTO = clienteApi.getCarmenDtoOficial(nombreCodigoMunicipal.get(nombre)).execute().body();
+            System.out.println(carmenDTO);
+            assert carmenDTO != null;
+            List<CpData> datos = CpData.fromCarmenDto(carmenDTO);
+            printData(datos);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void printData(List<CpData> list) {
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("CODIGO");
+        tableModel.addColumn("NOMBRE");
+        tableModel.addColumn("VOTANTES");
+        tableModel.addColumn("ESCANOS");
+
+
+        for (CpData cpDTO : list) {
+            Object[] rowData = {cpDTO.getCodigo(), cpDTO.getNombrePartido(),
+                    cpDTO.getVoto(), "" + cpDTO.getEscanosHasta() + "/" + cpDTO.getEscanosDesde()};
+            tableModel.addRow(rowData);
+        }
+        JScrollPane scrollPane = new JScrollPane(tablaDatos);
+        tablaDatos = new JTable(tableModel);
+        tablaDatos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        jScrollPane1.setViewportView(tablaDatos);
+    }
+
+    public Main() {
+        retrofit = new Retrofit.Builder().baseUrl("http://localhost:9090").addConverterFactory(GsonConverterFactory.create()).build();
+        clienteApi = retrofit.create(IClienteApi.class);
+        long startTime = System.currentTimeMillis();
+
+        initCircunscripcionesAutonomicas();
+        long endTime = System.currentTimeMillis();
+        System.out.println(endTime-startTime);
+        initCircunscripcionesMunicipales();
+        initComponents();
+        Tablas();
+
+
+    }
+
+    private void Tablas() {
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,114 +190,112 @@ public class Main extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaComunidades = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        TablaGraficos = new javax.swing.JTable();
+        tablaGraficos = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaMunicipios = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        entra = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        comboDatos = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        btnReplegar = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        TablaGraficos1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ELECCIONES 2023");
 
         tablaDatos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Cod", "Partido", "Escaños", "Votos"
-            }
+                new Object[][]{
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String[]{
+                        "Cod", "Partido", "Escaños", "Votos"
+                }
         ));
         jScrollPane1.setViewportView(tablaDatos);
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("COMUNIDADES");
 
-        tablaComunidades.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"Aragón"},
-                {"Asturias"},
-                {"Madrid"},
-                {"Cantabria"},
-                {"Castilla-La Mancha"},
-                {"Navarra"},
-                {"Valencia"},
-                {"Extremadura"},
-                {"Galicia"},
-                {"Baleares"},
-                {"Canarias"},
-                {"La Rioja"},
-                {"Murcia"}
-            },
-            new String [] {
-                "COMUNIDADES"
-            }
-        ));
-        tablaComunidades.getTableHeader().setResizingAllowed(false);
+        for (String s : circunscripcionesAutonomicas.keySet()) {
+            tableModel.addRow(new Object[]{s});
+        }
+        JScrollPane scrollPane = new JScrollPane(tablaComunidades);
+
+        tablaComunidades = new JTable(tableModel);
+
+        //tablaComunidades.getTableHeader().setResizingAllowed(false);
         jScrollPane2.setViewportView(tablaComunidades);
-        if (tablaComunidades.getColumnModel().getColumnCount() > 0) {
-            tablaComunidades.getColumnModel().getColumn(0).setResizable(false);
-        }
+        tablaComunidades.getSelectionModel().addListSelectionListener(e -> {
+            long start = System.currentTimeMillis();
 
-        TablaGraficos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"Mapa Electoral"},
-                {"Faldon Mapa"},
-                {"Pactometro"}
-            },
-            new String [] {
-                "CARTONES"
+            String codAutonomia;
+            if (((String) Objects.requireNonNull(comboDatos.getSelectedItem())).endsWith("AUTONOMICAS")) {
+                int selectedRow = tablaComunidades.getSelectedRow();
+                if (selectedRow != -1) {
+                    loadSelectedAutonomicas((String) tablaComunidades.getValueAt(selectedRow, 0));
+                    codAutonomia = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
+                    //TODO:Hacer un switch aqui para distinguir con qué datos actualizamos: Oficiales A o M, Sondeo A o M
+                    graficosController.selectedAutonomicas(codAutonomia);
+                }
+                showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
+            } else {
+                int selectedRow = tablaComunidades.getSelectedRow();
+                if (selectedRow != -1) {
+                    loadSelectedMunicipales((String) tablaComunidades.getValueAt(selectedRow, 0));
+                    codAutonomia = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
+                    //TODO:Hacer un switch aqui para distinguir con qué datos actualizamos: Oficiales A o M, Sondeo A o M
+                    graficosController.selectedMunicipales(codAutonomia);
+                }
+                showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
+
             }
+            long end = System.currentTimeMillis();
+            System.out.println(end-start);
+
+        });
+
+        tablaGraficos.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{
+                        {"Mapa Electoral"},
+                        {"Faldon Mapa"},
+                        {"Pactometro"},
+                        {"Lateral"}
+                },
+                new String[]{
+                        "GRAFICOS"
+                }
         ));
-        jScrollPane3.setViewportView(TablaGraficos);
-        if (TablaGraficos.getColumnModel().getColumnCount() > 0) {
-            TablaGraficos.getColumnModel().getColumn(0).setResizable(false);
+        jScrollPane3.setViewportView(tablaGraficos);
+        if (tablaGraficos.getColumnModel().getColumnCount() > 0) {
+            tablaGraficos.getColumnModel().getColumn(0).setResizable(false);
         }
 
-        tablaMunicipios.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
-            },
-            new String [] {
-                "MUNICIPIOS"
-            }
-        ));
-        jScrollPane4.setViewportView(tablaMunicipios);
-        if (tablaMunicipios.getColumnModel().getColumnCount() > 0) {
-            tablaMunicipios.getColumnModel().getColumn(0).setResizable(false);
-        }
-
-        jButton1.setBackground(new java.awt.Color(153, 255, 153));
-        jButton1.setText("ENTRA");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        entra.setBackground(new java.awt.Color(153, 255, 153));
+        entra.setText("ENTRA");
+        entra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                entraActionPerformed(evt);
             }
         });
 
         jButton2.setBackground(new java.awt.Color(255, 102, 102));
         jButton2.setText("SALE");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.addActionListener(e -> saleEvent());
+
+        comboDatos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        comboDatos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"OFICIALES MUNICIPALES", "OFICIALES AUTONOMICAS", "SONDEO MUNICIPALES", "SONDEO AUTONOMICAS"}));
+        selectedDb = "OFICIALES MUNICIPALES";
+        comboDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                comboDatosActionPerformed(evt);
             }
         });
 
         jButton3.setBackground(new java.awt.Color(242, 242, 242));
-        jButton3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fede\\Documents\\NetBeansProjects\\Elecciones2023DATOS\\Imagenes\\actualizar.png")); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon("src/main/resources/Imagenes/actualizar.png")); // NOI18N
 
         jButton4.setText("PACTOS");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -178,194 +308,368 @@ public class Main extends javax.swing.JFrame {
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("RESET");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fede\\Documents\\NetBeansProjects\\Elecciones2023DATOS\\Imagenes\\iconconfig.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("src/main/resources/Imagenes/iconconfig.png")); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+                try {
+                    jLabel1MouseClicked(evt);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
-
-        btnReplegar.setBackground(new java.awt.Color(255, 153, 51));
-        btnReplegar.setText("REPLEGAR");
-        btnReplegar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReplegarActionPerformed(evt);
-            }
-        });
-
-        jButton6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton6.setText("SONDEO AUTONOMICAS");
-
-        jButton7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton7.setText("SONDEO MUNICIPALES");
-
-        jButton8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton8.setText("DATOS AUTONOMICAS");
-
-        jButton9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton9.setText("DATOS MUNICIPALES");
-
-        TablaGraficos1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"Mapa Electoral"},
-                {"Faldon Mapa"},
-                {"Pactometro"}
-            },
-            new String [] {
-                "FALDONES"
-            }
-        ));
-        jScrollPane5.setViewportView(TablaGraficos1);
-        if (TablaGraficos1.getColumnModel().getColumnCount() > 0) {
-            TablaGraficos1.getColumnModel().getColumn(0).setResizable(false);
-        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(13, 13, 13)
-                            .addComponent(jButton5)
-                            .addGap(247, 247, 247)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(45, 45, 45)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(45, 45, 45)
-                            .addComponent(btnReplegar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(19, 19, 19))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(31, 31, 31)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(67, 67, 67)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(92, 92, 92)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(402, 402, 402)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                                .addGap(31, 31, 31)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jButton5)
+                                                .addGap(260, 260, 260)
+                                                .addComponent(entra, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(45, 45, 45)
+                                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(19, 19, 19)
+                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(31, 31, 31)
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addGap(28, 28, 28)
+                                                .addComponent(comboDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReplegar)
-                    .addComponent(jButton5))
-                .addGap(45, 45, 45))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(comboDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel1)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(31, 31, 31)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(entra, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jButton5)
+                                                .addGap(15, 15, 15)))
+                                .addGap(18, 18, 18))
         );
-
+        comboDatos.addActionListener(e -> {
+            selectedDb = (String) comboDatos.getSelectedItem();
+            System.out.println(selectedDb);
+        });
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
-       
-        
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void saleEvent() {
+        if (tablaGraficos.getSelectedRow() == 3) {
+
+        }
+    }
+
+
+    private void loadSelectedAutonomicas(String cod) {
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("MUNICIPIOS");
+        var municipios = circunscripcionesAutonomicas.get(cod);
+        for (Circunscripcion municipio : municipios) {
+            tableModel.addRow(new Object[]{municipio.getNombreCircunscripcion()});
+        }
+        JScrollPane scrollPane = new JScrollPane(tablaMunicipios);
+        tablaMunicipios = new JTable(tableModel);
+        tablaComunidades.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane4.setViewportView(tablaMunicipios);
+        tablaMunicipios.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int selectedRow = tablaMunicipios.getSelectedRow();
+                if (selectedRow != -1) {
+                    String nombreMunicipio = (String) tablaMunicipios.getValueAt(selectedRow, 0);
+                    showDataTableMunicipio(nombreMunicipio);
+                }
+            }
+        });
+
+
+    }
+
+    private void loadSelectedMunicipales(String cod) {
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("MUNICIPIOS");
+        var municipios = cicunscripcionesMunicipales.get(cod);
+        for (Circunscripcion municipio : municipios) {
+            tableModel.addRow(new Object[]{municipio.getNombreCircunscripcion()});
+        }
+
+        JScrollPane scrollPane = new JScrollPane(tablaMunicipios);
+        tablaMunicipios = new JTable(tableModel);
+        tablaMunicipios.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        jScrollPane4.setViewportView(tablaMunicipios);
+    }
+
+    private void entraActionPerformed(java.awt.event.ActionEvent evt) {
+        switch (comboDatos.getSelectedIndex()) {
+            //OFICIALES MUNICIPALES
+            case 0 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> {
+                            String codCCAA = null;
+                            if (tablaComunidades.getSelectedRow() != -1) {
+                                codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+                                graficosController.actualizaLateralMunicipales(codCCAA);
+                            }
+                            if (!lateralIn) {
+                                graficosController.entraLateralMunicipales();
+                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                                lateralIn = true;
+                            } else {
+                                if (codCCAA != null) {
+                                    graficosController.despliegaLateralMunicipales(codCCAA);
+                                }
+                            }
+                        }
+                        default -> System.out.println("Default");
+                    }
+                }
+            }
+            //OFICIALES AUTONOMICAS
+            case 1 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> System.out.println(3);
+                        default -> System.out.println("Default");
+                    }
+                }
+            }
+            //SONDEO MUNICIPALES
+            case 2 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> System.out.println(3);
+                        default -> System.out.println("Default");
+                    }
+                }
+            }
+            //SONDEO AUTONOMICAS
+            case 3 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> System.out.println(3);
+                        default -> System.out.println("Default");
+                    }
+                }
+            }
+            default -> System.out.println("Default");
+        }
+
+        // if (tablaGraficos.getSelectedRow() == 3) {
+        //     int selectedRow = -1;
+        //     if (tablaMunicipios.getSelectedRow() != -1) {
+        //         selectedRow = tablaMunicipios.getSelectedRow();
+        //         var codigo = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
+        //         if (selectedDb.equals("DATOS AUTONOMICAS") || selectedDb.equals("SONDEO AUTONOMICAS")) {
+        //             System.out.println("ENTRA AUTO");
+//
+        //             graficosController.entraLateralAutonomicas();
+        //         } else {
+        //             System.out.println("ENTRA MUNI");
+//
+        //             graficosController.entraLateralMunicipales();
+        //         }
+        //         System.out.println(codigo);
+        //     } else {
+        //         selectedRow = tablaComunidades.getSelectedRow();
+        //         var codigo = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
+        //         if (selectedDb.equals("DATOS AUTONOMICAS") || selectedDb.equals("SONDEO AUTONOMICAS")) {
+        //             System.out.println("ENTRA AUTO");
+//
+        //             graficosController.entraLateralAutonomicas();
+        //         } else {
+        //             System.out.println("ENTRA MUNI");
+//
+        //             graficosController.entraLateralMunicipales();
+        //         }
+        //         System.out.println(codigo);
+        //     }
+        // } else if (tablaGraficos.getSelectedRow() == 1) {
+        //     int selectedRow = -1;
+        //     if (tablaMunicipios.getSelectedRow() != -1) {
+        //         selectedRow = tablaMunicipios.getSelectedRow();
+        //         var codigo = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
+        //         if (selectedDb.equals("DATOS AUTONOMICAS") || selectedDb.equals("SONDEO AUTONOMICAS")) {
+        //             System.out.println("ENTRA AUTO");
+//
+        //             graficosController.entraFaldonAuto();
+        //         } else {
+        //             System.out.println("ENTRA MUNI");
+//
+        //             graficosController.entraLateralMunicipales();
+        //         }
+        //         System.out.println(codigo);
+        //     } else {
+        //         selectedRow = tablaComunidades.getSelectedRow();
+        //         var codigo = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
+        //         if (selectedDb.equals("DATOS AUTONOMICAS") || selectedDb.equals("SONDEO AUTONOMICAS")) {
+        //             System.out.println("ENTRA AUTO");
+//
+        //             graficosController.entraLateralAutonomicas();
+        //         } else {
+        //             System.out.println("ENTRA MUNI");
+//
+        //             graficosController.entraLateralMunicipales();
+        //         }
+        //         System.out.println(codigo);
+        //     }
+        // } else if (tablaGraficos.getSelectedRow() == 0) {
+        //     graficosController.loadArcoAutonomicas();
+        // }
+
+
+    }//GEN-LAST:event_entraActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        
-        
-         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        int screenWidth = gd.getDisplayMode().getWidth();
-        int screenHeight = gd.getDisplayMode().getHeight();
-        
-        /*JFrame pactometroFin = new PactometroFin();
-        pactometroFin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        pactometroFin.setLocation(screenWidth/4, screenHeight/2);
-        pactometroFin.setVisible(true);
-        
-        JFrame pactometro2 = new Pactometro2();
-        pactometro2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        pactometro2.setLocation(screenWidth/4, screenHeight/9);
-        pactometro2.setVisible(true);*/
-        JFrame pactos = new PactosOpcion2();
-        pactos.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        pactos.setLocation(screenWidth/4, screenHeight/2);
-        pactos.setVisible(true);
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
+        switch (comboDatos.getSelectedIndex()) {
+            //OFICIALES MUNICIPALES
+            case 0 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> {
+                            if (lateralIn) {
+                                graficosController.saleLateralMunicipales();
+                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                                lateralIn = false;
+                            }
+                        }
+                        default -> System.out.println("Default");
+                    }
+                }
+            }
+            //OFICIALES AUTONOMICAS
+            case 1 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> System.out.println(3);
+                        default -> System.out.println("Default");
+                    }
+                }
+            }
+            //SONDEO MUNICIPALES
+            case 2 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> System.out.println(3);
+                        default -> System.out.println("Default");
+                    }
+                }
+            }
+            //SONDEO AUTONOMICAS
+            case 3 -> {
+                if (tablaGraficos.getSelectedRow() != -1) {
+                    switch (tablaGraficos.getSelectedRow()) {
+                        case 0 -> System.out.println(0);
+                        case 1 -> System.out.println(1);
+                        case 2 -> System.out.println(2);
+                        case 3 -> System.out.println(3);
+                        default -> System.out.println("Default");
+                    }
+                }
+            }
+            default -> System.out.println("Default");
+        }
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        // TODO add your handling code here:
-        
+
+        //Parte de colocación del botón
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         int screenWidth = gd.getDisplayMode().getWidth();
         int screenHeight = gd.getDisplayMode().getHeight();
+
+        JFrame pactometroFin = new PactometroFin();
+        pactometroFin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        pactometroFin.setLocation(screenWidth / 4, screenHeight / 2);
+        pactometroFin.setVisible(true);
+
+        JFrame pactometro2 = new Pactometro2();
+        pactometro2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        pactometro2.setLocation(screenWidth / 4, screenHeight / 9);
+        pactometro2.setVisible(true);
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void comboDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDatosActionPerformed
+        // TODO add your handling code here:
         
-        JFrame config;
-        try {
-            config = new config();
-            
-            config.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            config.setLocation(screenWidth/4, screenHeight/4);
-            config.setVisible(true);
-            
-        } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+       /* String selectedOption = comboDatos.getSelectedItem().toString();
+        
+        if (selectedOption.equals("SONDEO AUTONÓMICAS") || selectedOption.equals("SONDEO MUNICIPALES")) {
+            jScrollPane4.setVisible(false);
+        } else {
+            jScrollPane4.setVisible(true);
         }
-        
+      */
+
+
+    }//GEN-LAST:event_comboDatosActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) throws IOException {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        int screenWidth = gd.getDisplayMode().getWidth();
+        int screenHeight = gd.getDisplayMode().getHeight();
+
+        JFrame config = new config();
+        config.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        config.setLocation(screenWidth / 4, screenHeight / 4);
+        config.setVisible(true);
     }//GEN-LAST:event_jLabel1MouseClicked
-
-    private void btnReplegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReplegarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnReplegarActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -374,7 +678,7 @@ public class Main extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -393,36 +697,29 @@ public class Main extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main().setVisible(true);
-                
+
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TablaGraficos;
-    private javax.swing.JTable TablaGraficos1;
-    private javax.swing.JButton btnReplegar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTable tablaGraficos;
+    private javax.swing.JComboBox<String> comboDatos;
+    private javax.swing.JButton entra;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable tablaComunidades;
     private javax.swing.JTable tablaDatos;
     private javax.swing.JTable tablaMunicipios;
