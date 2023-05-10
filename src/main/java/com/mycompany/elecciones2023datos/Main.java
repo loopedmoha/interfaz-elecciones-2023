@@ -272,7 +272,11 @@ public class Main extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon("src/main/resources/Imagenes/iconconfig.png")); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+                try {
+                    jLabel1MouseClicked(evt);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -685,9 +689,9 @@ public class Main extends javax.swing.JFrame {
 
     private void comboDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDatosActionPerformed
         // TODO add your handling code here:
-        
+
        /* String selectedOption = comboDatos.getSelectedItem().toString();
-        
+
         if (selectedOption.equals("SONDEO AUTONÓMICAS") || selectedOption.equals("SONDEO MUNICIPALES")) {
             jScrollPane4.setVisible(false);
         } else {
@@ -698,7 +702,7 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_comboDatosActionPerformed
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) throws IOException {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
 
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
