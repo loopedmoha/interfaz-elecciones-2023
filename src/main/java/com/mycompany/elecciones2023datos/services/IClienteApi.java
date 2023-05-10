@@ -15,9 +15,6 @@ public interface IClienteApi {
     @GET("/autonomicas/circunscripciones/autonomias/{codigo}")
     Call<List<Circunscripcion>> getCircunscripcionesByAutonomia(@Path("codigo") String codigo);
 
-    @GET("/autonomicas/circunscripciones/selected/{codigo}")
-    Call<Circunscripcion> getByCodigo(@Path("codigo") String codigo);
-
     @GET("/autonomicas/carmen/data/{codigo}")
     Call<CarmenDTO> getCarmenDto(@Path("codigo") String codigo);
 
@@ -90,11 +87,11 @@ public interface IClienteApi {
     /*
      **************** CARTONES ARCOS
      */
-    @GET("/autonomicas/arco/load")
-    Call<String> loadArcoAutonomicas();
+    @GET("/autonomicas/load")
+    Call<String> loadAutonomicas();
 
-    @GET("/municipales/arco/load")
-    Call<String> loadArcoMunicipales();
+    @GET("/municipales/load")
+    Call<String> loadMunicipales();
 
     @GET("/autonomicas/circunscripciones/selected/{codigo}")
     Call<String> selectedAutonomicas(@Path("codigo") String codigo);

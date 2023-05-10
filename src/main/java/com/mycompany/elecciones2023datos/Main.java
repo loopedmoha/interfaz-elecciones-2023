@@ -40,6 +40,9 @@ public class Main extends javax.swing.JFrame {
 
     private boolean lateralIn = false;
 
+    private boolean inferiorAutoIn = false;
+    private boolean inferiorMuniIn = false;
+
 
     /**
      * Creates new form Main
@@ -135,13 +138,6 @@ public class Main extends javax.swing.JFrame {
         initCircunscripcionesAutonomicas();
         initCircunscripcionesMunicipales();
         initComponents();
-        Tablas();
-
-
-    }
-
-    private void Tablas() {
-
     }
 
     /**
@@ -162,11 +158,11 @@ public class Main extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaMunicipios = new javax.swing.JTable();
         entra = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        sale = new javax.swing.JButton();
         comboDatos = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        pactos = new javax.swing.JButton();
+        reset = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -246,9 +242,9 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 102, 102));
-        jButton2.setText("SALE");
-        jButton2.addActionListener(e -> saleEvent());
+        sale.setBackground(new java.awt.Color(255, 102, 102));
+        sale.setText("SALE");
+        sale.addActionListener(e -> saleEvent());
 
         comboDatos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         comboDatos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"OFICIALES MUNICIPALES", "OFICIALES AUTONOMICAS", "SONDEO MUNICIPALES", "SONDEO AUTONOMICAS"}));
@@ -262,16 +258,16 @@ public class Main extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(242, 242, 242));
         jButton3.setIcon(new javax.swing.ImageIcon("src/main/resources/Imagenes/actualizar.png")); // NOI18N
 
-        jButton4.setText("PACTOS");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        pactos.setText("PACTOS");
+        pactos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                pactosActionPerformed(evt);
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(153, 0, 51));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("RESET");
+        reset.setBackground(new java.awt.Color(153, 0, 51));
+        reset.setForeground(new java.awt.Color(255, 255, 255));
+        reset.setText("RESET");
 
         jLabel1.setIcon(new javax.swing.ImageIcon("src/main/resources/Imagenes/iconconfig.png")); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -288,13 +284,13 @@ public class Main extends javax.swing.JFrame {
                                 .addGap(31, 31, 31)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jButton5)
+                                                .addComponent(reset)
                                                 .addGap(260, 260, 260)
                                                 .addComponent(entra, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(45, 45, 45)
-                                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(sale, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(pactos, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(19, 19, 19)
@@ -331,11 +327,11 @@ public class Main extends javax.swing.JFrame {
                                                 .addGap(31, 31, 31)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                         .addComponent(entra, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                        .addComponent(sale, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(pactos, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jButton5)
+                                                .addComponent(reset)
                                                 .addGap(15, 15, 15)))
                                 .addGap(18, 18, 18))
         );
@@ -345,12 +341,6 @@ public class Main extends javax.swing.JFrame {
         });
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void saleEvent() {
-        if (tablaGraficos.getSelectedRow() == 3) {
-
-        }
-    }
 
     private void loadSelectedAutonomicas(String cod) {
         DefaultTableModel tableModel = new DefaultTableModel();
@@ -398,9 +388,23 @@ public class Main extends javax.swing.JFrame {
             case 0 -> {
                 if (tablaGraficos.getSelectedRow() != -1) {
                     switch (tablaGraficos.getSelectedRow()) {
-                        case 0 -> System.out.println(0);
+                        //Cualquiera de Cartones por ahora
+                        case 0 -> {
+                            graficosController.loadMunicipales();
+                        }
                         case 1 -> System.out.println(1);
-                        case 2 -> System.out.println(2);
+                        //Faldon inferior
+                        case 2 -> {
+                            if (tablaMunicipios.getSelectedRow() != -1) {
+
+                            } else if (tablaComunidades.getSelectedRow() != -1) {
+
+                            } else {
+                                graficosController.entraFaldonAuto();
+                            }
+
+                        }
+                        //Faldon lateral
                         case 3 -> {
                             String codCCAA = null;
                             if (tablaComunidades.getSelectedRow() != -1) {
@@ -425,10 +429,27 @@ public class Main extends javax.swing.JFrame {
             case 1 -> {
                 if (tablaGraficos.getSelectedRow() != -1) {
                     switch (tablaGraficos.getSelectedRow()) {
-                        case 0 -> System.out.println(0);
+                        case 0 -> {
+                            graficosController.loadAutonomicas();
+                        }
                         case 1 -> System.out.println(1);
                         case 2 -> System.out.println(2);
-                        case 3 -> System.out.println(3);
+                        case 3 -> {
+                            String codCCAA = null;
+                            if (tablaComunidades.getSelectedRow() != -1) {
+                                codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+                                graficosController.actualizaLateralMunicipales(codCCAA);
+                            }
+                            if (!lateralIn) {
+                                graficosController.entraLateralMunicipales();
+                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                                lateralIn = true;
+                            } else {
+                                if (codCCAA != null) {
+                                    graficosController.despliegaLateralMunicipales(codCCAA);
+                                }
+                            }
+                        }
                         default -> System.out.println("Default");
                     }
                 }
@@ -437,10 +458,27 @@ public class Main extends javax.swing.JFrame {
             case 2 -> {
                 if (tablaGraficos.getSelectedRow() != -1) {
                     switch (tablaGraficos.getSelectedRow()) {
-                        case 0 -> System.out.println(0);
+                        case 0 -> {
+                            graficosController.loadMunicipales();
+                        }
                         case 1 -> System.out.println(1);
                         case 2 -> System.out.println(2);
-                        case 3 -> System.out.println(3);
+                        case 3 -> {
+                            String codCCAA = null;
+                            if (tablaComunidades.getSelectedRow() != -1) {
+                                codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+                                graficosController.actualizaLateralMunicipales(codCCAA);
+                            }
+                            if (!lateralIn) {
+                                graficosController.entraLateralMunicipales();
+                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                                lateralIn = true;
+                            } else {
+                                if (codCCAA != null) {
+                                    graficosController.despliegaLateralMunicipales(codCCAA);
+                                }
+                            }
+                        }
                         default -> System.out.println("Default");
                     }
                 }
@@ -449,10 +487,27 @@ public class Main extends javax.swing.JFrame {
             case 3 -> {
                 if (tablaGraficos.getSelectedRow() != -1) {
                     switch (tablaGraficos.getSelectedRow()) {
-                        case 0 -> System.out.println(0);
+                        case 0 -> {
+                            graficosController.loadAutonomicas();
+                        }
                         case 1 -> System.out.println(1);
                         case 2 -> System.out.println(2);
-                        case 3 -> System.out.println(3);
+                        case 3 -> {
+                            String codCCAA = null;
+                            if (tablaComunidades.getSelectedRow() != -1) {
+                                codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+                                graficosController.actualizaLateralMunicipales(codCCAA);
+                            }
+                            if (!lateralIn) {
+                                graficosController.entraLateralMunicipales();
+                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                                lateralIn = true;
+                            } else {
+                                if (codCCAA != null) {
+                                    graficosController.despliegaLateralMunicipales(codCCAA);
+                                }
+                            }
+                        }
                         default -> System.out.println("Default");
                     }
                 }
@@ -525,8 +580,7 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_entraActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+    private void saleEvent() {
         switch (comboDatos.getSelectedIndex()) {
             //OFICIALES MUNICIPALES
             case 0 -> {
@@ -534,7 +588,13 @@ public class Main extends javax.swing.JFrame {
                     switch (tablaGraficos.getSelectedRow()) {
                         case 0 -> System.out.println(0);
                         case 1 -> System.out.println(1);
-                        case 2 -> System.out.println(2);
+                        case 2 -> {
+                            if (inferiorAutoIn || inferiorMuniIn) {
+                                graficosController.saleFaldonAuto();
+                                inferiorAutoIn = false;
+                                inferiorMuniIn = false;
+                            }
+                        }
                         case 3 -> {
                             if (lateralIn) {
                                 graficosController.saleLateralMunicipales();
@@ -553,7 +613,13 @@ public class Main extends javax.swing.JFrame {
                         case 0 -> System.out.println(0);
                         case 1 -> System.out.println(1);
                         case 2 -> System.out.println(2);
-                        case 3 -> System.out.println(3);
+                        case 3 -> {
+                            if (lateralIn) {
+                                graficosController.saleLateralMunicipales();
+                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                                lateralIn = false;
+                            }
+                        }
                         default -> System.out.println("Default");
                     }
                 }
@@ -565,7 +631,13 @@ public class Main extends javax.swing.JFrame {
                         case 0 -> System.out.println(0);
                         case 1 -> System.out.println(1);
                         case 2 -> System.out.println(2);
-                        case 3 -> System.out.println(3);
+                        case 3 -> {
+                            if (lateralIn) {
+                                graficosController.saleLateralMunicipales();
+                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                                lateralIn = false;
+                            }
+                        }
                         default -> System.out.println("Default");
                     }
                 }
@@ -577,15 +649,23 @@ public class Main extends javax.swing.JFrame {
                         case 0 -> System.out.println(0);
                         case 1 -> System.out.println(1);
                         case 2 -> System.out.println(2);
-                        case 3 -> System.out.println(3);
+                        case 3 -> {
+                            if (lateralIn) {
+                                graficosController.saleLateralMunicipales();
+                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                                lateralIn = false;
+                            }
+                        }
                         default -> System.out.println("Default");
                     }
                 }
             }
             default -> System.out.println("Default");
         }
+    }
 
-
+    private void pactosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pactosActionPerformed
+        // TODO add your handling code here:
         //Parte de colocación del botón
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         int screenWidth = gd.getDisplayMode().getWidth();
@@ -601,7 +681,7 @@ public class Main extends javax.swing.JFrame {
         pactometro2.setLocation(screenWidth / 4, screenHeight / 9);
         pactometro2.setVisible(true);
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_pactosActionPerformed
 
     private void comboDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDatosActionPerformed
         // TODO add your handling code here:
@@ -671,10 +751,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTable tablaGraficos;
     private javax.swing.JComboBox<String> comboDatos;
     private javax.swing.JButton entra;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton sale;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton pactos;
+    private javax.swing.JButton reset;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

@@ -114,17 +114,17 @@ public class GraficosController {
         }
     }
 
-    public void loadArcoAutonomicas() {
+    public void loadAutonomicas() {
         try {
-            clienteApi.loadArcoAutonomicas().execute();
+            clienteApi.loadAutonomicas().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void loadArcoMunicipales() {
+    public void loadMunicipales() {
         try {
-            clienteApi.loadArcoMunicipales().execute();
+            clienteApi.loadMunicipales().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
