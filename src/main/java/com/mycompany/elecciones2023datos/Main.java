@@ -61,7 +61,7 @@ public class Main extends javax.swing.JFrame {
 
     public void initCircunscripcionesAutonomicas() {
         try {
-            var autonomias = clienteApi.getAllCircunscripciones().execute().body();
+            var autonomias = clienteApi.getAllAutonomiasAuto().execute().body();
             autonomias.stream()
                     .map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> circunscripcionesAutonomicas.put(auto, null));
             for (Circunscripcion autonomia : autonomias) {
@@ -81,7 +81,7 @@ public class Main extends javax.swing.JFrame {
 
     public void initCircunscripcionesMunicipales() {
         try {
-            var autonomias = clienteApi.getAllCircunscripciones().execute().body();
+            var autonomias = clienteApi.getAllAutonomiasMuni().execute().body();
             autonomias.stream()
                     .map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> cicunscripcionesMunicipales.put(auto, null));
             for (Circunscripcion autonomia : autonomias) {
@@ -100,8 +100,16 @@ public class Main extends javax.swing.JFrame {
 
     public void showDataTable(String nombre) {
         //Solo hay seleccioanda una autonomia
+        CarmenDTO carmenDTO = null;
         try {
-            CarmenDTO carmenDTO = clienteApi.getCarmenDto(nombreCodigo.get(nombre)).execute().body();
+            switch (selectedDb) {
+                case "DA" -> carmenDTO = clienteApi.getCarmenDtoOficialAuto(nombreCodigo.get(nombre)).execute().body();
+                case "SA" -> carmenDTO = clienteApi.getCarmenDtoSondeoAuto(nombreCodigo.get(nombre)).execute().body();
+                case "DM" -> carmenDTO = clienteApi.getCarmenDtoOficialMuni(nombreCodigo.get(nombre)).execute().body();
+                case "SM" -> carmenDTO = clienteApi.getCarmenDtoSondeoMuni(nombreCodigo.get(nombre)).execute().body();
+                default -> System.out.println("No hay opción seleccionada");
+            }
+            // CarmenDTO carmenDTO = clienteApi.getCarmenDto(nombreCodigo.get(nombre)).execute().body();
             List<CpData> datos = CpData.fromCarmenDto(carmenDTO);
             printData(datos);
         } catch (IOException e) {
@@ -113,7 +121,7 @@ public class Main extends javax.swing.JFrame {
 
     public void showDataTableMunicipio(String nombre) {
         try {
-            CarmenDTO carmenDTO = clienteApi.getCarmenDtoOficial(nombreCodigoMunicipal.get(nombre)).execute().body();
+            CarmenDTO carmenDTO = clienteApi.getCarmenDtoOficialMuni(nombreCodigoMunicipal.get(nombre)).execute().body();
             System.out.println(carmenDTO);
             assert carmenDTO != null;
             List<CpData> datos = CpData.fromCarmenDto(carmenDTO);
@@ -966,24 +974,28 @@ public class Main extends javax.swing.JFrame {
         tipoElecciones = 4;
         oficiales = false;
         resaltarBoton(btnSondeoAutonomicas);
+        selectedDb = "SA";
     }//GEN-LAST:event_btnSondeoAutonomicasActionPerformed
 
     private void btnDatosAutonomicasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosAutonomicasActionPerformed
         tipoElecciones = 2;
         oficiales = true;
         resaltarBoton(btnDatosAutonomicas);
+        selectedDb = "DA";
     }//GEN-LAST:event_btnDatosAutonomicasActionPerformed
 
     private void btnSondeoMunicipalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSondeoMunicipalesActionPerformed
         tipoElecciones = 3;
         oficiales = false;
         resaltarBoton(btnSondeoMunicipales);
+        selectedDb = "SM";
     }//GEN-LAST:event_btnSondeoMunicipalesActionPerformed
 
     private void btnDatosMunicipalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosMunicipalesActionPerformed
         tipoElecciones = 1;
         oficiales = true;
         resaltarBoton(btnDatosMunicipales);
+        selectedDb = "DM";
     }//GEN-LAST:event_btnDatosMunicipalesActionPerformed
 
     private void TablaCartonesHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_TablaCartonesHierarchyChanged
