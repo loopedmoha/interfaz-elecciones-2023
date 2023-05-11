@@ -105,9 +105,8 @@ public class Main extends javax.swing.JFrame {
             switch (selectedDb) {
                 case "DA" -> carmenDTO = clienteApi.getCarmenDtoOficialAuto(nombreCodigo.get(nombre)).execute().body();
                 case "SA" -> carmenDTO = clienteApi.getCarmenDtoSondeoAuto(nombreCodigo.get(nombre)).execute().body();
-                case "DM" -> carmenDTO = clienteApi.getCarmenDtoOficialMuni(nombreCodigo.get(nombre)).execute().body();
                 case "SM" -> carmenDTO = clienteApi.getCarmenDtoSondeoMuni(nombreCodigo.get(nombre)).execute().body();
-                default -> System.out.println("No hay opción seleccionada");
+                default -> carmenDTO = clienteApi.getCarmenDtoOficialMuni(nombreCodigo.get(nombre)).execute().body();
             }
             // CarmenDTO carmenDTO = clienteApi.getCarmenDto(nombreCodigo.get(nombre)).execute().body();
             List<CpData> datos = CpData.fromCarmenDto(carmenDTO);
@@ -115,8 +114,6 @@ public class Main extends javax.swing.JFrame {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     public void showDataTableMunicipio(String nombre) {
