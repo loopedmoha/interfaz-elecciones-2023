@@ -259,11 +259,7 @@ public class Main extends javax.swing.JFrame {
         jButton3.setIcon(new javax.swing.ImageIcon("src/main/resources/Imagenes/actualizar.png")); // NOI18N
 
         pactos.setText("PACTOS");
-        pactos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pactosActionPerformed(evt);
-            }
-        });
+        pactos.addActionListener(this::pactosActionPerformed);
 
         reset.setBackground(new java.awt.Color(153, 0, 51));
         reset.setForeground(new java.awt.Color(255, 255, 255));
@@ -357,18 +353,20 @@ public class Main extends javax.swing.JFrame {
         tablaMunicipios = new JTable(tableModel);
         tablaComunidades.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jScrollPane4.setViewportView(tablaMunicipios);
-        tablaMunicipios.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                int selectedRow = tablaMunicipios.getSelectedRow();
-                if (selectedRow != -1) {
-                    String nombreMunicipio = (String) tablaMunicipios.getValueAt(selectedRow, 0);
-                    showDataTableMunicipio(nombreMunicipio);
+
+        tablaMunicipios.getSelectionModel().addListSelectionListener(e -> {
+            int selectedRow = tablaMunicipios.getSelectedRow();
+            if (selectedRow != -1) {
+                String nombreMunicipio = (String) tablaMunicipios.getValueAt(selectedRow, 0);
+                String codMunicipio = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
+                if (((String) Objects.requireNonNull(comboDatos.getSelectedItem())).endsWith("AUTONOMICAS")) {
+                    graficosController.selectedAutonomicas(codMunicipio);
+                } else {
+                    graficosController.selectedMunicipales(codMunicipio);
                 }
+                showDataTableMunicipio(nombreMunicipio);
             }
         });
-
-
     }
 
     private void loadSelectedMunicipales(String cod) {
@@ -400,16 +398,16 @@ public class Main extends javax.swing.JFrame {
                         //Faldon inferior
                         case 2 -> {
                             //if (!inferiorMuniIn)
-                                if (tablaMunicipios.getSelectedRow() != -1) {
-                                    graficosController.entraFaldonAuto();
-                                    inferiorMuniIn = true;
-                                } else if (tablaComunidades.getSelectedRow() != -1) {
-                                    graficosController.entraFaldonAuto();
-                                    inferiorMuniIn = true;
-                                } else {
-                                    graficosController.entraFaldonAuto();
-                                    inferiorMuniIn = true;
-                                }
+                            if (tablaMunicipios.getSelectedRow() != -1) {
+                                graficosController.entraFaldonAuto();
+                                inferiorMuniIn = true;
+                            } else if (tablaComunidades.getSelectedRow() != -1) {
+                                graficosController.entraFaldonAuto();
+                                inferiorMuniIn = true;
+                            } else {
+                                graficosController.entraFaldonAuto();
+                                inferiorMuniIn = true;
+                            }
 
                         }
                         //Faldon lateral
