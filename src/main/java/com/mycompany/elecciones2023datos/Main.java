@@ -47,7 +47,7 @@ public class Main extends javax.swing.JFrame {
 
 
     private boolean oficiales = true;
-    private int tipoElecciones;
+    private int tipoElecciones = 1;
     private boolean lateralIn = false;
     private boolean inferiorAutoIn = false;
     private boolean inferiorMuniIn = false;
@@ -151,8 +151,6 @@ public class Main extends javax.swing.JFrame {
         initComponents();
 
 
-        Tablas();
-
         ListSelectionModel selectionModel = TablaCartones.getSelectionModel();
         selectionModel.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
@@ -176,11 +174,6 @@ public class Main extends javax.swing.JFrame {
         });
 
         jLabel1.setIcon(new javax.swing.ImageIcon("Imagenes/iconconfig.png"));
-    }
-
-
-    private void Tablas() {
-
     }
 
     /**
@@ -262,8 +255,9 @@ public class Main extends javax.swing.JFrame {
                     } else {
                         graficosController.selectedAutonomicasSondeo(codAutonomia);
                     }
+                    showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
                 }
-                showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
+
             } else {
                 int selectedRow = tablaComunidades.getSelectedRow();
                 if (selectedRow != -1) {
@@ -275,8 +269,9 @@ public class Main extends javax.swing.JFrame {
                     } else {
                         graficosController.selectedMunicipalesSondeo(codAutonomia);
                     }
+                    showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
                 }
-                showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
+
             }
             if (tablaComunidades.getColumnModel().getColumnCount() > 0) {
                 tablaComunidades.getColumnModel().getColumn(0).setResizable(false);
@@ -285,9 +280,10 @@ public class Main extends javax.swing.JFrame {
 
         TablaCartones.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
-                        {"Mapa Electoral"},
-                        {"Faldon Mapa"},
-                        {"Pactometro"}
+                        {"Resultados"},
+                        {"Participación"},
+                        {"Arco individual"},
+                        {"Arco comparado"}
                 },
                 new String[]{
                         "CARTONES"
@@ -404,9 +400,10 @@ public class Main extends javax.swing.JFrame {
 
         TablaFaldones.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
-                        {"Mapa Electoral"},
-                        {"Faldon Mapa"},
-                        {"Pactometro"}
+                        {"Inferior"},
+                        {"Lateral"},
+                        {"Sedes"},
+                        {"Votantes"}
                 },
                 new String[]{
                         "FALDONES"
@@ -646,58 +643,22 @@ public class Main extends javax.swing.JFrame {
             //OFICIALES MUNICIPALES
             case 1 -> {
                 switch (TablaCartones.getSelectedRow()) {
-                    //Cualquiera de Cartones por ahora
+                    //RESULTADOS
                     case 0 -> graficosController.loadMunicipales();
-                    case 1 -> System.out.println(1);
-                    //Faldon inferior
-                    case 2 -> {
-                        if (tablaMunicipios.getSelectedRow() != -1) {
-
-                        } else if (tablaComunidades.getSelectedRow() != -1) {
-
-                        } else {
-                            graficosController.entraFaldonAuto();
-                        }
-
-                    }
-                    //Faldon lateral
-                    case 3 -> {
-                        String codCCAA = null;
-                        if (tablaComunidades.getSelectedRow() != -1) {
-                            codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
-                            graficosController.actualizaLateralMunicipales(codCCAA);
-                        }
-                        if (!lateralIn) {
-                            graficosController.entraLateralMunicipales();
-                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
-                            lateralIn = true;
-                        } else {
-                            if (codCCAA != null) {
-                                graficosController.despliegaLateralMunicipales(codCCAA);
-                            }
-                        }
-                    }
-                    default -> System.out.println("Default");
+                    //PARTICIPACION
+                    case 1 -> graficosController.loadMunicipales();
+                    //ARCO INDIVIDUAL
+                    case 2 -> graficosController.loadMunicipales();
+                    //ARCO COMPARADO
+                    case 3 -> graficosController.loadMunicipales();
+                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
                 }
                 switch (TablaFaldones.getSelectedRow()) {
-                    //Cualquiera de Cartones por ahora
-                    case 0 -> {
-                        graficosController.loadMunicipales();
-                    }
-                    case 1 -> System.out.println(1);
-                    //Faldon inferior
-                    case 2 -> {
-                        if (tablaMunicipios.getSelectedRow() != -1) {
-
-                        } else if (tablaComunidades.getSelectedRow() != -1) {
-
-                        } else {
-                            graficosController.entraFaldonAuto();
-                        }
-
-                    }
-                    //Faldon lateral
-                    case 3 -> {
+                    //INFERIOR
+                    //TODO: ENCADENA
+                    case 0 -> graficosController.entraFaldonAuto();
+                    //LATERAL
+                    case 1 -> {
                         String codCCAA = null;
                         if (tablaComunidades.getSelectedRow() != -1) {
                             codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
@@ -713,98 +674,139 @@ public class Main extends javax.swing.JFrame {
                             }
                         }
                     }
-                    default -> System.out.println("Default");
+                    //SEDES
+                    case 2 -> System.out.println("SEDES MUNI OFI");
+                    //VOTOS MILLONES
+                    case 3 -> System.out.println("SEDES MUNI OFI");
+                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
                 }
 
             }
             //OFICIALES AUTONOMICAS
             case 2 -> {
-                if (TablaCartones.getSelectedRow() != -1) {
-                    switch (TablaCartones.getSelectedRow()) {
-                        case 0 -> {
-                            graficosController.loadAutonomicas();
-                        }
-                        case 1 -> System.out.println(132);
-                        case 2 -> System.out.println(2132);
-                        case 3 -> {
-                            String codCCAA = null;
-                            if (tablaComunidades.getSelectedRow() != -1) {
-                                codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
-                                graficosController.actualizaLateralMunicipales(codCCAA);
-                            }
-                            if (!lateralIn) {
-                                graficosController.entraLateralMunicipales();
-                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
-                                lateralIn = true;
-                            } else {
-                                if (codCCAA != null) {
-                                    graficosController.despliegaLateralMunicipales(codCCAA);
-                                }
-                            }
-                        }
-                        default -> System.out.println("Default");
-                    }
+                switch (TablaCartones.getSelectedRow()) {
+                    //RESULTADOS
+                    case 0 -> graficosController.loadAutonomicas();
+                    //PARTICIPACION
+                    case 1 -> graficosController.loadAutonomicas();
+                    //ARCO INDIVIDUAL
+                    case 2 -> graficosController.loadAutonomicas();
+                    //ARCO COMPARADO
+                    case 3 -> graficosController.loadAutonomicas();
+                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
                 }
+                switch (TablaFaldones.getSelectedRow()) {
+                    //INFERIOR
+                    //TODO: ENCADENA
+                    case 0 -> graficosController.entraFaldonAuto();
+                    //LATERAL
+                    case 1 -> {
+                        String codCCAA = null;
+                        if (tablaComunidades.getSelectedRow() != -1) {
+                            codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+                            graficosController.actualizaLateralAutonomicas(codCCAA);
+                        }
+                        if (!lateralIn) {
+                            graficosController.entraLateralAutonomicas();
+                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                            lateralIn = true;
+                        } else {
+                            if (codCCAA != null) {
+                                graficosController.despliegaLateralAutonomicas(codCCAA);
+                            }
+                        }
+                    }
+                    //SEDES
+                    case 2 -> System.out.println("SEDES AUTO OFI");
+                    //VOTOS MILLONES
+                    case 3 -> System.out.println("SEDES AUTO OFI");
+                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
+                }
+
             }
             //SONDEO MUNICIPALES
             case 3 -> {
-                if (TablaCartones.getSelectedRow() != -1) {
-                    switch (TablaCartones.getSelectedRow()) {
-                        case 0 -> {
-                            graficosController.loadMunicipales();
-                        }
-                        case 1 -> System.out.println(12);
-                        case 2 -> System.out.println(23);
-                        case 3 -> {
-                            String codCCAA = null;
-                            if (tablaComunidades.getSelectedRow() != -1) {
-                                codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
-                                graficosController.actualizaLateralMunicipales(codCCAA);
-                            }
-                            if (!lateralIn) {
-                                graficosController.entraLateralMunicipales();
-                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
-                                lateralIn = true;
-                            } else {
-                                if (codCCAA != null) {
-                                    graficosController.despliegaLateralMunicipales(codCCAA);
-                                }
-                            }
-                        }
-                        default -> System.out.println("Default");
-                    }
+                switch (TablaCartones.getSelectedRow()) {
+                    //RESULTADOS
+                    case 0 -> graficosController.loadMunicipales();
+                    //PARTICIPACION
+                    case 1 -> graficosController.loadMunicipales();
+                    //ARCO INDIVIDUAL
+                    case 2 -> graficosController.loadMunicipales();
+                    //ARCO COMPARADO
+                    case 3 -> graficosController.loadMunicipales();
+                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
                 }
+                switch (TablaFaldones.getSelectedRow()) {
+                    //INFERIOR
+                    //TODO: ENCADENA
+                    case 0 -> graficosController.entraFaldonAuto();
+                    //LATERAL
+                    case 1 -> {
+                        String codCCAA = null;
+                        if (tablaComunidades.getSelectedRow() != -1) {
+                            codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+                            graficosController.actualizaLateralMunicipales(codCCAA);
+                        }
+                        if (!lateralIn) {
+                            graficosController.entraLateralMunicipales();
+                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                            lateralIn = true;
+                        } else {
+                            if (codCCAA != null) {
+                                graficosController.despliegaLateralMunicipales(codCCAA);
+                            }
+                        }
+                    }
+                    //SEDES
+                    case 2 -> System.out.println("SEDES MUNI OFI");
+                    //VOTOS MILLONES
+                    case 3 -> System.out.println("SEDES MUNI OFI");
+                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
+                }
+
             }
             //SONDEO AUTONOMICAS
             case 4 -> {
-                if (TablaCartones.getSelectedRow() != -1) {
-                    switch (TablaCartones.getSelectedRow()) {
-                        case 0 -> {
-                            graficosController.loadAutonomicas();
+                switch (TablaCartones.getSelectedRow()) {
+                    //RESULTADOS
+                    case 0 -> graficosController.loadAutonomicas();
+                    //PARTICIPACION
+                    case 1 -> graficosController.loadAutonomicas();
+                    //ARCO INDIVIDUAL
+                    case 2 -> graficosController.loadAutonomicas();
+                    //ARCO COMPARADO
+                    case 3 -> graficosController.loadAutonomicas();
+                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
+                }
+                switch (TablaFaldones.getSelectedRow()) {
+                    //INFERIOR
+                    //TODO: ENCADENA
+                    case 0 -> graficosController.entraFaldonAuto();
+                    //LATERAL
+                    case 1 -> {
+                        String codCCAA = null;
+                        if (tablaComunidades.getSelectedRow() != -1) {
+                            codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+                            graficosController.actualizaLateralAutonomicas(codCCAA);
                         }
-                        case 1 -> System.out.println(1);
-                        case 2 -> System.out.println(21);
-                        case 3 -> {
-                            String codCCAA = null;
-                            if (tablaComunidades.getSelectedRow() != -1) {
-                                codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
-                                graficosController.actualizaLateralMunicipales(codCCAA);
-                            }
-                            if (!lateralIn) {
-                                graficosController.entraLateralMunicipales();
-                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
-                                lateralIn = true;
-                            } else {
-                                if (codCCAA != null) {
-                                    graficosController.despliegaLateralMunicipales(codCCAA);
-                                }
+                        if (!lateralIn) {
+                            graficosController.entraLateralAutonomicas();
+                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                            lateralIn = true;
+                        } else {
+                            if (codCCAA != null) {
+                                graficosController.despliegaLateralAutonomicas(codCCAA);
                             }
                         }
-                        default -> System.out.println("Default");
                     }
+                    //SEDES
+                    case 2 -> System.out.println("SEDES AUTO OFI");
+                    //VOTOS MILLONES
+                    case 3 -> System.out.println("SEDES AUTO OFI");
+                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
                 }
             }
-            default -> System.out.println("Default");
         }
     }
 
@@ -851,12 +853,15 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void btnReplegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReplegarActionPerformed
+        String codCCAA = null;
+        if (tablaComunidades.getSelectedRow() != -1) {
+            codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+        }
         if (tipoElecciones == 2 || tipoElecciones == 4) {
-            String codCCAA = null;
-            if (tablaComunidades.getSelectedRow() != -1) {
-                codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
-                graficosController.repliegaLateralAutonomicas(codCCAA);
-            }
+            graficosController.repliegaLateralAutonomicas(codCCAA);
+        }
+        if (tipoElecciones == 1 || tipoElecciones == 3) {
+            graficosController.repliegaLateralMunicipales(codCCAA);
         }
     }//GEN-LAST:event_btnReplegarActionPerformed
 
