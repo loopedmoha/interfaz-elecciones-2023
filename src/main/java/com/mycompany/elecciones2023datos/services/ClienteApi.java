@@ -8,7 +8,7 @@ public class ClienteApi {
     private static IClienteApi clienteApi;
 
     private ClienteApi() {
-        retrofit = new Retrofit.Builder().baseUrl("http://10.10.55.220:9090").build();
+        retrofit = new Retrofit.Builder().baseUrl("http://localhost:9090").build();
         clienteApi = retrofit.create(IClienteApi.class);
     }
 
