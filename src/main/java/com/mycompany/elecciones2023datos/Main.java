@@ -153,7 +153,7 @@ public class Main extends javax.swing.JFrame {
 
         Tablas();
 
-        ListSelectionModel selectionModel = TablaGraficos.getSelectionModel();
+        ListSelectionModel selectionModel = TablaCartones.getSelectionModel();
         selectionModel.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
@@ -170,7 +170,7 @@ public class Main extends javax.swing.JFrame {
                 if (!e.getValueIsAdjusting()) {
                     tablaComunidades.clearSelection();
                     tablaMunicipios.clearSelection();
-                    TablaGraficos.clearSelection();
+                    TablaCartones.clearSelection();
                 }
             }
         });
@@ -197,7 +197,7 @@ public class Main extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaComunidades = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        TablaGraficos = new javax.swing.JTable();
+        TablaCartones = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaMunicipios = new javax.swing.JTable();
         btnEntra = new javax.swing.JButton();
@@ -283,7 +283,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        TablaGraficos.setModel(new javax.swing.table.DefaultTableModel(
+        TablaCartones.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
                         {"Mapa Electoral"},
                         {"Faldon Mapa"},
@@ -293,14 +293,14 @@ public class Main extends javax.swing.JFrame {
                         "CARTONES"
                 }
         ));
-        TablaGraficos.addHierarchyListener(new java.awt.event.HierarchyListener() {
+        TablaCartones.addHierarchyListener(new java.awt.event.HierarchyListener() {
             public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
-                TablaGraficosHierarchyChanged(evt);
+                TablaCartonesHierarchyChanged(evt);
             }
         });
-        jScrollPane3.setViewportView(TablaGraficos);
-        if (TablaGraficos.getColumnModel().getColumnCount() > 0) {
-            TablaGraficos.getColumnModel().getColumn(0).setResizable(false);
+        jScrollPane3.setViewportView(TablaCartones);
+        if (TablaCartones.getColumnModel().getColumnCount() > 0) {
+            TablaCartones.getColumnModel().getColumn(0).setResizable(false);
         }
 
         tablaMunicipios.setModel(new javax.swing.table.DefaultTableModel(
@@ -645,54 +645,87 @@ public class Main extends javax.swing.JFrame {
         switch (tipoElecciones) {
             //OFICIALES MUNICIPALES
             case 1 -> {
-                if (TablaGraficos.getSelectedRow() != -1) {
-                    switch (TablaGraficos.getSelectedRow()) {
-                        //Cualquiera de Cartones por ahora
-                        case 0 -> {
-                            graficosController.loadMunicipales();
-                        }
-                        case 1 -> System.out.println(1);
-                        //Faldon inferior
-                        case 2 -> {
-                            if (tablaMunicipios.getSelectedRow() != -1) {
+                switch (TablaCartones.getSelectedRow()) {
+                    //Cualquiera de Cartones por ahora
+                    case 0 -> graficosController.loadMunicipales();
+                    case 1 -> System.out.println(1);
+                    //Faldon inferior
+                    case 2 -> {
+                        if (tablaMunicipios.getSelectedRow() != -1) {
 
-                            } else if (tablaComunidades.getSelectedRow() != -1) {
+                        } else if (tablaComunidades.getSelectedRow() != -1) {
 
-                            } else {
-                                graficosController.entraFaldonAuto();
-                            }
+                        } else {
+                            graficosController.entraFaldonAuto();
+                        }
 
-                        }
-                        //Faldon lateral
-                        case 3 -> {
-                            String codCCAA = null;
-                            if (tablaComunidades.getSelectedRow() != -1) {
-                                codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
-                                graficosController.actualizaLateralMunicipales(codCCAA);
-                            }
-                            if (!lateralIn) {
-                                graficosController.entraLateralMunicipales();
-                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
-                                lateralIn = true;
-                            } else {
-                                if (codCCAA != null) {
-                                    graficosController.despliegaLateralMunicipales(codCCAA);
-                                }
-                            }
-                        }
-                        default -> System.out.println("Default");
                     }
+                    //Faldon lateral
+                    case 3 -> {
+                        String codCCAA = null;
+                        if (tablaComunidades.getSelectedRow() != -1) {
+                            codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+                            graficosController.actualizaLateralMunicipales(codCCAA);
+                        }
+                        if (!lateralIn) {
+                            graficosController.entraLateralMunicipales();
+                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                            lateralIn = true;
+                        } else {
+                            if (codCCAA != null) {
+                                graficosController.despliegaLateralMunicipales(codCCAA);
+                            }
+                        }
+                    }
+                    default -> System.out.println("Default");
                 }
+                switch (TablaFaldones.getSelectedRow()) {
+                    //Cualquiera de Cartones por ahora
+                    case 0 -> {
+                        graficosController.loadMunicipales();
+                    }
+                    case 1 -> System.out.println(1);
+                    //Faldon inferior
+                    case 2 -> {
+                        if (tablaMunicipios.getSelectedRow() != -1) {
+
+                        } else if (tablaComunidades.getSelectedRow() != -1) {
+
+                        } else {
+                            graficosController.entraFaldonAuto();
+                        }
+
+                    }
+                    //Faldon lateral
+                    case 3 -> {
+                        String codCCAA = null;
+                        if (tablaComunidades.getSelectedRow() != -1) {
+                            codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+                            graficosController.actualizaLateralMunicipales(codCCAA);
+                        }
+                        if (!lateralIn) {
+                            graficosController.entraLateralMunicipales();
+                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                            lateralIn = true;
+                        } else {
+                            if (codCCAA != null) {
+                                graficosController.despliegaLateralMunicipales(codCCAA);
+                            }
+                        }
+                    }
+                    default -> System.out.println("Default");
+                }
+
             }
             //OFICIALES AUTONOMICAS
             case 2 -> {
-                if (TablaGraficos.getSelectedRow() != -1) {
-                    switch (TablaGraficos.getSelectedRow()) {
+                if (TablaCartones.getSelectedRow() != -1) {
+                    switch (TablaCartones.getSelectedRow()) {
                         case 0 -> {
                             graficosController.loadAutonomicas();
                         }
-                        case 1 -> System.out.println(1);
-                        case 2 -> System.out.println(2);
+                        case 1 -> System.out.println(132);
+                        case 2 -> System.out.println(2132);
                         case 3 -> {
                             String codCCAA = null;
                             if (tablaComunidades.getSelectedRow() != -1) {
@@ -715,13 +748,13 @@ public class Main extends javax.swing.JFrame {
             }
             //SONDEO MUNICIPALES
             case 3 -> {
-                if (TablaGraficos.getSelectedRow() != -1) {
-                    switch (TablaGraficos.getSelectedRow()) {
+                if (TablaCartones.getSelectedRow() != -1) {
+                    switch (TablaCartones.getSelectedRow()) {
                         case 0 -> {
                             graficosController.loadMunicipales();
                         }
-                        case 1 -> System.out.println(1);
-                        case 2 -> System.out.println(2);
+                        case 1 -> System.out.println(12);
+                        case 2 -> System.out.println(23);
                         case 3 -> {
                             String codCCAA = null;
                             if (tablaComunidades.getSelectedRow() != -1) {
@@ -744,13 +777,13 @@ public class Main extends javax.swing.JFrame {
             }
             //SONDEO AUTONOMICAS
             case 4 -> {
-                if (TablaGraficos.getSelectedRow() != -1) {
-                    switch (TablaGraficos.getSelectedRow()) {
+                if (TablaCartones.getSelectedRow() != -1) {
+                    switch (TablaCartones.getSelectedRow()) {
                         case 0 -> {
                             graficosController.loadAutonomicas();
                         }
                         case 1 -> System.out.println(1);
-                        case 2 -> System.out.println(2);
+                        case 2 -> System.out.println(21);
                         case 3 -> {
                             String codCCAA = null;
                             if (tablaComunidades.getSelectedRow() != -1) {
@@ -818,15 +851,21 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void btnReplegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReplegarActionPerformed
-        // TODO add your handling code here:
+        if (tipoElecciones == 2 || tipoElecciones == 4) {
+            String codCCAA = null;
+            if (tablaComunidades.getSelectedRow() != -1) {
+                codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+                graficosController.repliegaLateralAutonomicas(codCCAA);
+            }
+        }
     }//GEN-LAST:event_btnReplegarActionPerformed
 
     private void btnSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleActionPerformed
         switch (tipoElecciones) {
             //OFICIALES MUNICIPALES
             case 1 -> {
-                if (TablaGraficos.getSelectedRow() != -1) {
-                    switch (TablaGraficos.getSelectedRow()) {
+                if (TablaCartones.getSelectedRow() != -1) {
+                    switch (TablaCartones.getSelectedRow()) {
                         case 0 -> System.out.println(0);
                         case 1 -> System.out.println(1);
                         case 2 -> {
@@ -849,8 +888,8 @@ public class Main extends javax.swing.JFrame {
             }
             //OFICIALES AUTONOMICAS
             case 2 -> {
-                if (TablaGraficos.getSelectedRow() != -1) {
-                    switch (TablaGraficos.getSelectedRow()) {
+                if (TablaCartones.getSelectedRow() != -1) {
+                    switch (TablaCartones.getSelectedRow()) {
                         case 0 -> System.out.println(0);
                         case 1 -> System.out.println(1);
                         case 2 -> {
@@ -873,8 +912,8 @@ public class Main extends javax.swing.JFrame {
             }
             //SONDEO MUNICIPALES
             case 3 -> {
-                if (TablaGraficos.getSelectedRow() != -1) {
-                    switch (TablaGraficos.getSelectedRow()) {
+                if (TablaCartones.getSelectedRow() != -1) {
+                    switch (TablaCartones.getSelectedRow()) {
                         case 0 -> System.out.println(0);
                         case 1 -> System.out.println(1);
                         case 2 -> {
@@ -897,8 +936,8 @@ public class Main extends javax.swing.JFrame {
             }
             //SONDEO AUTONOMICAS
             case 4 -> {
-                if (TablaGraficos.getSelectedRow() != -1) {
-                    switch (TablaGraficos.getSelectedRow()) {
+                if (TablaCartones.getSelectedRow() != -1) {
+                    switch (TablaCartones.getSelectedRow()) {
                         case 0 -> System.out.println(0);
                         case 1 -> System.out.println(1);
                         case 2 -> {
@@ -947,9 +986,9 @@ public class Main extends javax.swing.JFrame {
         resaltarBoton(btnDatosMunicipales);
     }//GEN-LAST:event_btnDatosMunicipalesActionPerformed
 
-    private void TablaGraficosHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_TablaGraficosHierarchyChanged
+    private void TablaCartonesHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_TablaCartonesHierarchyChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_TablaGraficosHierarchyChanged
+    }//GEN-LAST:event_TablaCartonesHierarchyChanged
 
     private void btnAvance1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvance1ActionPerformed
         // TODO add your handling code here:
@@ -1033,7 +1072,7 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaFaldones;
-    private javax.swing.JTable TablaGraficos;
+    private javax.swing.JTable TablaCartones;
     private javax.swing.JButton btnAvance1;
     private javax.swing.JButton btnAvance2;
     private javax.swing.JButton btnAvance3;
