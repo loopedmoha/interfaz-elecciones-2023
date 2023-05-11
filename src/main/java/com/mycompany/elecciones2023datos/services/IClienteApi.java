@@ -9,8 +9,26 @@ import retrofit2.http.Path;
 import java.util.List;
 
 public interface IClienteApi {
+
+    //Leer las autonomias
     @GET("/autonomicas/circunscripciones/autonomias")
-    Call<List<Circunscripcion>> getAllCircunscripciones();
+    Call<List<Circunscripcion>> getAllAutonomiasAuto();
+    @GET("/municipales/circunscripciones/autonomias")
+    Call<List<Circunscripcion>> getAllAutonomiasMuni();
+
+
+    //Leer autonomicas oficial y municipales oficial
+    @GET("/autonomicas/carmen/oficial/{codigo}/data")
+    Call<CarmenDTO> getCarmenDtoOficialAuto(@Path("codigo") String codigo);
+    @GET("/municipales/carmen/oficial/{codigo}/data")
+    Call<CarmenDTO> getCarmenDtoOficialMuni(@Path("codigo") String codigo);
+
+    //Leer municipales oficial y autonomicas oficial
+    @GET("/autonomicas/carmen/sondeo/{codigo}/data")
+    Call<CarmenDTO> getCarmenDtoSondeoAuto(@Path("codigo") String codigo);
+
+    @GET("/municipales/carmen/sondeo/{codigo}/data")
+    Call<CarmenDTO> getCarmenDtoSondeoMuni(@Path("codigo") String codigo);
 
     @GET("/autonomicas/circunscripciones/autonomias/{codigo}")
     Call<List<Circunscripcion>> getCircunscripcionesByAutonomia(@Path("codigo") String codigo);
@@ -22,8 +40,6 @@ public interface IClienteApi {
     @GET("/municipales/circunscripciones/municipios/{codigo}")
     Call<List<Circunscripcion>> getMunicipiosByCodigo(@Path("codigo") String codigo);
 
-    @GET("/municipales/carmen/oficial/{codigo}/data")
-    Call<CarmenDTO> getCarmenDtoOficial(@Path("codigo") String codigo);
 
     @GET("/municipales/carmen/sondeo/{codigo}/data")
     Call<CarmenDTO> getCarmenDtoSondeo(@Path("codigo") String codigo);
