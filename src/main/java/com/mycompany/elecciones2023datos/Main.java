@@ -38,8 +38,9 @@ public class Main extends javax.swing.JFrame {
 
     GraficosController graficosController = new GraficosController();
 
-    private boolean lateralIn = false;
 
+    private boolean oficiales = true;
+    private boolean lateralIn = false;
     private boolean inferiorAutoIn = false;
     private boolean inferiorMuniIn = false;
 
@@ -201,7 +202,11 @@ public class Main extends javax.swing.JFrame {
                     loadSelectedAutonomicas((String) tablaComunidades.getValueAt(selectedRow, 0));
                     codAutonomia = nombreCodigo.get(tablaComunidades.getValueAt(selectedRow, 0));
                     //TODO:Hacer un switch aqui para distinguir con qué datos actualizamos: Oficiales A o M, Sondeo A o M
-                    graficosController.selectedAutonomicas(codAutonomia);
+                    if (oficiales) {
+                        graficosController.selectedAutonomicasOficiales(codAutonomia);
+                    } else {
+                        graficosController.selectedAutonomicasSondeo(codAutonomia);
+                    }
                 }
                 showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
             } else {
@@ -210,7 +215,11 @@ public class Main extends javax.swing.JFrame {
                     loadSelectedMunicipales((String) tablaComunidades.getValueAt(selectedRow, 0));
                     codAutonomia = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
                     //TODO:Hacer un switch aqui para distinguir con qué datos actualizamos: Oficiales A o M, Sondeo A o M
-                    graficosController.selectedMunicipales(codAutonomia);
+                    if (oficiales) {
+                        graficosController.selectedMunicipalesOficiales(codAutonomia);
+                    } else {
+                        graficosController.selectedMunicipalesSondeo(codAutonomia);
+                    }
                 }
                 showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
 
@@ -360,14 +369,23 @@ public class Main extends javax.swing.JFrame {
                 String nombreMunicipio = (String) tablaMunicipios.getValueAt(selectedRow, 0);
                 String codMunicipio = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
                 if (((String) Objects.requireNonNull(comboDatos.getSelectedItem())).endsWith("AUTONOMICAS")) {
-                    graficosController.selectedAutonomicas(codMunicipio);
+                    if (oficiales) {
+                        graficosController.selectedAutonomicasOficiales(codMunicipio);
+                    } else {
+                        graficosController.selectedAutonomicasSondeo(codMunicipio);
+                    }
                 } else {
-                    graficosController.selectedMunicipales(codMunicipio);
+                    if (oficiales) {
+                        graficosController.selectedMunicipalesOficiales(codMunicipio);
+                    } else {
+                        graficosController.selectedMunicipalesSondeo(codMunicipio);
+                    }
                 }
                 showDataTableMunicipio(nombreMunicipio);
             }
         });
     }
+
 
     private void loadSelectedMunicipales(String cod) {
         DefaultTableModel tableModel = new DefaultTableModel();
@@ -379,9 +397,28 @@ public class Main extends javax.swing.JFrame {
 
         JScrollPane scrollPane = new JScrollPane(tablaMunicipios);
         tablaMunicipios = new JTable(tableModel);
-        tablaMunicipios.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
         jScrollPane4.setViewportView(tablaMunicipios);
+        tablaMunicipios.getSelectionModel().addListSelectionListener(e -> {
+            int selectedRow = tablaMunicipios.getSelectedRow();
+            if (selectedRow != -1) {
+                String nombreMunicipio = (String) tablaMunicipios.getValueAt(selectedRow, 0);
+                String codMunicipio = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
+                if (((String) Objects.requireNonNull(comboDatos.getSelectedItem())).endsWith("AUTONOMICAS")) {
+                    if (oficiales) {
+                        graficosController.selectedAutonomicasOficiales(codMunicipio);
+                    } else {
+                        graficosController.selectedAutonomicasSondeo(codMunicipio);
+                    }
+                } else {
+                    if (oficiales) {
+                        graficosController.selectedMunicipalesOficiales(codMunicipio);
+                    } else {
+                        graficosController.selectedMunicipalesSondeo(codMunicipio);
+                    }
+                }
+                showDataTableMunicipio(nombreMunicipio);
+            }
+        });
     }
 
     private void entraActionPerformed(java.awt.event.ActionEvent evt) {
@@ -742,7 +779,11 @@ public class Main extends javax.swing.JFrame {
 
     private void comboDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDatosActionPerformed
         // TODO add your handling code here:
-
+        if (((String) Objects.requireNonNull(comboDatos.getSelectedItem())).startsWith("SONDEO")) {
+            oficiales = false;
+        } else {
+            oficiales = false;
+        }
        /* String selectedOption = comboDatos.getSelectedItem().toString();
 
         if (selectedOption.equals("SONDEO AUTONÓMICAS") || selectedOption.equals("SONDEO MUNICIPALES")) {

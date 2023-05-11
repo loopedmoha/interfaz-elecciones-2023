@@ -93,10 +93,18 @@ public interface IClienteApi {
     @GET("/municipales/load")
     Call<String> loadMunicipales();
 
-    @GET("/autonomicas/circunscripciones/selected/{codigo}")
-    Call<String> selectedAutonomicas(@Path("codigo") String codigo);
 
-    @GET("/municipales/circunscripciones/selected/{codigo}")
-    Call<String> selectedMunicipales(@Path("codigo") String codigo);
+    //DESCARGA DE ARCHIVOS
+    @GET("/autonomicas/circunscripciones/selected/oficial/{codigo}")
+    Call<String> selectedAutonomicasOficiales(@Path("codigo") String codigo);
+
+    @GET("/autonomicas/circunscripciones/selected/sondeo/{codigo}")
+    Call<String> selectedAutonomicasSondeo(@Path("codigo") String codigo);
+
+    @GET("/municipales/circunscripciones/selected/oficial/{codigo}")
+    Call<String> selectedMunicipalesOficiales(@Path("codigo") String codigo);
+
+    @GET("/municipales/circunscripciones/selected/sondeo/{codigo}")
+    Call<String> selectedMunicipalesSondeo(@Path("codigo") String codigo);
 
 }

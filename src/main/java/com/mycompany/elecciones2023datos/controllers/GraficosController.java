@@ -130,17 +130,33 @@ public class GraficosController {
         }
     }
 
-    public void selectedAutonomicas(String codigo) {
+    public void selectedAutonomicasOficiales(String codigo) {
         try {
-            clienteApi.selectedAutonomicas(codigo).execute();
+            clienteApi.selectedAutonomicasOficiales(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void selectedMunicipales(String codigo) {
+    public void selectedAutonomicasSondeo(String codigo) {
         try {
-            clienteApi.selectedMunicipales(codigo).execute();
+            clienteApi.selectedAutonomicasSondeo(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void selectedMunicipalesOficiales(String codigo) {
+        try {
+            clienteApi.selectedMunicipalesOficiales(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void selectedMunicipalesSondeo(String codigo) {
+        try {
+            clienteApi.selectedMunicipalesSondeo(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
