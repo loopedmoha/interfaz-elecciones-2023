@@ -66,6 +66,8 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         });
+        
+        jLabel1.setIcon(new javax.swing.ImageIcon("Imagenes/iconconfig.png"));
     }
     
 
@@ -90,10 +92,10 @@ public class Main extends javax.swing.JFrame {
         TablaGraficos = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaMunicipios = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnEntra = new javax.swing.JButton();
+        btnSale = new javax.swing.JButton();
+        btnPactos = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnReplegar = new javax.swing.JButton();
         btnSondeoAutonomicas = new javax.swing.JButton();
@@ -189,34 +191,38 @@ public class Main extends javax.swing.JFrame {
             tablaMunicipios.getColumnModel().getColumn(0).setResizable(false);
         }
 
-        jButton1.setBackground(new java.awt.Color(153, 255, 153));
-        jButton1.setText("ENTRA");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnEntra.setBackground(new java.awt.Color(153, 255, 153));
+        btnEntra.setText("ENTRA");
+        btnEntra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnEntraActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 102, 102));
-        jButton2.setText("SALE");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnSale.setBackground(new java.awt.Color(255, 102, 102));
+        btnSale.setText("SALE");
+        btnSale.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnSaleActionPerformed(evt);
             }
         });
 
-        jButton4.setText("PACTOS");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnPactos.setText("PACTOS");
+        btnPactos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnPactosActionPerformed(evt);
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(153, 0, 51));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("RESET");
+        btnReset.setBackground(new java.awt.Color(153, 0, 51));
+        btnReset.setForeground(new java.awt.Color(255, 255, 255));
+        btnReset.setText("RESET");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Fede\\Documents\\NetBeansProjects\\Elecciones2023DATOS\\Imagenes\\iconconfig.png")); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
@@ -351,15 +357,15 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(btnAvance1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(13, 13, 13)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(207, 207, 207)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEntra, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSale, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
                         .addComponent(btnReplegar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnPactos, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -422,26 +428,26 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEntra, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSale, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPactos, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReplegar)
-                    .addComponent(jButton5))
+                    .addComponent(btnReset))
                 .addGap(27, 27, 27))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnEntraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraActionPerformed
         // TODO add your handling code here:
         
        
         
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnEntraActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnPactosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPactosActionPerformed
         // TODO add your handling code here:
         
         
@@ -463,7 +469,7 @@ public class Main extends javax.swing.JFrame {
         pactos.setLocation(screenWidth/4, screenHeight/2);
         pactos.setVisible(true);
         
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnPactosActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
@@ -490,9 +496,9 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReplegarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnSaleActionPerformed
 
     private void btnSondeoAutonomicasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSondeoAutonomicasActionPerformed
         // TODO add your handling code here:
@@ -534,6 +540,10 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         resaltarBotonAvances(btnAvance3);
     }//GEN-LAST:event_btnAvance3ActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnResetActionPerformed
 
     
     private void resaltarBoton(JButton boton) {
@@ -609,13 +619,13 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnAvance3;
     private javax.swing.JButton btnDatosAutonomicas;
     private javax.swing.JButton btnDatosMunicipales;
+    private javax.swing.JButton btnEntra;
+    private javax.swing.JButton btnPactos;
     private javax.swing.JButton btnReplegar;
+    private javax.swing.JButton btnReset;
+    private javax.swing.JButton btnSale;
     private javax.swing.JButton btnSondeoAutonomicas;
     private javax.swing.JButton btnSondeoMunicipales;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
