@@ -22,6 +22,7 @@ public class CpData {
     public static List<CpData> fromCarmenDto(CarmenDTO carmen) {
         List<CpData> res = new ArrayList<>();
         for (CpDTO cpDTO : carmen.getCpDTO()) {
+            System.out.println(cpDTO);
             res.add(new CpData(cpDTO.getCodigoPartido(),
                     cpDTO.getLiteralPartido(), cpDTO.getNumVotantes(), cpDTO.getEscanos_hasta(), cpDTO.getEscanos_desde()));
         }

@@ -70,7 +70,6 @@ public class Main extends javax.swing.JFrame {
             for (Circunscripcion autonomia : autonomias) {
                 var auxList = clienteApi.getCircunscripcionesByAutonomia(autonomia.getCodigo()).execute().body();
                 auxList.sort(Comparator.comparing(Circunscripcion::getCodigo));
-                System.out.println(auxList);
                 nombreCodigo.put(autonomia.getNombreCircunscripcion(), autonomia.getCodigo());
                 auxList.forEach(x -> {
                     nombreCodigoMunicipal.put(x.getNombreCircunscripcion(), x.getCodigo());
@@ -87,15 +86,14 @@ public class Main extends javax.swing.JFrame {
         try {
             var autonomias = clienteApi.getAllAutonomiasMuni().execute().body();
             autonomias.stream()
-                    .map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> cicunscripcionesMunicipales.put(auto, null));
+                    .map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> cicunscripcionesMunicipales.put(auto.replaceAll(" ", ""), null));
             for (Circunscripcion autonomia : autonomias) {
                 var auxList = clienteApi.getMunicipiosByCodigo(autonomia.getCodigo()).execute().body();
                 auxList.sort(Comparator.comparing(Circunscripcion::getCodigo));
-                System.out.println(auxList);
                 for (Circunscripcion circunscripcion : auxList) {
                     nombreCodigoMunicipal.put(circunscripcion.getNombreCircunscripcion(), circunscripcion.getCodigo());
                 }
-                cicunscripcionesMunicipales.put(autonomia.getNombreCircunscripcion(), auxList);
+                cicunscripcionesMunicipales.put(autonomia.getNombreCircunscripcion().replaceAll(" ", ""), auxList);
             }
 
 
@@ -119,6 +117,8 @@ public class Main extends javax.swing.JFrame {
             printData(datos);
         } catch (IOException e) {
             throw new RuntimeException(e);
+
+
         }
     }
 
@@ -181,6 +181,8 @@ public class Main extends javax.swing.JFrame {
 
     public void printData(List<CpData> list) {
         DefaultTableModel tableModel = new DefaultTableModel();
+
+
         for (CpData cpDTO : list) {
             Object[] rowData = {cpDTO.getCodigo(), cpDTO.getNombrePartido(),
                     cpDTO.getVoto(), "" + cpDTO.getEscanosHasta() + "/" + cpDTO.getEscanosDesde()};
@@ -200,6 +202,11 @@ public class Main extends javax.swing.JFrame {
         initCircunscripcionesMunicipales();
         initComponents();
         resaltarBoton(btnDatosMunicipales);
+        TablaCartones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        TablaFaldones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tablaDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tablaMunicipios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tablaComunidades.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 
         ListSelectionModel selectionModel = TablaCartones.getSelectionModel();
@@ -317,10 +324,45 @@ public class Main extends javax.swing.JFrame {
 
         tablaComunidades.getTableHeader().setResizingAllowed(false);
         jScrollPane2.setViewportView(tablaComunidades);
+
+        tablaComunidades.getSelectionModel().addListSelectionListener(e -> {
+            String codAutonomia;
+            if (tipoElecciones == 2 || tipoElecciones == 4) {
+                int selectedRow = tablaComunidades.getSelectedRow();
+                if (selectedRow != -1) {
+                    loadSelectedAutonomicas((String) tablaComunidades.getValueAt(selectedRow, 0));
+                    codAutonomia = nombreCodigo.get(tablaComunidades.getValueAt(selectedRow, 0));
+                    //TODO:Hacer un switch aqui para distinguir con qué datos actualizamos: Oficiales A o M, Sondeo A o M
+                    if (oficiales) {
+                        graficosController.selectedAutonomicasOficiales(codAutonomia);
+                    } else {
+                        graficosController.selectedAutonomicasSondeo(codAutonomia);
+                    }
+                    showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
+                }
+
+            } else {
+                int selectedRow = tablaComunidades.getSelectedRow();
+                if (selectedRow != -1) {
+                    loadSelectedMunicipales((String) tablaComunidades.getValueAt(selectedRow, 0));
+                    codAutonomia = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
+                    //TODO:Hacer un switch aqui para distinguir con qué datos actualizamos: Oficiales A o M, Sondeo A o M
+                    if (oficiales) {
+                        graficosController.selectedMunicipalesOficiales(codAutonomia);
+                    } else {
+                        graficosController.selectedMunicipalesSondeo(codAutonomia);
+                    }
+                    showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
+                }
+
+            }
+            if (tablaComunidades.getColumnModel().getColumnCount() > 0) {
+                tablaComunidades.getColumnModel().getColumn(0).setResizable(false);
+            }
+        });
         if (tablaComunidades.getColumnModel().getColumnCount() > 0) {
             tablaComunidades.getColumnModel().getColumn(0).setResizable(false);
         }
-
         TablaCartones.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
                         {"Resultados"},
@@ -359,7 +401,7 @@ public class Main extends javax.swing.JFrame {
                         {null}
                 },
                 new String[]{
-                        "MUNICIPIOS"
+                        "CIRCUNSCRIPCIONES"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
@@ -656,7 +698,8 @@ public class Main extends javax.swing.JFrame {
         tableModel.addColumn("MUNICIPIOS");
         var municipios = circunscripcionesAutonomicas.get(cod);
         for (Circunscripcion municipio : municipios) {
-            tableModel.addRow(new Object[]{municipio.getNombreCircunscripcion()});
+            if (!municipio.getCodigo().endsWith("00000"))
+                tableModel.addRow(new Object[]{municipio.getNombreCircunscripcion()});
         }
         JScrollPane scrollPane = new JScrollPane(tablaMunicipios);
         tablaMunicipios = new JTable(tableModel);
@@ -681,7 +724,12 @@ public class Main extends javax.swing.JFrame {
                         graficosController.selectedMunicipalesSondeo(codMunicipio);
                     }
                 }
-                showDataTableOficialMunicipio(nombreMunicipio);
+                switch (selectedDb) {
+                    case "DA" -> showDataTableOficialAutonomicas(nombreMunicipio);
+                    case "SA" -> showDataTableSondeoAutonomicas(nombreMunicipio);
+                    case "SM" -> showDataTableSondeoMunicipio(nombreMunicipio);
+                    default -> showDataTableOficialMunicipio(nombreMunicipio);
+                }
             }
         });
     }
@@ -690,10 +738,11 @@ public class Main extends javax.swing.JFrame {
     private void loadSelectedMunicipales(String cod) {
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.addColumn("MUNICIPIOS");
-        var municipios = cicunscripcionesMunicipales.get(cod);
+        var municipios = cicunscripcionesMunicipales.get(cod.replaceAll(" ", ""));
         municipios.sort(Comparator.comparing(Circunscripcion::getCodigo));
         for (Circunscripcion municipio : municipios) {
-            tableModel.addRow(new Object[]{municipio.getNombreCircunscripcion()});
+            if (!municipio.getCodigo().endsWith("00000"))
+                tableModel.addRow(new Object[]{municipio.getNombreCircunscripcion()});
         }
 
         JScrollPane scrollPane = new JScrollPane(tablaMunicipios);
