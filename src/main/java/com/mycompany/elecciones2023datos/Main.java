@@ -154,6 +154,7 @@ public class Main extends javax.swing.JFrame {
         initCircunscripcionesAutonomicas();
         initCircunscripcionesMunicipales();
         initComponents();
+        resaltarBoton(btnDatosMunicipales);
 
 
         ListSelectionModel selectionModel = TablaCartones.getSelectionModel();
@@ -715,7 +716,6 @@ public class Main extends javax.swing.JFrame {
                         String codCCAA = null;
                         if (tablaComunidades.getSelectedRow() != -1) {
                             codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
-
                             graficosController.actualizaLateralAutonomicas(codCCAA);
                         }
                         if (!lateralIn) {
@@ -761,7 +761,6 @@ public class Main extends javax.swing.JFrame {
                         String codCCAA = null;
                         if (tablaComunidades.getSelectedRow() != -1) {
                             codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
-
                             graficosController.actualizaLateralMunicipales(codCCAA);
                         }
                         if (!lateralIn) {
@@ -1149,8 +1148,8 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TablaFaldones;
     private javax.swing.JTable TablaCartones;
+    private javax.swing.JTable TablaFaldones;
     private javax.swing.JButton btnAvance1;
     private javax.swing.JButton btnAvance2;
     private javax.swing.JButton btnAvance3;
