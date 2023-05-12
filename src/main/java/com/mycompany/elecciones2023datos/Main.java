@@ -352,7 +352,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("src/main/resources/Imagenes/iconconfig.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("Imagenes/iconconfig.png")); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 try {
@@ -656,12 +656,15 @@ public class Main extends javax.swing.JFrame {
                     case 2 -> graficosController.loadMunicipales();
                     //ARCO COMPARADO
                     case 3 -> graficosController.loadMunicipales();
-                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
+                    default -> System.out.print("");
                 }
                 switch (TablaFaldones.getSelectedRow()) {
                     //INFERIOR
                     //TODO: ENCADENA
-                    case 0 -> graficosController.entraFaldonAuto();
+                    case 0 -> {
+                        graficosController.entraFaldonAuto();
+                        inferiorMuniIn = true;
+                    }
                     //LATERAL
                     case 1 -> {
                         String codCCAA = null;
@@ -683,7 +686,7 @@ public class Main extends javax.swing.JFrame {
                     case 2 -> System.out.println("SEDES MUNI OFI");
                     //VOTOS MILLONES
                     case 3 -> System.out.println("SEDES MUNI OFI");
-                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
+                    default -> System.out.print("");
                 }
 
             }
@@ -698,17 +701,21 @@ public class Main extends javax.swing.JFrame {
                     case 2 -> graficosController.loadAutonomicas();
                     //ARCO COMPARADO
                     case 3 -> graficosController.loadAutonomicas();
-                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
+                    default -> System.out.print("");
                 }
                 switch (TablaFaldones.getSelectedRow()) {
                     //INFERIOR
                     //TODO: ENCADENA
-                    case 0 -> graficosController.entraFaldonAuto();
+                    case 0 -> {
+                        graficosController.entraFaldonAuto();
+                        inferiorAutoIn = true;
+                    }
                     //LATERAL
                     case 1 -> {
                         String codCCAA = null;
                         if (tablaComunidades.getSelectedRow() != -1) {
                             codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+
                             graficosController.actualizaLateralAutonomicas(codCCAA);
                         }
                         if (!lateralIn) {
@@ -725,7 +732,7 @@ public class Main extends javax.swing.JFrame {
                     case 2 -> System.out.println("SEDES AUTO OFI");
                     //VOTOS MILLONES
                     case 3 -> System.out.println("SEDES AUTO OFI");
-                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
+                    default -> System.out.print("");
                 }
 
             }
@@ -740,17 +747,21 @@ public class Main extends javax.swing.JFrame {
                     case 2 -> graficosController.loadMunicipales();
                     //ARCO COMPARADO
                     case 3 -> graficosController.loadMunicipales();
-                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
+                    default -> System.out.print("");
                 }
                 switch (TablaFaldones.getSelectedRow()) {
                     //INFERIOR
                     //TODO: ENCADENA
-                    case 0 -> graficosController.entraFaldonAuto();
+                    case 0 -> {
+                        graficosController.entraFaldonAuto();
+                        inferiorMuniIn = true;
+                    }
                     //LATERAL
                     case 1 -> {
                         String codCCAA = null;
                         if (tablaComunidades.getSelectedRow() != -1) {
                             codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+
                             graficosController.actualizaLateralMunicipales(codCCAA);
                         }
                         if (!lateralIn) {
@@ -767,7 +778,7 @@ public class Main extends javax.swing.JFrame {
                     case 2 -> System.out.println("SEDES MUNI OFI");
                     //VOTOS MILLONES
                     case 3 -> System.out.println("SEDES MUNI OFI");
-                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
+                    default -> System.out.print("");
                 }
 
             }
@@ -782,12 +793,15 @@ public class Main extends javax.swing.JFrame {
                     case 2 -> graficosController.loadAutonomicas();
                     //ARCO COMPARADO
                     case 3 -> graficosController.loadAutonomicas();
-                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
+                    default -> System.out.print("");
                 }
                 switch (TablaFaldones.getSelectedRow()) {
                     //INFERIOR
                     //TODO: ENCADENA
-                    case 0 -> graficosController.entraFaldonAuto();
+                    case 0 -> {
+                        graficosController.entraFaldonAuto();
+                        inferiorAutoIn = true;
+                    }
                     //LATERAL
                     case 1 -> {
                         String codCCAA = null;
@@ -809,7 +823,7 @@ public class Main extends javax.swing.JFrame {
                     case 2 -> System.out.println("SEDES AUTO OFI");
                     //VOTOS MILLONES
                     case 3 -> System.out.println("SEDES AUTO OFI");
-                    default -> System.out.println("No se ha seleccionado ningún tipo de gráfico");
+                    default -> System.out.print("");
                 }
             }
         }
@@ -873,101 +887,152 @@ public class Main extends javax.swing.JFrame {
         switch (tipoElecciones) {
             //OFICIALES MUNICIPALES
             case 1 -> {
-                if (TablaCartones.getSelectedRow() != -1) {
-                    switch (TablaCartones.getSelectedRow()) {
-                        case 0 -> System.out.println(0);
-                        case 1 -> System.out.println(1);
-                        case 2 -> {
-                            if (inferiorAutoIn || inferiorMuniIn) {
-                                graficosController.saleFaldonAuto();
-                                inferiorAutoIn = false;
-                                inferiorMuniIn = false;
-                            }
+                switch (TablaCartones.getSelectedRow()) {
+                    //RESULTADOS
+                    case 0 -> System.out.println("Sale Resultados");
+                    //PARTICIPACION
+                    case 1 -> System.out.println("Sale Participación");
+                    //ARCO INDIVIDUAL
+                    case 2 -> System.out.println("Sale Arco principal");
+                    //ARCO COMPARADO
+                    case 3 -> System.out.println("Sale Arco comparativo");
+                    default -> System.out.print("");
+                }
+                switch (TablaFaldones.getSelectedRow()) {
+                    //INFERIOR
+                    case 0 -> {
+                        if (inferiorAutoIn || inferiorMuniIn) {
+                            graficosController.saleFaldonAuto();
+                            inferiorAutoIn = false;
+                            inferiorMuniIn = false;
                         }
-                        case 3 -> {
-                            if (lateralIn) {
-                                graficosController.saleLateralMunicipales();
-                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
-                                lateralIn = false;
-                            }
-                        }
-                        default -> System.out.println("Default");
                     }
+                    //LATERAL
+                    case 1 -> {
+                        if (lateralIn) {
+                            graficosController.saleLateralMunicipales();
+                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                            lateralIn = false;
+                        }
+                    }
+                    //VOTANTES
+                    case 2 -> System.out.println("Sale Arco principal");
+                    //SEDES
+                    case 3 -> System.out.println("Sale Arco comparativo");
+                    default -> System.out.print("");
                 }
             }
             //OFICIALES AUTONOMICAS
             case 2 -> {
-                if (TablaCartones.getSelectedRow() != -1) {
-                    switch (TablaCartones.getSelectedRow()) {
-                        case 0 -> System.out.println(0);
-                        case 1 -> System.out.println(1);
-                        case 2 -> {
-                            if (inferiorAutoIn || inferiorMuniIn) {
-                                graficosController.saleFaldonAuto();
-                                inferiorAutoIn = false;
-                                inferiorMuniIn = false;
-                            }
+                switch (TablaCartones.getSelectedRow()) {
+                    //RESULTADOS
+                    case 0 -> System.out.println("Sale Resultados");
+                    //PARTICIPACION
+                    case 1 -> System.out.println("Sale Participación");
+                    //ARCO INDIVIDUAL
+                    case 2 -> System.out.println("Sale Arco principal");
+                    //ARCO COMPARADO
+                    case 3 -> System.out.println("Sale Arco comparativo");
+                    default -> System.out.print("");
+                }
+                switch (TablaFaldones.getSelectedRow()) {
+                    //INFERIOR
+                    case 0 -> {
+                        if (inferiorAutoIn || inferiorMuniIn) {
+                            graficosController.saleFaldonAuto();
+                            inferiorAutoIn = false;
+                            inferiorMuniIn = false;
                         }
-                        case 3 -> {
-                            if (lateralIn) {
-                                graficosController.saleLateralMunicipales();
-                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
-                                lateralIn = false;
-                            }
-                        }
-                        default -> System.out.println("Default");
                     }
+                    //LATERAL
+                    case 1 -> {
+                        if (lateralIn) {
+                            graficosController.saleLateralAutonomicas();
+                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                            lateralIn = false;
+                        }
+                    }
+                    //VOTANTES
+                    case 2 -> System.out.println("Sale Arco principal");
+                    //SEDES
+                    case 3 -> System.out.println("Sale Arco comparativo");
+                    default -> System.out.print("");
                 }
             }
             //SONDEO MUNICIPALES
             case 3 -> {
-                if (TablaCartones.getSelectedRow() != -1) {
-                    switch (TablaCartones.getSelectedRow()) {
-                        case 0 -> System.out.println(0);
-                        case 1 -> System.out.println(1);
-                        case 2 -> {
-                            if (inferiorAutoIn || inferiorMuniIn) {
-                                graficosController.saleFaldonAuto();
-                                inferiorAutoIn = false;
-                                inferiorMuniIn = false;
-                            }
+                switch (TablaCartones.getSelectedRow()) {
+                    //RESULTADOS
+                    case 0 -> System.out.println("Sale Resultados");
+                    //PARTICIPACION
+                    case 1 -> System.out.println("Sale Participación");
+                    //ARCO INDIVIDUAL
+                    case 2 -> System.out.println("Sale Arco principal");
+                    //ARCO COMPARADO
+                    case 3 -> System.out.println("Sale Arco comparativo");
+                    default -> System.out.print("");
+                }
+                switch (TablaFaldones.getSelectedRow()) {
+                    //INFERIOR
+                    case 0 -> {
+                        if (inferiorAutoIn || inferiorMuniIn) {
+                            graficosController.saleFaldonAuto();
+                            inferiorAutoIn = false;
+                            inferiorMuniIn = false;
                         }
-                        case 3 -> {
-                            if (lateralIn) {
-                                graficosController.saleLateralMunicipales();
-                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
-                                lateralIn = false;
-                            }
-                        }
-                        default -> System.out.println("Default");
                     }
+                    //LATERAL
+                    case 1 -> {
+                        if (lateralIn) {
+                            graficosController.saleLateralMunicipales();
+                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                            lateralIn = false;
+                        }
+                    }
+                    //VOTANTES
+                    case 2 -> System.out.println("Sale Arco principal");
+                    //SEDES
+                    case 3 -> System.out.println("Sale Arco comparativo");
+                    default -> System.out.print("");
                 }
             }
             //SONDEO AUTONOMICAS
             case 4 -> {
-                if (TablaCartones.getSelectedRow() != -1) {
-                    switch (TablaCartones.getSelectedRow()) {
-                        case 0 -> System.out.println(0);
-                        case 1 -> System.out.println(1);
-                        case 2 -> {
-                            if (inferiorAutoIn || inferiorMuniIn) {
-                                graficosController.saleFaldonAuto();
-                                inferiorAutoIn = false;
-                                inferiorMuniIn = false;
-                            }
+                switch (TablaCartones.getSelectedRow()) {
+                    //RESULTADOS
+                    case 0 -> System.out.println("Sale Resultados");
+                    //PARTICIPACION
+                    case 1 -> System.out.println("Sale Participación");
+                    //ARCO INDIVIDUAL
+                    case 2 -> System.out.println("Sale Arco principal");
+                    //ARCO COMPARADO
+                    case 3 -> System.out.println("Sale Arco comparativo");
+                    default -> System.out.print("");
+                }
+                switch (TablaFaldones.getSelectedRow()) {
+                    //INFERIOR
+                    case 0 -> {
+                        if (inferiorAutoIn || inferiorMuniIn) {
+                            graficosController.saleFaldonAuto();
+                            inferiorAutoIn = false;
+                            inferiorMuniIn = false;
                         }
-                        case 3 -> {
-                            if (lateralIn) {
-                                graficosController.saleLateralMunicipales();
-                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
-                                lateralIn = false;
-                            }
-                        }
-                        default -> System.out.println("Default");
                     }
+                    //LATERAL
+                    case 1 -> {
+                        if (lateralIn) {
+                            graficosController.saleLateralAutonomicas();
+                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                            lateralIn = false;
+                        }
+                    }
+                    //VOTANTES
+                    case 2 -> System.out.println("Sale Arco principal");
+                    //SEDES
+                    case 3 -> System.out.println("Sale Arco comparativo");
+                    default -> System.out.print("");
                 }
             }
-            default -> System.out.println("Default");
         }
     }//GEN-LAST:event_btnSaleActionPerformed
 
