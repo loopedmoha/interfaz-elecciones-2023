@@ -38,10 +38,10 @@ public class Main extends javax.swing.JFrame {
     Retrofit retrofit;
     IClienteApi clienteApi;
 
-    Map<String, List<Circunscripcion>> circunscripcionesAutonomicas = new HashMap<>();
-    Map<String, List<Circunscripcion>> cicunscripcionesMunicipales = new HashMap<>();
-    Map<String, String> nombreCodigo = new HashMap<>();
-    Map<String, String> nombreCodigoMunicipal = new HashMap<>();
+    TreeMap<String, List<Circunscripcion>> circunscripcionesAutonomicas = new TreeMap<>();
+    TreeMap<String, List<Circunscripcion>> cicunscripcionesMunicipales = new TreeMap<>();
+    TreeMap<String, String> nombreCodigo = new TreeMap<>();
+    TreeMap<String, String> nombreCodigoMunicipal = new TreeMap<>();
 
     String selectedDb = "";
 
@@ -68,11 +68,14 @@ public class Main extends javax.swing.JFrame {
                     .map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> circunscripcionesAutonomicas.put(auto, null));
             for (Circunscripcion autonomia : autonomias) {
                 var auxList = clienteApi.getCircunscripcionesByAutonomia(autonomia.getCodigo()).execute().body();
+                auxList.sort(Comparator.comparing(Circunscripcion::getCodigo));
+                System.out.println(auxList);
                 nombreCodigo.put(autonomia.getNombreCircunscripcion(), autonomia.getCodigo());
                 auxList.forEach(x -> {
                     nombreCodigoMunicipal.put(x.getNombreCircunscripcion(), x.getCodigo());
                 });
                 circunscripcionesAutonomicas.put(autonomia.getNombreCircunscripcion(), auxList);
+
             }
         } catch (IOException e) {
             System.err.println(e.getMessage());
@@ -86,6 +89,8 @@ public class Main extends javax.swing.JFrame {
                     .map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> cicunscripcionesMunicipales.put(auto, null));
             for (Circunscripcion autonomia : autonomias) {
                 var auxList = clienteApi.getMunicipiosByCodigo(autonomia.getCodigo()).execute().body();
+                auxList.sort(Comparator.comparing(Circunscripcion::getCodigo));
+                System.out.println(auxList);
                 for (Circunscripcion circunscripcion : auxList) {
                     nombreCodigoMunicipal.put(circunscripcion.getNombreCircunscripcion(), circunscripcion.getCodigo());
                 }
@@ -670,6 +675,7 @@ public class Main extends javax.swing.JFrame {
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.addColumn("MUNICIPIOS");
         var municipios = cicunscripcionesMunicipales.get(cod);
+        municipios.sort(Comparator.comparing(Circunscripcion::getCodigo));
         for (Circunscripcion municipio : municipios) {
             tableModel.addRow(new Object[]{municipio.getNombreCircunscripcion()});
         }
@@ -700,7 +706,6 @@ public class Main extends javax.swing.JFrame {
                     case "SA" -> showDataTableSondeoAutonomicas(nombreMunicipio);
                     case "SM" -> showDataTableSondeoMunicipio(nombreMunicipio);
                     default -> showDataTableOficialMunicipio(nombreMunicipio);
-
                 }
             }
         });
