@@ -16,9 +16,11 @@ import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -114,7 +116,9 @@ public class Main extends javax.swing.JFrame {
         }
     }
 
-    public void showDataTableMunicipio(String nombre) {
+    public void showDataTableOficialMunicipio(String nombre) {
+        var a = nombreCodigoMunicipal.get(nombre);
+
         try {
             CarmenDTO carmenDTO = clienteApi.getCarmenDtoOficialMuni(nombreCodigoMunicipal.get(nombre)).execute().body();
             System.out.println(carmenDTO);
@@ -123,6 +127,49 @@ public class Main extends javax.swing.JFrame {
             printData(datos);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void showDataTableSondeoMunicipio(String nombre) {
+        var a = nombreCodigoMunicipal.get(nombre);
+
+        try {
+            CarmenDTO carmenDTO = clienteApi.getCarmenDtoSondeoMuni(nombreCodigoMunicipal.get(nombre)).execute().body();
+            System.out.println(carmenDTO);
+            assert carmenDTO != null;
+            List<CpData> datos = CpData.fromCarmenDto(carmenDTO);
+            printData(datos);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void showDataTableOficialAutonomicas(String nombre) {
+        try {
+            var a = nombreCodigoMunicipal.get(nombre);
+            CarmenDTO carmenDTO = clienteApi.getCarmenDtoOficialAuto(nombreCodigoMunicipal.get(nombre)).execute().body();
+            System.out.println(carmenDTO);
+            assert carmenDTO != null;
+            List<CpData> datos = CpData.fromCarmenDto(carmenDTO);
+            printData(datos);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+
+        }
+    }
+
+    public void showDataTableSondeoAutonomicas(String nombre) {
+        var a = nombreCodigoMunicipal.get(nombre);
+
+        try {
+            CarmenDTO carmenDTO = clienteApi.getCarmenDtoSondeoAuto(nombreCodigoMunicipal.get(nombre)).execute().body();
+            System.out.println(carmenDTO);
+            assert carmenDTO != null;
+            List<CpData> datos = CpData.fromCarmenDto(carmenDTO);
+            printData(datos);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+
         }
     }
 
@@ -177,7 +224,15 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("Imagenes/iconconfig.png"));
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream("Imagenes/iconconfig.png");
+        ImageIcon icon = null;
+        try {
+            icon = new ImageIcon(ImageIO.read(inputStream));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        jLabel1.setIcon(icon);
     }
 
     /**
@@ -602,7 +657,7 @@ public class Main extends javax.swing.JFrame {
                         graficosController.selectedMunicipalesSondeo(codMunicipio);
                     }
                 }
-                showDataTableMunicipio(nombreMunicipio);
+                showDataTableOficialMunicipio(nombreMunicipio);
             }
         });
     }
@@ -637,7 +692,13 @@ public class Main extends javax.swing.JFrame {
                         graficosController.selectedMunicipalesSondeo(codMunicipio);
                     }
                 }
-                showDataTableMunicipio(nombreMunicipio);
+                switch (selectedDb) {
+                    case "DA" -> showDataTableOficialAutonomicas(nombreMunicipio);
+                    case "SA" -> showDataTableSondeoAutonomicas(nombreMunicipio);
+                    case "SM" -> showDataTableSondeoMunicipio(nombreMunicipio);
+                    default -> showDataTableOficialMunicipio(nombreMunicipio);
+
+                }
             }
         });
     }
