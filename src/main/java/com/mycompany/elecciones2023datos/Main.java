@@ -72,8 +72,6 @@ public class Main extends javax.swing.JFrame {
                 });
                 circunscripcionesAutonomicas.put(autonomia.getNombreCircunscripcion(), auxList);
             }
-
-
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
