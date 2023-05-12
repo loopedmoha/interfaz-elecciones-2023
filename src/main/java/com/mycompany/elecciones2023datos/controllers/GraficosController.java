@@ -130,6 +130,55 @@ public class GraficosController {
         }
     }
 
+    public void entraParticipacionAuto() {
+        try {
+            clienteApi.entraParticipacionAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraParticipacionMuni() {
+        try {
+            clienteApi.entraParticipacionMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleParticipacionAuto() {
+        try {
+            clienteApi.saleParticipacionAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleParticipacionMuni() {
+        try {
+            clienteApi.saleParticipacionMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void cambiaParticipacionAuto() {
+        try {
+            clienteApi.cambiaParticipacionAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void cambiaParticipacionMuni() {
+        try {
+            clienteApi.cambiaParticipacionMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public void selectedAutonomicasOficiales(String codigo) {
         try {
             clienteApi.selectedAutonomicasOficiales(codigo).execute();

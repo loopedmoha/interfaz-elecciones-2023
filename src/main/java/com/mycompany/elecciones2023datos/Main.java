@@ -53,6 +53,7 @@ public class Main extends javax.swing.JFrame {
     private boolean lateralIn = false;
     private boolean inferiorAutoIn = false;
     private boolean inferiorMuniIn = false;
+    private boolean participacionIn = false;
 
 
     /**
@@ -180,12 +181,6 @@ public class Main extends javax.swing.JFrame {
 
     public void printData(List<CpData> list) {
         DefaultTableModel tableModel = new DefaultTableModel();
-        tableModel.addColumn("CODIGO");
-        tableModel.addColumn("NOMBRE");
-        tableModel.addColumn("VOTANTES");
-        tableModel.addColumn("ESCANOS");
-
-
         for (CpData cpDTO : list) {
             Object[] rowData = {cpDTO.getCodigo(), cpDTO.getNombrePartido(),
                     cpDTO.getVoto(), "" + cpDTO.getEscanosHasta() + "/" + cpDTO.getEscanosDesde()};
@@ -307,6 +302,7 @@ public class Main extends javax.swing.JFrame {
             tablaDatos.getColumnModel().getColumn(0).setResizable(false);
             tablaDatos.getColumnModel().getColumn(1).setResizable(false);
             tablaDatos.getColumnModel().getColumn(2).setResizable(false);
+            tablaDatos.getColumnModel().getColumn(3).setResizable(false);
             tablaDatos.getColumnModel().getColumn(3).setResizable(false);
             tablaDatos.getColumnModel().getColumn(4).setResizable(false);
         }
@@ -739,7 +735,15 @@ public class Main extends javax.swing.JFrame {
                     //RESULTADOS
                     case 0 -> graficosController.loadMunicipales();
                     //PARTICIPACION
-                    case 1 -> graficosController.loadMunicipales();
+                    case 1 -> {
+                        if (!participacionIn) {
+                            graficosController.entraParticipacionMuni();
+                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                            participacionIn = true;
+                        } else {
+                            graficosController.cambiaParticipacionMuni();
+                        }
+                    }
                     //ARCO INDIVIDUAL
                     case 2 -> graficosController.loadMunicipales();
                     //ARCO COMPARADO
@@ -784,7 +788,15 @@ public class Main extends javax.swing.JFrame {
                     //RESULTADOS
                     case 0 -> graficosController.loadAutonomicas();
                     //PARTICIPACION
-                    case 1 -> graficosController.loadAutonomicas();
+                    case 1 -> {
+                        if (!participacionIn) {
+                            graficosController.entraParticipacionAuto();
+                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                            participacionIn = true;
+                        } else {
+                            graficosController.cambiaParticipacionAuto();
+                        }
+                    }
                     //ARCO INDIVIDUAL
                     case 2 -> graficosController.loadAutonomicas();
                     //ARCO COMPARADO
@@ -829,7 +841,15 @@ public class Main extends javax.swing.JFrame {
                     //RESULTADOS
                     case 0 -> graficosController.loadMunicipales();
                     //PARTICIPACION
-                    case 1 -> graficosController.loadMunicipales();
+                    case 1 -> {
+                        if (!participacionIn) {
+                            graficosController.entraParticipacionMuni();
+                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                            participacionIn = true;
+                        } else {
+                            graficosController.cambiaParticipacionMuni();
+                        }
+                    }
                     //ARCO INDIVIDUAL
                     case 2 -> graficosController.loadMunicipales();
                     //ARCO COMPARADO
@@ -874,7 +894,15 @@ public class Main extends javax.swing.JFrame {
                     //RESULTADOS
                     case 0 -> graficosController.loadAutonomicas();
                     //PARTICIPACION
-                    case 1 -> graficosController.loadAutonomicas();
+                    case 1 -> {
+                        if (!participacionIn) {
+                            graficosController.entraParticipacionAuto();
+                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                            participacionIn = true;
+                        } else {
+                            graficosController.cambiaParticipacionAuto();
+                        }
+                    }
                     //ARCO INDIVIDUAL
                     case 2 -> graficosController.loadAutonomicas();
                     //ARCO COMPARADO
