@@ -837,7 +837,6 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPactosActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) throws IOException {//GEN-FIRST:event_jLabel1MouseClicked
-        // TODO add your handling code here:
 
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         int screenWidth = gd.getDisplayMode().getWidth();
