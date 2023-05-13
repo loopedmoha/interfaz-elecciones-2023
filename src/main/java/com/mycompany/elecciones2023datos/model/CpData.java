@@ -14,10 +14,11 @@ import java.util.List;
 public class CpData {
     String codigo = "";
     String siglas = "";
-
-    int escanosHasta = 0;
     int escanosDesde = 0;
+    int escanosHasta = 0;
+    int escanosHist = 0;
     double porcentajeVoto = 0;
+    int votantes = 0;
 
 
     public static List<CpData> fromCarmenDto(CarmenDTO carmen) {
@@ -25,7 +26,8 @@ public class CpData {
         for (CpDTO cpDTO : carmen.getCpDTO()) {
             System.out.println(cpDTO);
             res.add(new CpData(
-                    cpDTO.getCodigoPartido(), cpDTO.getSiglas(), cpDTO.getEscanos_desde(), cpDTO.getEscanos_hasta(), cpDTO.getPorcentajeVoto()));
+                    cpDTO.getCodigoPartido(), cpDTO.getSiglas(), cpDTO.getEscanos_desde(), cpDTO.getEscanos_hasta(),
+                    cpDTO.getEscanos_hasta_hist(), cpDTO.getPorcentajeVoto(), cpDTO.getNumVotantes()));
         }
         return res;
     }

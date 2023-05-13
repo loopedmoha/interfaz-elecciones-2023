@@ -186,7 +186,7 @@ public class config extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    IniFileReaderWriter iniFile = new IniFileReaderWriter("config.ini");
+    IniFileReaderWriter iniFile = new IniFileReaderWriter("C:\\Elecciones2023\\config.ini");
     
     private void cargarIni() throws IOException{
         

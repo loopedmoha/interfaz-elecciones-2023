@@ -181,16 +181,18 @@ public class Main extends javax.swing.JFrame {
 
     public void printData(List<CpData> list) {
         DefaultTableModel tableModel = new DefaultTableModel();
-        tableModel.addColumn("CODIGO");
+        tableModel.addColumn("COD");
         tableModel.addColumn("SIGLAS");
-        tableModel.addColumn("ESC DESDE");
-        tableModel.addColumn("ESC HASTA");
+        tableModel.addColumn("E.D");
+        tableModel.addColumn("E.H");
+        tableModel.addColumn("HIST");
         tableModel.addColumn("% VOTO");
+        tableModel.addColumn("VOTANTES");
 
 
         for (CpData cpDTO : list) {
             Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
-                    cpDTO.getEscanosHasta(), cpDTO.getEscanosDesde(), cpDTO.getPorcentajeVoto()};
+                    cpDTO.getEscanosDesde(), cpDTO.getEscanosHasta(), cpDTO.getEscanosHist(), cpDTO.getPorcentajeVoto(), cpDTO.getVotantes()};
             tableModel.addRow(rowData);
         }
         JScrollPane scrollPane = new JScrollPane(tablaDatos);
@@ -297,7 +299,7 @@ public class Main extends javax.swing.JFrame {
                         {null, null, null, null, null}
                 },
                 new String[]{
-                        "CODIGO", "SIGLAS", "ESC DESDE", "ESC HASTA", "% VOTO"
+                        "COD", "SIGLAS", "E.D", "E.H", "HIST", "% VOTO", "VOTANTES"
                 }
         ) {
             boolean[] canEdit = new boolean[]{
