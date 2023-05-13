@@ -281,12 +281,12 @@ public class Main extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         lblEscrutado = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        lblEscrutado1 = new javax.swing.JLabel();
+        lblParticipacion = new javax.swing.JLabel();
         btnAvance1 = new javax.swing.JButton();
         btnAvance2 = new javax.swing.JButton();
         btnAvance3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        lblEscrutado2 = new javax.swing.JLabel();
+        lblParticipacionHist = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ELECCIONES 2023");
@@ -542,8 +542,8 @@ public class Main extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel3.setText("PARTICIPACION:");
 
-        lblEscrutado1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lblEscrutado1.setText("---");
+        lblParticipacion.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        lblParticipacion.setText("---");
 
         btnAvance1.setText("AVANCE 1");
         btnAvance1.addActionListener(new java.awt.event.ActionListener() {
@@ -569,8 +569,8 @@ public class Main extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel4.setText("PART HISTORICO:");
 
-        lblEscrutado2.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lblEscrutado2.setText("---");
+        lblParticipacionHist.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        lblParticipacionHist.setText("---");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -628,8 +628,8 @@ public class Main extends javax.swing.JFrame {
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                         .addGroup(layout.createSequentialGroup()
                                                                                 .addGap(6, 6, 6)
-                                                                                .addComponent(lblEscrutado2))
-                                                                        .addComponent(lblEscrutado1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                                                .addComponent(lblParticipacionHist))
+                                                                        .addComponent(lblParticipacion, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                                 .addGap(79, 79, 79)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                         .addComponent(btnAvance2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -665,10 +665,10 @@ public class Main extends javax.swing.JFrame {
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                                         .addComponent(jLabel3)
-                                                                        .addComponent(lblEscrutado1))))
+                                                                        .addComponent(lblParticipacion))))
                                                 .addGap(7, 7, 7)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(lblEscrutado2)
+                                                        .addComponent(lblParticipacionHist)
                                                         .addComponent(jLabel4))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                                         .addGroup(layout.createSequentialGroup()
@@ -717,19 +717,43 @@ public class Main extends javax.swing.JFrame {
             if (selectedRow != -1) {
                 String nombreMunicipio = (String) tablaMunicipios.getValueAt(selectedRow, 0);
                 String codMunicipio = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
+                CarmenDTO carmen = null;
                 if (tipoElecciones == 2 || tipoElecciones == 4) {
                     if (oficiales) {
+                        try {
+                            carmen = clienteApi.getCarmenDtoOficialAuto(codMunicipio).execute().body();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
                         graficosController.selectedAutonomicasOficiales(codMunicipio);
                     } else {
+                        try {
+                            carmen = clienteApi.getCarmenDtoSondeoAuto(codMunicipio).execute().body();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
                         graficosController.selectedAutonomicasSondeo(codMunicipio);
                     }
                 } else {
                     if (oficiales) {
+                        try {
+                            carmen = clienteApi.getCarmenDtoOficialMuni(codMunicipio).execute().body();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
                         graficosController.selectedMunicipalesOficiales(codMunicipio);
                     } else {
+                        try {
+                            carmen = clienteApi.getCarmenDtoSondeoMuni(codMunicipio).execute().body();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
                         graficosController.selectedMunicipalesSondeo(codMunicipio);
                     }
                 }
+                lblEscrutado.setText(carmen.getCircunscripcion().getEscrutado() + "");
+                lblParticipacion.setText(carmen.getCircunscripcion().getParticipacion() + "");
+                lblParticipacionHist.setText(carmen.getCircunscripcion().getParticipacionHist() + "");
                 switch (selectedDb) {
                     case "DA" -> showDataTableOficialAutonomicas(nombreMunicipio);
                     case "SA" -> showDataTableSondeoAutonomicas(nombreMunicipio);
@@ -759,19 +783,43 @@ public class Main extends javax.swing.JFrame {
             if (selectedRow != -1) {
                 String nombreMunicipio = (String) tablaMunicipios.getValueAt(selectedRow, 0);
                 String codMunicipio = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
+                CarmenDTO carmen = null;
                 if (tipoElecciones == 2 || tipoElecciones == 4) {
                     if (oficiales) {
+                        try {
+                            carmen = clienteApi.getCarmenDtoOficialAuto(codMunicipio).execute().body();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
                         graficosController.selectedAutonomicasOficiales(codMunicipio);
                     } else {
+                        try {
+                            carmen = clienteApi.getCarmenDtoSondeoAuto(codMunicipio).execute().body();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
                         graficosController.selectedAutonomicasSondeo(codMunicipio);
                     }
                 } else {
                     if (oficiales) {
+                        try {
+                            carmen = clienteApi.getCarmenDtoOficialMuni(codMunicipio).execute().body();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
                         graficosController.selectedMunicipalesOficiales(codMunicipio);
                     } else {
+                        try {
+                            carmen = clienteApi.getCarmenDtoSondeoMuni(codMunicipio).execute().body();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
                         graficosController.selectedMunicipalesSondeo(codMunicipio);
                     }
                 }
+                lblEscrutado.setText(carmen.getCircunscripcion().getEscrutado() + "");
+                lblParticipacion.setText(carmen.getCircunscripcion().getParticipacion() + "");
+                lblParticipacionHist.setText(carmen.getCircunscripcion().getParticipacionHist() + "");
                 switch (selectedDb) {
                     case "DA" -> showDataTableOficialAutonomicas(nombreMunicipio);
                     case "SA" -> showDataTableSondeoAutonomicas(nombreMunicipio);
@@ -1356,8 +1404,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblEscrutado;
-    private javax.swing.JLabel lblEscrutado1;
-    private javax.swing.JLabel lblEscrutado2;
+    private javax.swing.JLabel lblParticipacion;
+    private javax.swing.JLabel lblParticipacionHist;
     private javax.swing.JTable tablaComunidades;
     private javax.swing.JTable tablaDatos;
     private javax.swing.JTable tablaMunicipios;

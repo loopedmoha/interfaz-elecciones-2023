@@ -35,9 +35,6 @@ public interface IClienteApi {
     @GET("/autonomicas/circunscripciones/autonomias/{codigo}")
     Call<List<Circunscripcion>> getCircunscripcionesByAutonomia(@Path("codigo") String codigo);
 
-    @GET("/autonomicas/carmen/data/{codigo}")
-    Call<CarmenDTO> getCarmenDto(@Path("codigo") String codigo);
-
     //MUNICIPALES
     @GET("/municipales/circunscripciones/municipios/{codigo}")
     Call<List<Circunscripcion>> getMunicipiosByCodigo(@Path("codigo") String codigo);
