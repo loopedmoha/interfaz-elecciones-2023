@@ -13,19 +13,22 @@ import java.util.List;
 @AllArgsConstructor
 public class CpData {
     String codigo = "";
-    String nombrePartido = "";
-    int voto = 0;
+    String siglas = "";
 
     int escanosHasta = 0;
     int escanosDesde = 0;
+    double porcentajeVoto = 0;
+
 
     public static List<CpData> fromCarmenDto(CarmenDTO carmen) {
         List<CpData> res = new ArrayList<>();
         for (CpDTO cpDTO : carmen.getCpDTO()) {
             System.out.println(cpDTO);
-            res.add(new CpData(cpDTO.getCodigoPartido(),
-                    cpDTO.getLiteralPartido(), cpDTO.getNumVotantes(), cpDTO.getEscanos_hasta(), cpDTO.getEscanos_desde()));
+            res.add(new CpData(
+                    cpDTO.getCodigoPartido(), cpDTO.getSiglas(), cpDTO.getEscanos_desde(), cpDTO.getEscanos_hasta(), cpDTO.getPorcentajeVoto()));
         }
         return res;
     }
+
+
 }
