@@ -181,7 +181,12 @@ public class Main extends javax.swing.JFrame {
     }
 
     public void printData(List<CpData> list) {
-        DefaultTableModel tableModel = new DefaultTableModel();
+        DefaultTableModel tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // establece todas las celdas no editables
+            }
+        };
         tableModel.addColumn("COD");
         tableModel.addColumn("SIGLAS");
         tableModel.addColumn("E.D");
@@ -323,34 +328,19 @@ public class Main extends javax.swing.JFrame {
             tablaDatos.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        tablaComunidades.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {"Aragón"},
-                        {"Asturias"},
-                        {"Madrid"},
-                        {"Cantabria"},
-                        {"Castilla-La Mancha"},
-                        {"Navarra"},
-                        {"Valencia"},
-                        {"Extremadura"},
-                        {"Galicia"},
-                        {"Baleares"},
-                        {"Canarias"},
-                        {"La Rioja"},
-                        {"Murcia"}
-                },
-                new String[]{
-                        "COMUNIDADES"
-                }
-        ) {
-            boolean[] canEdit = new boolean[]{
-                    false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+        DefaultTableModel tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // establece todas las celdas no editables
             }
-        });
+        };
+
+        tableModel.addColumn("COMUNIDADES");
+        for (String s : circunscripcionesAutonomicas.keySet()) {
+            tableModel.addRow(new Object[]{s});
+        }
+        tablaComunidades.setModel(tableModel);
+        JScrollPane scrollPane = new JScrollPane(tablaComunidades);
         tablaComunidades.getTableHeader().setResizingAllowed(false);
         jScrollPane2.setViewportView(tablaComunidades);
 
@@ -419,9 +409,10 @@ public class Main extends javax.swing.JFrame {
 
         TablaCartones.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
-                        {"Mapa Electoral"},
-                        {"Faldon Mapa"},
-                        {"Pactometro"}
+                        {"Resultados"},
+                        {"Participación"},
+                        {"Arco individual"},
+                        {"Arco comparado"}
                 },
                 new String[]{
                         "CARTONES"
@@ -763,7 +754,12 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loadSelectedAutonomicas(String cod) {
-        DefaultTableModel tableModel = new DefaultTableModel();
+        DefaultTableModel tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // establece todas las celdas no editables
+            }
+        };
         tableModel.addColumn("CIRCUNSCRIPCIONES");
         var municipios = circunscripcionesAutonomicas.get(cod);
         for (Circunscripcion municipio : municipios) {
@@ -829,7 +825,12 @@ public class Main extends javax.swing.JFrame {
 
 
     private void loadSelectedMunicipales(String cod) {
-        DefaultTableModel tableModel = new DefaultTableModel();
+        DefaultTableModel tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // establece todas las celdas no editables
+            }
+        };
         tableModel.addColumn("CIRCUNSCRIPCIONES");
         var municipios = cicunscripcionesMunicipales.get(cod.replaceAll(" ", ""));
         municipios.sort(Comparator.comparing(Circunscripcion::getCodigo));
