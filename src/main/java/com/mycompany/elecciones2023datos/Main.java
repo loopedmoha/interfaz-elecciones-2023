@@ -695,7 +695,7 @@ public class Main extends javax.swing.JFrame {
 
     private void loadSelectedAutonomicas(String cod) {
         DefaultTableModel tableModel = new DefaultTableModel();
-        tableModel.addColumn("MUNICIPIOS");
+        tableModel.addColumn("CIRCUNSCRIPCIONES");
         var municipios = circunscripcionesAutonomicas.get(cod);
         for (Circunscripcion municipio : municipios) {
             if (!municipio.getCodigo().endsWith("00000"))
