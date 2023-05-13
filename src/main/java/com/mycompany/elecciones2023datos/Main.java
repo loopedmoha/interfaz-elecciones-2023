@@ -19,8 +19,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.JButton;
@@ -399,6 +401,7 @@ public class Main extends javax.swing.JFrame {
             lblEscrutado.setText(carmen.getCircunscripcion().getEscrutado() + "");
             lblParticipacion.setText(carmen.getCircunscripcion().getParticipacion() + "");
             lblPartHistorica.setText(carmen.getCircunscripcion().getParticipacionHist() + "");
+            lblEscanosTotales.setText(carmen.getCircunscripcion().getEscanios() + "");
             if (tablaComunidades.getColumnModel().getColumnCount() > 0) {
                 tablaComunidades.getColumnModel().getColumn(0).setResizable(false);
             }
@@ -545,9 +548,10 @@ public class Main extends javax.swing.JFrame {
 
         TablaFaldones.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
-                        {"Mapa Electoral"},
-                        {"Faldon Mapa"},
-                        {"Pactometro"}
+                        {"Inferior"},
+                        {"Lateral"},
+                        {"Sedes"},
+                        {"Votantes"}
                 },
                 new String[]{
                         "FALDONES"
@@ -762,8 +766,10 @@ public class Main extends javax.swing.JFrame {
         };
         tableModel.addColumn("CIRCUNSCRIPCIONES");
         var municipios = circunscripcionesAutonomicas.get(cod);
+        municipios = municipios.stream().distinct().collect(Collectors.toList());
+        municipios.sort(Comparator.comparing(Circunscripcion::getCodigo));
         for (Circunscripcion municipio : municipios) {
-            if (!municipio.getCodigo().endsWith("00000"))
+            if (!municipio.getCodigo().endsWith("000"))
                 tableModel.addRow(new Object[]{municipio.getNombreCircunscripcion()});
         }
         JScrollPane scrollPane = new JScrollPane(tablaMunicipios);
@@ -813,6 +819,7 @@ public class Main extends javax.swing.JFrame {
                 lblEscrutado.setText(carmen.getCircunscripcion().getEscrutado() + "");
                 lblParticipacion.setText(carmen.getCircunscripcion().getParticipacion() + "");
                 lblPartHistorica.setText(carmen.getCircunscripcion().getParticipacionHist() + "");
+                lblEscanosTotales.setText(carmen.getCircunscripcion().getEscanios() + "");
                 switch (selectedDb) {
                     case "DA" -> showDataTableOficialAutonomicas(nombreMunicipio);
                     case "SA" -> showDataTableSondeoAutonomicas(nombreMunicipio);
@@ -833,9 +840,13 @@ public class Main extends javax.swing.JFrame {
         };
         tableModel.addColumn("CIRCUNSCRIPCIONES");
         var municipios = cicunscripcionesMunicipales.get(cod.replaceAll(" ", ""));
+        municipios = new ArrayList<>(municipios.stream()
+                .distinct()
+                .collect(Collectors.toMap(Circunscripcion::getCodigo, Function.identity(), (municipio1, municipio2) -> municipio1))
+                .values());
         municipios.sort(Comparator.comparing(Circunscripcion::getCodigo));
         for (Circunscripcion municipio : municipios) {
-            if (!municipio.getCodigo().endsWith("00000"))
+            if (!municipio.getCodigo().endsWith("000"))
                 tableModel.addRow(new Object[]{municipio.getNombreCircunscripcion()});
         }
 
@@ -884,6 +895,7 @@ public class Main extends javax.swing.JFrame {
                 lblEscrutado.setText(carmen.getCircunscripcion().getEscrutado() + "");
                 lblParticipacion.setText(carmen.getCircunscripcion().getParticipacion() + "");
                 lblPartHistorica.setText(carmen.getCircunscripcion().getParticipacionHist() + "");
+                lblEscanosTotales.setText(carmen.getCircunscripcion().getEscanios() + "");
                 switch (selectedDb) {
                     case "DA" -> showDataTableOficialAutonomicas(nombreMunicipio);
                     case "SA" -> showDataTableSondeoAutonomicas(nombreMunicipio);
@@ -900,7 +912,7 @@ public class Main extends javax.swing.JFrame {
             case 1 -> {
                 switch (TablaCartones.getSelectedRow()) {
                     //RESULTADOS
-                    case 0 -> graficosController.loadMunicipales();
+                    case 0 -> graficosController.entraResultadosMuni();
                     //PARTICIPACION
                     case 1 -> {
                         if (!participacionIn) {
@@ -953,7 +965,7 @@ public class Main extends javax.swing.JFrame {
             case 2 -> {
                 switch (TablaCartones.getSelectedRow()) {
                     //RESULTADOS
-                    case 0 -> graficosController.loadAutonomicas();
+                    case 0 -> graficosController.entraResultadosAuto();
                     //PARTICIPACION
                     case 1 -> {
                         if (!participacionIn) {
@@ -1006,7 +1018,7 @@ public class Main extends javax.swing.JFrame {
             case 3 -> {
                 switch (TablaCartones.getSelectedRow()) {
                     //RESULTADOS
-                    case 0 -> graficosController.loadMunicipales();
+                    case 0 -> graficosController.entraResultadosMuni();
                     //PARTICIPACION
                     case 1 -> {
                         if (!participacionIn) {
@@ -1059,7 +1071,7 @@ public class Main extends javax.swing.JFrame {
             case 4 -> {
                 switch (TablaCartones.getSelectedRow()) {
                     //RESULTADOS
-                    case 0 -> graficosController.loadAutonomicas();
+                    case 0 -> graficosController.entraResultadosAuto();
                     //PARTICIPACION
                     case 1 -> {
                         if (!participacionIn) {
@@ -1195,9 +1207,9 @@ public class Main extends javax.swing.JFrame {
             case 1 -> {
                 switch (TablaCartones.getSelectedRow()) {
                     //RESULTADOS
-                    case 0 -> System.out.println("Sale Resultados");
+                    case 0 -> graficosController.saleResultadosMuni();
                     //PARTICIPACION
-                    case 1 -> System.out.println("Sale Participación");
+                    case 1 -> graficosController.saleParticipacionMuni();
                     //ARCO INDIVIDUAL
                     case 2 -> System.out.println("Sale Arco principal");
                     //ARCO COMPARADO
@@ -1232,9 +1244,9 @@ public class Main extends javax.swing.JFrame {
             case 2 -> {
                 switch (TablaCartones.getSelectedRow()) {
                     //RESULTADOS
-                    case 0 -> System.out.println("Sale Resultados");
+                    case 0 -> graficosController.saleResultadosAuto();
                     //PARTICIPACION
-                    case 1 -> System.out.println("Sale Participación");
+                    case 1 -> graficosController.saleParticipacionAuto();
                     //ARCO INDIVIDUAL
                     case 2 -> System.out.println("Sale Arco principal");
                     //ARCO COMPARADO
@@ -1269,9 +1281,9 @@ public class Main extends javax.swing.JFrame {
             case 3 -> {
                 switch (TablaCartones.getSelectedRow()) {
                     //RESULTADOS
-                    case 0 -> System.out.println("Sale Resultados");
+                    case 0 -> graficosController.saleResultadosMuni();
                     //PARTICIPACION
-                    case 1 -> System.out.println("Sale Participación");
+                    case 1 -> graficosController.saleParticipacionMuni();
                     //ARCO INDIVIDUAL
                     case 2 -> System.out.println("Sale Arco principal");
                     //ARCO COMPARADO
@@ -1306,9 +1318,9 @@ public class Main extends javax.swing.JFrame {
             case 4 -> {
                 switch (TablaCartones.getSelectedRow()) {
                     //RESULTADOS
-                    case 0 -> System.out.println("Sale Resultados");
+                    case 0 -> graficosController.saleResultadosAuto();
                     //PARTICIPACION
-                    case 1 -> System.out.println("Sale Participación");
+                    case 1 -> graficosController.saleParticipacionAuto();
                     //ARCO INDIVIDUAL
                     case 2 -> System.out.println("Sale Arco principal");
                     //ARCO COMPARADO

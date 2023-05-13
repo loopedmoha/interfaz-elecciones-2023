@@ -178,6 +178,38 @@ public class GraficosController {
         }
     }
 
+    public void entraResultadosAuto() {
+        try {
+            clienteApi.entraResultadosAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraResultadosMuni() {
+        try {
+            clienteApi.entraResultadosMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleResultadosAuto() {
+        try {
+            clienteApi.saleResultadosAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleResultadosMuni() {
+        try {
+            clienteApi.saleResultadosMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void selectedAutonomicasOficiales(String codigo) {
         try {

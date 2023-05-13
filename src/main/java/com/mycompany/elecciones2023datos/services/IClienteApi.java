@@ -89,7 +89,7 @@ public interface IClienteApi {
     Call<String> saleLateralMunicipales();
 
     /*
-     ****************LATERAL
+     ****************CARTON PARTICIPACION
      */
 
     @GET("/autonomicas/participacion/entra")
@@ -104,11 +104,33 @@ public interface IClienteApi {
     @GET("/municipales/participacion/cambia")
     Call<String> cambiaParticipacionMuni();
 
-    @GET("/autonomicas/carmen/lateral/sale")
+    @GET("/autonomicas/participacion/sale")
     Call<String> saleParticipacionAuto();
 
-    @GET("/municipales/carmen/lateral/sale")
+    @GET("/municipales/participacion/sale")
     Call<String> saleParticipacionMuni();
+
+    /*
+     ****************CARTON RESULTADOS
+     */
+
+    @GET("/autonomicas/resultados/entra")
+    Call<String> entraResultadosAuto();
+
+    @GET("/municipales/resultados/entra")
+    Call<String> entraResultadosMuni();
+
+    @GET("/autonomicas/resultados/entra")
+    Call<String> cambiaResultadosAuto();
+
+    @GET("/municipales/resultados/cambia")
+    Call<String> cambiaResultadosMuni();
+
+    @GET("/autonomicas/resultados/sale")
+    Call<String> saleResultadosAuto();
+
+    @GET("/municipales/resultados/sale")
+    Call<String> saleResultadosMuni();
 
     /*
      **************** CARTONES ARCOS
@@ -120,13 +142,19 @@ public interface IClienteApi {
     Call<String> loadMunicipales();
 
     /*
-     **************** CARTONES PARTICIPACION
+     **************** FALDON INFERIOR
      */
     @GET("/autonomicas/carmen/faldon/entra")
     Call<String> entraFaldonAutonomicas();
 
     @GET("/autonomicas/carmen/faldon/sale")
     Call<String> saleFaldonAutonomicas();
+
+    @GET("/municipales/carmen/faldon/entra")
+    Call<String> entraFaldonMunicipales();
+
+    @GET("/municipales/carmen/faldon/sale")
+    Call<String> saleFaldonMunicipales();
 
     //DESCARGA DE ARCHIVOS
     @GET("/autonomicas/circunscripciones/selected/oficial/{codigo}")
