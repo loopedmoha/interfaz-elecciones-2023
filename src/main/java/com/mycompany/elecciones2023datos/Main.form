@@ -69,29 +69,38 @@
                           <Component id="btnSondeoMunicipales" min="-2" pref="220" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel2" min="-2" pref="87" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lblEscrutado" min="-2" pref="51" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jCheckBox1" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel2" min="-2" pref="87" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lblEscrutado" min="-2" pref="57" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <Component id="jCheckBox1" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="lblEscTotales" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="lblEscanosTotales" min="-2" pref="66" max="-2" attributes="0"/>
+                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel3" min="-2" pref="110" max="-2" attributes="0"/>
                                   <Component id="jLabel4" min="-2" pref="116" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                      <Component id="lblEscrutado2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lblParticipacion" min="-2" pref="59" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="lblEscrutado1" min="-2" pref="51" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                      <Component id="lblPartHistorica" min="-2" pref="61" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnAvance2" alignment="0" min="-2" pref="145" max="-2" attributes="0"/>
                           <Component id="btnAvance3" alignment="0" min="-2" pref="145" max="-2" attributes="0"/>
@@ -115,7 +124,6 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="btnDatosMunicipales" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                                   <Component id="btnSondeoMunicipales" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                                  <Component id="jCheckBox1" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
@@ -137,25 +145,33 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblEscrutado1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblParticipacion" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblEscrutado2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblPartHistorica" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="btnAvance1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnAvance1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblEscTotales" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblEscanosTotales" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Component id="btnAvance2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnAvance3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="23" max="32767" attributes="0"/>
+                      <EmptySpace pref="7" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -192,11 +208,11 @@
         <Component class="javax.swing.JTable" name="tablaDatos">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="5" rowCount="4">
+              <Table columnCount="5" rowCount="5">
                 <Column editable="false" title="CODIGO" type="java.lang.Object"/>
                 <Column editable="false" title="SIGLAS" type="java.lang.Object"/>
-                <Column editable="false" title="ESC DESDE" type="java.lang.Object"/>
-                <Column editable="false" title="ESC HASTA" type="java.lang.Object"/>
+                <Column editable="false" title="E.D" type="java.lang.Object"/>
+                <Column editable="false" title="E.H" type="java.lang.Object"/>
                 <Column editable="false" title="% VOTO" type="java.lang.Object"/>
               </Table>
             </Property>
@@ -522,7 +538,7 @@
         <Property name="text" type="java.lang.String" value="PARTICIPACION:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblEscrutado1">
+    <Component class="javax.swing.JLabel" name="lblParticipacion">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="13" style="0"/>
@@ -562,12 +578,28 @@
         <Property name="text" type="java.lang.String" value="PART HISTORICO:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblEscrutado2">
+    <Component class="javax.swing.JLabel" name="lblPartHistorica">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="13" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="---"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblEscanosTotales">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="13" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="---"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblEscTotales">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="13" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="ESC TOTALES:"/>
       </Properties>
     </Component>
   </SubComponents>

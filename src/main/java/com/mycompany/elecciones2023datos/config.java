@@ -4,6 +4,7 @@
  */
 package com.mycompany.elecciones2023datos;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -186,7 +187,7 @@ public class config extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    IniFileReaderWriter iniFile = new IniFileReaderWriter("C:\\Elecciones2023\\config.ini");
+    IniFileReaderWriter iniFile = new IniFileReaderWriter("C:\\ELECCIONES2023\\config.ini");
     
     private void cargarIni() throws IOException{
         
@@ -203,6 +204,32 @@ public class config extends javax.swing.JFrame {
         String ipServReserva = iniFile.getValue("ipServReserva", "ipServReserva");
         srTL.setText(ipServReserva);
         
+    }
+    
+    private void exite() throws IOException{
+        // Verificar si el archivo existe
+        File file = new File("C:\\ELECCIONES2023\\config.ini");
+        if (!file.exists()) {
+            // Si no existe, crear el archivo y escribir los valores iniciales
+            System.out.println("no existe");
+            file.createNewFile();
+            try {
+                IniFileReaderWriter ini = new IniFileReaderWriter("C:\\ELECCIONES2023\\config.ini");
+                ini.setValue("ip1", "ip1", "111.11.11.12");
+                ini.setValue("puerto", "puerto", "5123");
+                ini.setValue("bd1", "bd1", "<FALDONES>");
+                ini.setValue("bd2", "bd2", "<CARTONES>");
+                ini.setValue("ipServPrincipal", "ipServPrincipal", "111.11.11.11");
+                ini.setValue("ipServReserva", "ipServReserva", "222.22.22.22");
+                ini.store(file);
+            } catch (IOException e) {
+                System.err.println("Error al crear el archivo config.ini: " + e.getMessage());
+                System.exit(1);
+            }
+        }else{
+            System.out.println("existe");
+            cargarIni();
+        }
     }
     
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed

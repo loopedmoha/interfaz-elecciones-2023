@@ -27,19 +27,12 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     
     public PactosOpcion2() {
        initComponents();
-       ListaPactosIzq.setEnabled(false);
-       ListaIzq.setEnabled(false);
-       listaDcha.setEnabled(false);
-       listaPactosDcha.setEnabled(false);
 
-            // Crear los modelos de datos para cada lista
+
      
-
-     // Agregar elementos al modelo de la lista izquierda
-     modelIzq.addElement("Partido 1");
-     modelIzq.addElement("Partido 2");
-     modelIzq.addElement("Partido 3");
-     // ... Agregar más elementos a la lista izquierda ..
+       cargarDatos();
+    
+    
      
      
      // Asignar los modelos de datos a las listas
@@ -53,6 +46,13 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     
     //modelIzq.set(selectedIndex, "<html><font color=gray>" + selectedValue + "</font></html>");
 
+    
+    private void cargarDatos(){
+         // Agregar elementos al modelo de la lista izquierda
+        modelIzq.addElement("Partido 1");
+        modelIzq.addElement("Partido 2");
+        modelIzq.addElement("Partido 3");
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -304,16 +304,21 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         String selected = ListaPactosIzq.getSelectedValue();
         if (selectedIndex != -1) { // si hay un elemento seleccionado
             for (int i = 0; i < modelPactos.getSize(); i++) {
-                if (modelPactos.getElementAt(i).equals(selected)) { // si el elemento existe en la lista de la izquierda
-                    modelPactos.set(i, selected); // establecer su color a su estado original
+                if (modelIzq.getElementAt(i).equals("<html><font color=gray>" + selected + "</font></html>")) { // si el elemento existe en la lista de la izquierda
                     modelIzq.set(selectedIndex, "<html><font color=black>" + selected + "</font></html>");
+                    System.out.println(modelPactos.getElementAt(i));
+                    System.out.println(ListaPactosIzq.getSelectedValue());
+                    
                     break;
                 }
             }
             modelPactos.remove(selectedIndex); // eliminar el elemento de la lista de la derecha
         }
 
-
+System.out.println(modelIzq.getElementAt(0));
+System.out.println(modelIzq.getElementAt(1));
+System.out.println(modelIzq.getElementAt(2));
+System.out.println("<html><font color=gray>" + selected + "</font></html>");
 
 //        // Obtener el modelo de ambas listas
 //    DefaultListModel<String> modelIzq = (DefaultListModel<String>) ListaIzq.getModel();

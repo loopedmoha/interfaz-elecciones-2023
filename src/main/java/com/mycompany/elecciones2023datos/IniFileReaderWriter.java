@@ -35,5 +35,9 @@ public class IniFileReaderWriter {
         prefs.node(section).put(key, value);
         this.ini.store(this.file);
     }
+    
+    public void store(File file) throws IOException {
+        this.ini.store(file);
+    }
 
 }
