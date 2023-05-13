@@ -181,17 +181,21 @@ public class Main extends javax.swing.JFrame {
 
     public void printData(List<CpData> list) {
         DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("CODIGO");
+        tableModel.addColumn("SIGLAS");
+        tableModel.addColumn("ESC DESDE");
+        tableModel.addColumn("ESC HASTA");
+        tableModel.addColumn("% VOTO");
 
 
         for (CpData cpDTO : list) {
-            Object[] rowData = {cpDTO.getCodigo(), cpDTO.getNombrePartido(),
-                    cpDTO.getVoto(), "" + cpDTO.getEscanosHasta() + "/" + cpDTO.getEscanosDesde()};
+            Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
+                    cpDTO.getEscanosHasta(), cpDTO.getEscanosDesde(), cpDTO.getPorcentajeVoto()};
             tableModel.addRow(rowData);
         }
         JScrollPane scrollPane = new JScrollPane(tablaDatos);
-        tablaDatos = new JTable(tableModel);
+        tablaDatos.setModel(tableModel);
         tablaDatos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
         jScrollPane1.setViewportView(tablaDatos);
     }
 
