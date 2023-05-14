@@ -4,11 +4,21 @@
  */
 package com.mycompany.elecciones2023datos;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import org.apache.commons.lang3.StringEscapeUtils;
+
 
 /**
  *
@@ -50,8 +60,8 @@ public class config extends javax.swing.JFrame {
         srTL = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        bdFaldones = new javax.swing.JLabel();
+        bdCartones = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -80,11 +90,11 @@ public class config extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         jLabel4.setText("PUERTO:");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        jLabel5.setText("BD 1:");
+        bdFaldones.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        bdFaldones.setText("BD FALDONES:");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        jLabel6.setText("BD 2:");
+        bdCartones.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        bdCartones.setText("BD CARTONES:");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         jLabel7.setText("IP SERVIDOR RESERVA:");
@@ -114,22 +124,25 @@ public class config extends javax.swing.JFrame {
                             .addComponent(jRadioButton2)
                             .addComponent(jLabel2)
                             .addComponent(jRadioButton3))
-                        .addGap(142, 142, 142)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
+                                .addGap(194, 194, 194)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel6))
-                                        .addGap(22, 22, 22))))
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel3))
+                                        .addGap(11, 11, 11))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(bdCartones)
+                                        .addComponent(bdFaldones, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8))
+                                .addGap(27, 27, 27)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(srTL, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(spTL, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -140,7 +153,7 @@ public class config extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(219, 219, 219)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,11 +171,11 @@ public class config extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(bd1TL, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
+                            .addComponent(bdFaldones))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(bd2TL, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
+                            .addComponent(bdCartones))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(spTL, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -187,50 +200,37 @@ public class config extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    IniFileReaderWriter iniFile = new IniFileReaderWriter("C:\\ELECCIONES2023\\config.ini");
+    //IniFileReaderWriter iniFile = new IniFileReaderWriter("C:\\ELECCIONES2023\\config.ini");
+    
+    public static Properties cargarConfiguracion() throws IOException {
+        Properties propiedades = new Properties();
+        FileInputStream archivoConfiguracion = new FileInputStream("C:\\Elecciones2023\\config.properties");
+        propiedades.load(archivoConfiguracion);
+        archivoConfiguracion.close();
+        return propiedades;
+    }
     
     private void cargarIni() throws IOException{
         
-        String ip1 = iniFile.getValue("ip1", "ip1");
+        Properties propiedades = cargarConfiguracion();
+
+        
+        String ip1 = propiedades.getProperty("direccion1");
         ip1TL.setText(ip1);
-        String puerto = iniFile.getValue("puerto", "puerto");
+        String puerto = propiedades.getProperty("puerto");
         puertoTL.setText(puerto);
-        String bd1 = iniFile.getValue("bd1", "bd1");
-        bd1TL.setText(bd1);
-        String bd2 = iniFile.getValue("bd2", "bd2");
-        bd2TL.setText(bd2);
-        String ipServPrincipal = iniFile.getValue("ipServPrincipal", "ipServPrincipal");
+        String bdCartones = propiedades.getProperty("BDCartones");
+        bd1TL.setText(bdCartones);
+        String bdFaldones = propiedades.getProperty("BDFaldones");
+        bd2TL.setText(bdFaldones);
+        String ipServPrincipal = propiedades.getProperty("ipServer");
         spTL.setText(ipServPrincipal);
-        String ipServReserva = iniFile.getValue("ipServReserva", "ipServReserva");
+        String ipServReserva = propiedades.getProperty("ipServerReserva");
         srTL.setText(ipServReserva);
         
     }
     
-    private void exite() throws IOException{
-        // Verificar si el archivo existe
-        File file = new File("C:\\ELECCIONES2023\\config.ini");
-        if (!file.exists()) {
-            // Si no existe, crear el archivo y escribir los valores iniciales
-            System.out.println("no existe");
-            file.createNewFile();
-            try {
-                IniFileReaderWriter ini = new IniFileReaderWriter("C:\\ELECCIONES2023\\config.ini");
-                ini.setValue("ip1", "ip1", "111.11.11.12");
-                ini.setValue("puerto", "puerto", "5123");
-                ini.setValue("bd1", "bd1", "<FALDONES>");
-                ini.setValue("bd2", "bd2", "<CARTONES>");
-                ini.setValue("ipServPrincipal", "ipServPrincipal", "111.11.11.11");
-                ini.setValue("ipServReserva", "ipServReserva", "222.22.22.22");
-                ini.store(file);
-            } catch (IOException e) {
-                System.err.println("Error al crear el archivo config.ini: " + e.getMessage());
-                System.exit(1);
-            }
-        }else{
-            System.out.println("existe");
-            cargarIni();
-        }
-    }
+    
     
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
@@ -239,21 +239,88 @@ public class config extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         try {
-            iniFile.setValue("ip1", "ip1", ip1TL.getText());
-            iniFile.setValue("puerto", "puerto", puertoTL.getText());
-            iniFile.setValue("bd1", "bd1", bd1TL.getText());
-            iniFile.setValue("bd2", "bd2", bd2TL.getText());
-            iniFile.setValue("ipServPrincipal", "ipServPrincipal", spTL.getText());
-            iniFile.setValue("ipServReserva", "ipServReserva", srTL.getText());
             
-            JOptionPane.showMessageDialog(null, "El archivo se ha guardado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-
+            String cartones = StringEscapeUtils.escapeJava(bd1TL.getText());
+            String faldones = StringEscapeUtils.escapeJava(bd2TL.getText());
+            
+            Properties properties = new Properties();
+            properties.setProperty("direccion1", ip1TL.getText());
+            properties.setProperty("direccion3", "0");
+            properties.setProperty("direccion2", "0");
+            properties.setProperty("direccion4", "0");
+            properties.setProperty("rutaFicheros", "C:\\\\Elecciones2023\\\\DATOS");
+            properties.setProperty("nConexiones", "1");
+            properties.setProperty("puerto", puertoTL.getText());
+            properties.setProperty("ipServerReserva", srTL.getText());
+            properties.setProperty("ipServer", spTL.getText());
+            properties.setProperty("BDCartones", cartones);
+            properties.setProperty("BDFaldones", faldones);
+            
+            FileOutputStream archivo = new FileOutputStream("C:\\Elecciones2023\\config.properties");
+            properties.store(archivo, "Archivo de configuración");
+            archivo.close();
+            
+            System.out.println(properties.getProperty("BDCartones"));
+            
+            JOptionPane.showMessageDialog(null, "El archivo se ha guardado correctamente", "Configuracion guardada", JOptionPane.INFORMATION_MESSAGE);
+            
+           
+            //CIERRE DE VENTANA CUANDO GUARDO
+            
+            dispose();
+            
         } catch (IOException ex) {
             Logger.getLogger(config.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "El archivo no se ha guardado correctamente", "Configuracion no guardada", JOptionPane.INFORMATION_MESSAGE);
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    
+    private static String escapePropertyValue(String value) {
+    StringBuilder sb = new StringBuilder(value.length());
+    for (int i = 0; i < value.length(); i++) {
+        char c = value.charAt(i);
+        switch (c) {
+            case '\\':
+                sb.append("\\\\");
+                break;
+            case '\n':
+                sb.append("\\n");
+                break;
+            case '\r':
+                sb.append("\\r");
+                break;
+            case '\t':
+                sb.append("\\t");
+                break;
+            case '\f':
+                sb.append("\\f");
+                break;
+            case ' ':
+                sb.append("\\ ");
+                break;
+            case ':':
+                sb.append("\\:");
+                break;
+            case '=':
+                sb.append("\\=");
+                break;
+            case '<':
+                sb.append("\\<");
+                break;
+            case '>':
+                sb.append("\\>");
+                break;
+            default:
+                sb.append(c);
+                break;
+        }
+    }
+    return sb.toString();
+}
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -297,6 +364,8 @@ public class config extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField bd1TL;
     private javax.swing.JTextField bd2TL;
+    private javax.swing.JLabel bdCartones;
+    private javax.swing.JLabel bdFaldones;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JTextField ip1TL;
@@ -305,8 +374,6 @@ public class config extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JRadioButton jRadioButton1;

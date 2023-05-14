@@ -24,12 +24,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="btnReset" min="-2" pref="112" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="106" max="32767" attributes="0"/>
                       <Component id="btnEntra" min="-2" pref="180" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="btnSale" min="-2" pref="180" max="-2" attributes="0"/>
@@ -37,7 +37,7 @@
                       <Component id="btnReplegar" min="-2" pref="121" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
                       <Component id="btnPactos" min="-2" pref="122" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
@@ -55,10 +55,11 @@
                       <Component id="jScrollPane4" min="-2" pref="163" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="519" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+                      <Component id="btnConfig" min="-2" pref="45" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnDatosMunicipales" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
                           <Component id="btnDatosAutonomicas" min="-2" pref="220" max="-2" attributes="0"/>
@@ -106,10 +107,9 @@
                           <Component id="btnAvance3" alignment="0" min="-2" pref="145" max="-2" attributes="0"/>
                           <Component id="btnAvance1" alignment="0" min="-2" pref="145" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -118,20 +118,22 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="btnDatosMunicipales" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                                   <Component id="btnSondeoMunicipales" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Component id="btnConfig" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="btnAvance1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                               <Component id="btnSondeoAutonomicas" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
@@ -141,6 +143,7 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblEscrutado" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnAvance2" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -157,21 +160,18 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnAvance1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jCheckBox1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                      <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblEscTotales" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblEscanosTotales" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="lblEscanosTotales" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                              <Component id="btnAvance3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lblEscTotales" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Component id="btnAvance2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnAvance3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="7" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -262,22 +262,8 @@
         <Component class="javax.swing.JTable" name="tablaComunidades">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="1" rowCount="13">
-                <Column editable="false" title="COMUNIDADES" type="java.lang.Object">
-                  <Data value="Arag&#xf3;n"/>
-                  <Data value="Asturias"/>
-                  <Data value="Madrid"/>
-                  <Data value="Cantabria"/>
-                  <Data value="Castilla-La Mancha"/>
-                  <Data value="Navarra"/>
-                  <Data value="Valencia"/>
-                  <Data value="Extremadura"/>
-                  <Data value="Galicia"/>
-                  <Data value="Baleares"/>
-                  <Data value="Canarias"/>
-                  <Data value="La Rioja"/>
-                  <Data value="Murcia"/>
-                </Column>
+              <Table columnCount="1" rowCount="0">
+                <Column editable="false" title="COMUNIDADES" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -306,12 +292,8 @@
         <Component class="javax.swing.JTable" name="TablaCartones">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="1" rowCount="3">
-                <Column editable="false" title="CARTONES" type="java.lang.Object">
-                  <Data value="Mapa Electoral"/>
-                  <Data value="Faldon Mapa"/>
-                  <Data value="Pactometro"/>
-                </Column>
+              <Table columnCount="1" rowCount="0">
+                <Column editable="false" title="CARTONES" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -407,16 +389,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnResetActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Fede\Documents\NetBeansProjects\Elecciones2023DATOS\Imagenes\iconconfig.png"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel1MouseClicked"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="btnReplegar">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -482,12 +454,8 @@
         <Component class="javax.swing.JTable" name="TablaFaldones">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="1" rowCount="3">
-                <Column editable="false" title="FALDONES" type="java.lang.Object">
-                  <Data value="Mapa Electoral"/>
-                  <Data value="Faldon Mapa"/>
-                  <Data value="Pactometro"/>
-                </Column>
+              <Table columnCount="1" rowCount="0">
+                <Column editable="false" title="FALDONES" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -601,6 +569,16 @@
         </Property>
         <Property name="text" type="java.lang.String" value="ESC TOTALES:"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnConfig">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/iconconfig.png"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConfigActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
