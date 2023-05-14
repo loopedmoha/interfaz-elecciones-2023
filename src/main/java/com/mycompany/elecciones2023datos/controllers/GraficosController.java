@@ -114,6 +114,71 @@ public class GraficosController {
         }
     }
 
+    public void actualizaFaldonAuto() {
+        try {
+            clienteApi.actualizaFaldonAutonomicas().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void encadenaFaldonAuto() {
+        try {
+            clienteApi.encadenaFaldonAutonomicas().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deAutoaMuniFaldonAuto() {
+        try {
+            clienteApi.deAutoaMuniFaldonAutonomicas().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraFaldonMuni() {
+        try {
+            clienteApi.entraFaldonMunicipales().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleFaldonMuni() {
+        try {
+            clienteApi.saleFaldonMunicipales().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void actualizaFaldonMuni() {
+        try {
+            clienteApi.actualizaFaldonMunicipales().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void encadenaFaldonMuni() {
+        try {
+            clienteApi.encadenaFaldonMunicipales().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deMuniaAutoFaldonMuni() {
+        try {
+            clienteApi.deMuniaAutoFaldonMunicipales().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public void loadAutonomicas() {
         try {
             clienteApi.loadAutonomicas().execute();
@@ -162,17 +227,17 @@ public class GraficosController {
         }
     }
 
-    public void cambiaParticipacionAuto() {
+    public void cambiaParticipacionComunidad() {
         try {
-            clienteApi.cambiaParticipacionAuto().execute();
+            clienteApi.cambiaParticipacionComunidad().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void cambiaParticipacionMuni() {
+    public void cambiaParticipacionMunicipio() {
         try {
-            clienteApi.cambiaParticipacionMuni().execute();
+            clienteApi.cambiaParticipacionMunipio().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -205,6 +270,22 @@ public class GraficosController {
     public void saleResultadosMuni() {
         try {
             clienteApi.saleResultadosMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void cambiaResultadosComunidad() {
+        try {
+            clienteApi.cambiaResultadosComunidad().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void cambiaResultadosMunicipio() {
+        try {
+            clienteApi.cambiaResultadosMunicipio().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

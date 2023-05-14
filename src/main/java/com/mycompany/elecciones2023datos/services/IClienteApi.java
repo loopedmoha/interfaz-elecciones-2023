@@ -98,11 +98,11 @@ public interface IClienteApi {
     @GET("/municipales/participacion/entra")
     Call<String> entraParticipacionMuni();
 
-    @GET("/autonomicas/participacion/entra")
-    Call<String> cambiaParticipacionAuto();
+    @GET("/autonomicas/participacion/cambia")
+    Call<String> cambiaParticipacionComunidad();
 
     @GET("/municipales/participacion/cambia")
-    Call<String> cambiaParticipacionMuni();
+    Call<String> cambiaParticipacionMunipio();
 
     @GET("/autonomicas/participacion/sale")
     Call<String> saleParticipacionAuto();
@@ -120,11 +120,11 @@ public interface IClienteApi {
     @GET("/municipales/resultados/entra")
     Call<String> entraResultadosMuni();
 
-    @GET("/autonomicas/resultados/entra")
-    Call<String> cambiaResultadosAuto();
+    @GET("/autonomicas/resultados/cambia")
+    Call<String> cambiaResultadosComunidad();
 
     @GET("/municipales/resultados/cambia")
-    Call<String> cambiaResultadosMuni();
+    Call<String> cambiaResultadosMunicipio();
 
     @GET("/autonomicas/resultados/sale")
     Call<String> saleResultadosAuto();
@@ -150,11 +150,29 @@ public interface IClienteApi {
     @GET("/autonomicas/carmen/faldon/sale")
     Call<String> saleFaldonAutonomicas();
 
+    @GET("/autonomicas/carmen/faldon/actualiza")
+    Call<String> actualizaFaldonAutonomicas();
+
+    @GET("/autonomicas/carmen/faldon/encadena")
+    Call<String> encadenaFaldonAutonomicas();
+
+    @GET("/autonomicas/carmen/faldon/deAutoaMuni")
+    Call<String> deAutoaMuniFaldonAutonomicas();
+
     @GET("/municipales/carmen/faldon/entra")
     Call<String> entraFaldonMunicipales();
 
     @GET("/municipales/carmen/faldon/sale")
     Call<String> saleFaldonMunicipales();
+
+    @GET("/municipales/carmen/faldon/actualiza")
+    Call<String> actualizaFaldonMunicipales();
+
+    @GET("/municipales/carmen/faldon/encadena")
+    Call<String> encadenaFaldonMunicipales();
+
+    @GET("/municipales/carmen/faldon/deMuniaAuto")
+    Call<String> deMuniaAutoFaldonMunicipales();
 
     //DESCARGA DE ARCHIVOS
     @GET("/autonomicas/circunscripciones/selected/oficial/{codigo}")
