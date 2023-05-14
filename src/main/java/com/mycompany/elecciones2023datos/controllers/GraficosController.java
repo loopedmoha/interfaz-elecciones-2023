@@ -324,5 +324,14 @@ public class GraficosController {
         }
     }
 
+    public void resetIPF() {
+        try {
+            clienteApi.resetIPFAuto().execute();
+            clienteApi.resetIPFMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

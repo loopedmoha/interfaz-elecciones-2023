@@ -187,4 +187,11 @@ public interface IClienteApi {
     @GET("/municipales/circunscripciones/selected/sondeo/{codigo}")
     Call<String> selectedMunicipalesSondeo(@Path("codigo") String codigo);
 
+    //RESET
+    @GET("/municipales/reset")
+    Call<String> resetIPFMuni();
+
+    @GET("/autonomicas/reset")
+    Call<String> resetIPFAuto();
+
 }
