@@ -237,7 +237,7 @@ public class GraficosController {
 
     public void cambiaParticipacionMunicipio() {
         try {
-            clienteApi.cambiaParticipacionMunipio().execute();
+            clienteApi.cambiaParticipacionMunicipio().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -286,6 +286,54 @@ public class GraficosController {
     public void cambiaResultadosMunicipio() {
         try {
             clienteApi.cambiaResultadosMunicipio().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraSondeoResultadosAuto() {
+        try {
+            clienteApi.entraSondeoResultadosAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraSondeoResultadosMuni() {
+        try {
+            clienteApi.entraSondeoResultadosMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleSondeoResultadosAuto() {
+        try {
+            clienteApi.saleSondeoResultadosAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleSondeoResultadosMuni() {
+        try {
+            clienteApi.saleSondeoResultadosMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void cambiaSondeoResultadosComunidad() {
+        try {
+            clienteApi.cambiaSondeoResultadosComunidad().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void cambiaSondeoResultadosMunicipio() {
+        try {
+            clienteApi.cambiaSondeoResultadosMunicipio().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

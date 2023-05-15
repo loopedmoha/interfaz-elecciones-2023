@@ -102,7 +102,7 @@ public interface IClienteApi {
     Call<String> cambiaParticipacionComunidad();
 
     @GET("/municipales/participacion/cambia")
-    Call<String> cambiaParticipacionMunipio();
+    Call<String> cambiaParticipacionMunicipio();
 
     @GET("/autonomicas/participacion/sale")
     Call<String> saleParticipacionAuto();
@@ -131,6 +131,25 @@ public interface IClienteApi {
 
     @GET("/municipales/resultados/sale")
     Call<String> saleResultadosMuni();
+
+    //Sondeo
+    @GET("/autonomicas/resultados/sondeo/entra")
+    Call<String> entraSondeoResultadosAuto();
+
+    @GET("/municipales/resultados/sondeo/entra")
+    Call<String> entraSondeoResultadosMuni();
+
+    @GET("/autonomicas/resultados/sondeo/cambia")
+    Call<String> cambiaSondeoResultadosComunidad();
+
+    @GET("/municipales/resultados/sondeo/cambia")
+    Call<String> cambiaSondeoResultadosMunicipio();
+
+    @GET("/autonomicas/resultados/sondeo/sale")
+    Call<String> saleSondeoResultadosAuto();
+
+    @GET("/municipales/resultados/sondeo/sale")
+    Call<String> saleSondeoResultadosMuni();
 
     /*
      **************** CARTONES ARCOS

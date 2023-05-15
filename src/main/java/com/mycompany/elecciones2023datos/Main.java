@@ -45,7 +45,10 @@ public class Main extends javax.swing.JFrame {
     TreeMap<String, List<Circunscripcion>> circunscripcionesAutonomicas = new TreeMap<>();
     TreeMap<String, List<Circunscripcion>> cicunscripcionesMunicipales = new TreeMap<>();
     TreeMap<String, String> nombreCodigo = new TreeMap<>();
+    TreeMap<String, String> nombreCodigoAuto = new TreeMap<>();
     TreeMap<String, String> nombreCodigoMunicipal = new TreeMap<>();
+
+    TreeMap<String, String> nombreCodigoAutonomicas = new TreeMap<>();
 
     String selectedDb = "";
 
@@ -72,15 +75,28 @@ public class Main extends javax.swing.JFrame {
 
     public void initCircunscripcionesAutonomicas() {
         try {
-            var autonomias = clienteApi.getAllAutonomiasAuto().execute().body();
-            autonomias.stream()
+            var autonomiasMuni = clienteApi.getAllAutonomiasMuni().execute().body();
+            autonomiasMuni.stream().filter(x -> x.getCodigo().endsWith("00000"))
                     .map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> circunscripcionesAutonomicas.put(auto, null));
-            for (Circunscripcion autonomia : autonomias) {
+
+            var autonomiasAuto = clienteApi.getAllAutonomiasAuto().execute().body();
+            autonomiasAuto.stream().map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> circunscripcionesAutonomicas.put(auto, null));
+
+            for (Circunscripcion autonomia : autonomiasMuni) {
                 var auxList = clienteApi.getCircunscripcionesByAutonomia(autonomia.getCodigo()).execute().body();
                 auxList.sort(Comparator.comparing(Circunscripcion::getCodigo));
-                nombreCodigo.put(autonomia.getNombreCircunscripcion(), autonomia.getCodigo());
+                nombreCodigo.put(autonomia.getNombreCircunscripcion().replaceAll(" ", ""), autonomia.getCodigo());
                 auxList.forEach(x -> {
                     nombreCodigoMunicipal.put(x.getNombreCircunscripcion(), x.getCodigo());
+                });
+                circunscripcionesAutonomicas.put(autonomia.getNombreCircunscripcion(), auxList);
+            }
+            for (Circunscripcion autonomia : autonomiasAuto) {
+                var auxList = clienteApi.getCircunscripcionesByAutonomia(autonomia.getCodigo()).execute().body();
+                auxList.sort(Comparator.comparing(Circunscripcion::getCodigo));
+                nombreCodigoAuto.put(autonomia.getNombreCircunscripcion(), autonomia.getCodigo());
+                auxList.forEach(x -> {
+                    nombreCodigoAutonomicas.put(x.getNombreCircunscripcion(), x.getCodigo());
                 });
                 circunscripcionesAutonomicas.put(autonomia.getNombreCircunscripcion(), auxList);
             }
@@ -109,78 +125,38 @@ public class Main extends javax.swing.JFrame {
         }
     }
 
-    public void showDataTable(String nombre) {
+    public void showDataTable(CarmenDTO carmen) {
         //Solo hay seleccioanda una autonomia
-        CarmenDTO carmenDTO = null;
-        try {
-            switch (selectedDb) {
-                case "DA" -> carmenDTO = clienteApi.getCarmenDtoOficialAuto(nombreCodigo.get(nombre)).execute().body();
-                case "SA" -> carmenDTO = clienteApi.getCarmenDtoSondeoAuto(nombreCodigo.get(nombre)).execute().body();
-                case "SM" -> carmenDTO = clienteApi.getCarmenDtoSondeoMuni(nombreCodigo.get(nombre)).execute().body();
-                default -> carmenDTO = clienteApi.getCarmenDtoOficialMuni(nombreCodigo.get(nombre)).execute().body();
-            }
-            // CarmenDTO carmenDTO = clienteApi.getCarmenDto(nombreCodigo.get(nombre)).execute().body();
-            List<CpData> datos = CpData.fromCarmenDto(carmenDTO);
-            printData(datos);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-
-
-        }
+        //CarmenDTO carmenDTO = null;
+        //    switch (selectedDb) {
+        //        case "DA" -> carmenDTO = clienteApi.getCarmenDtoOficialAuto(nombreCodigo.get(nombre)).execute().body();
+        //        case "SA" -> carmenDTO = clienteApi.getCarmenDtoSondeoAuto(nombreCodigo.get(nombre)).execute().body();
+        //        case "SM" -> carmenDTO = clienteApi.getCarmenDtoSondeoMuni(nombreCodigo.get(nombre)).execute().body();
+        //        default -> carmenDTO = clienteApi.getCarmenDtoOficialMuni(nombreCodigo.get(nombre)).execute().body();
+        //    }
+        //    // CarmenDTO carmenDTO = clienteApi.getCarmenDto(nombreCodigo.get(nombre)).execute().body();
+        List<CpData> datos = CpData.fromCarmenDto(carmen);
+        printData(datos);
     }
 
-    public void showDataTableOficialMunicipio(String nombre) {
-        var a = nombreCodigoMunicipal.get(nombre);
-
-        try {
-            CarmenDTO carmenDTO = clienteApi.getCarmenDtoOficialMuni(nombreCodigoMunicipal.get(nombre)).execute().body();
-            // System.out.println(carmenDTO);
-            assert carmenDTO != null;
-            List<CpData> datos = CpData.fromCarmenDto(carmenDTO);
-            printData(datos);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void showDataTableOficialMunicipio(CarmenDTO carmen) {
+        List<CpData> datos = CpData.fromCarmenDto(carmen);
+        printData(datos);
     }
 
-    public void showDataTableSondeoMunicipio(String nombre) {
-        var a = nombreCodigoMunicipal.get(nombre);
-
-        try {
-            CarmenDTO carmenDTO = clienteApi.getCarmenDtoSondeoMuni(nombreCodigoMunicipal.get(nombre)).execute().body();
-            //  System.out.println(carmenDTO);
-            assert carmenDTO != null;
-            List<CpData> datos = CpData.fromCarmenDto(carmenDTO);
-            printData(datos);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void showDataTableSondeoMunicipio(CarmenDTO carmen) {
+        List<CpData> datos = CpData.fromCarmenDto(carmen);
+        printData(datos);
     }
 
-    public void showDataTableOficialAutonomicas(String nombre) {
-        try {
-            CarmenDTO carmenDTO = clienteApi.getCarmenDtoOficialAuto(nombreCodigo.get(nombre)).execute().body();
-            // System.out.println(carmenDTO);
-            assert carmenDTO != null;
-            List<CpData> datos = CpData.fromCarmenDto(carmenDTO);
-            printData(datos);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-
-        }
+    public void showDataTableOficialAutonomicas(CarmenDTO carmen) {
+        List<CpData> datos = CpData.fromCarmenDto(carmen);
+        printData(datos);
     }
 
-    public void showDataTableSondeoAutonomicas(String nombre) {
-        try {
-            CarmenDTO carmenDTO = clienteApi.getCarmenDtoSondeoAuto(nombreCodigo.get(nombre)).execute().body();
-            // System.out.println(carmenDTO);
-            assert carmenDTO != null;
-            List<CpData> datos = CpData.fromCarmenDto(carmenDTO);
-            printData(datos);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-
-        }
+    public void showDataTableSondeoAutonomicas(CarmenDTO carmen) {
+        List<CpData> datos = CpData.fromCarmenDto(carmen);
+        printData(datos);
     }
 
     public void printData(List<CpData> list) {
@@ -338,10 +314,8 @@ public class Main extends javax.swing.JFrame {
         };
 
         tableModel.addColumn("COMUNIDADES");
-        for (String s : circunscripcionesAutonomicas.keySet()) {
-            tableModel.addRow(new Object[]{s});
-        }
         tablaComunidades.setModel(tableModel);
+        rellenarCCAA(1);
         JScrollPane scrollPane = new JScrollPane(tablaComunidades);
         tablaComunidades.getTableHeader().setResizingAllowed(false);
         jScrollPane2.setViewportView(tablaComunidades);
@@ -351,11 +325,11 @@ public class Main extends javax.swing.JFrame {
             CarmenDTO carmen = null;
             isComunidad = true;
             isMunicipio = false;
-            if (tipoElecciones == 2 || tipoElecciones == 4) {
-                int selectedRow = tablaComunidades.getSelectedRow();
-                if (selectedRow != -1) {
+            int selectedRow = tablaComunidades.getSelectedRow();
+            if (selectedRow != -1) {
+                if (tipoElecciones == 2 || tipoElecciones == 4) {
                     loadSelectedAutonomicas((String) tablaComunidades.getValueAt(selectedRow, 0));
-                    codAutonomia = nombreCodigo.get(tablaComunidades.getValueAt(selectedRow, 0));
+                    codAutonomia = nombreCodigo.get(((String) tablaComunidades.getValueAt(selectedRow, 0)).replaceAll(" ", ""));
                     if (oficiales) {
                         try {
                             carmen = clienteApi.getCarmenDtoOficialAuto(codAutonomia).execute().body();
@@ -369,16 +343,13 @@ public class Main extends javax.swing.JFrame {
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
-                        //graficosController.selectedAutonomicasSondeo(codAutonomia);
+                        graficosController.selectedAutonomicasSondeo(codAutonomia);
                     }
-                    showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
-                }
-
-            } else {
-                int selectedRow = tablaComunidades.getSelectedRow();
-                if (selectedRow != -1) {
+                    //showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
+                    showDataTable(carmen);
+                } else {
                     loadSelectedMunicipales((String) tablaComunidades.getValueAt(selectedRow, 0));
-                    codAutonomia = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(selectedRow, 0));
+                    codAutonomia = nombreCodigo.get(tablaComunidades.getValueAt(selectedRow, 0));
                     //TODO:Hacer un switch aqui para distinguir con qué datos actualizamos: Oficiales A o M, Sondeo A o M
                     if (oficiales) {
                         try {
@@ -393,16 +364,16 @@ public class Main extends javax.swing.JFrame {
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
-                        //graficosController.selectedMunicipalesSondeo(codAutonomia);
+                        graficosController.selectedMunicipalesSondeo(codAutonomia);
                     }
-                    showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
+                    //showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
+                    showDataTable(carmen);
                 }
-
+                lblEscrutado.setText(carmen.getCircunscripcion().getEscrutado() + "");
+                lblParticipacion.setText(carmen.getCircunscripcion().getParticipacion() + "");
+                lblPartHistorica.setText(carmen.getCircunscripcion().getParticipacionHist() + "");
+                lblEscanosTotales.setText(carmen.getCircunscripcion().getEscanios() + "");
             }
-            lblEscrutado.setText(carmen.getCircunscripcion().getEscrutado() + "");
-            lblParticipacion.setText(carmen.getCircunscripcion().getParticipacion() + "");
-            lblPartHistorica.setText(carmen.getCircunscripcion().getParticipacionHist() + "");
-            lblEscanosTotales.setText(carmen.getCircunscripcion().getEscanios() + "");
             if (tablaComunidades.getColumnModel().getColumnCount() > 0) {
                 tablaComunidades.getColumnModel().getColumn(0).setResizable(false);
             }
@@ -778,11 +749,12 @@ public class Main extends javax.swing.JFrame {
             int selectedRow = tablaMunicipios.getSelectedRow();
             if (selectedRow != -1) {
                 String nombreMunicipio = (String) tablaMunicipios.getValueAt(selectedRow, 0);
-                String codMunicipio = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
+                String codMunicipio;
                 CarmenDTO carmen = null;
                 isComunidad = false;
                 isMunicipio = true;
                 if (tipoElecciones == 2 || tipoElecciones == 4) {
+                    codMunicipio = nombreCodigoAutonomicas.get(tablaMunicipios.getValueAt(selectedRow, 0));
                     if (oficiales) {
                         try {
                             carmen = clienteApi.getCarmenDtoOficialAuto(codMunicipio).execute().body();
@@ -796,9 +768,10 @@ public class Main extends javax.swing.JFrame {
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
-                        //graficosController.selectedAutonomicasSondeo(codMunicipio);
+                        graficosController.selectedAutonomicasSondeo(codMunicipio);
                     }
                 } else {
+                    codMunicipio = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
                     if (oficiales) {
                         try {
                             carmen = clienteApi.getCarmenDtoOficialMuni(codMunicipio).execute().body();
@@ -820,10 +793,10 @@ public class Main extends javax.swing.JFrame {
                 lblPartHistorica.setText(carmen.getCircunscripcion().getParticipacionHist() + "");
                 lblEscanosTotales.setText(carmen.getCircunscripcion().getEscanios() + "");
                 switch (selectedDb) {
-                    case "DA" -> showDataTableOficialAutonomicas(nombreMunicipio);
-                    case "SA" -> showDataTableSondeoAutonomicas(nombreMunicipio);
-                    case "SM" -> showDataTableSondeoMunicipio(nombreMunicipio);
-                    default -> showDataTableOficialMunicipio(nombreMunicipio);
+                    case "DA" -> showDataTableOficialAutonomicas(carmen);
+                    case "SA" -> showDataTableSondeoAutonomicas(carmen);
+                    case "SM" -> showDataTableSondeoMunicipio(carmen);
+                    default -> showDataTableOficialMunicipio(carmen);
                 }
             }
         });
@@ -871,7 +844,7 @@ public class Main extends javax.swing.JFrame {
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
-                        //graficosController.selectedAutonomicasSondeo(codMunicipio);
+                        graficosController.selectedAutonomicasSondeo(codMunicipio);
                     }
                 } else {
                     if (oficiales) {
@@ -887,7 +860,7 @@ public class Main extends javax.swing.JFrame {
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
-                        //graficosController.selectedMunicipalesSondeo(codMunicipio);
+                        graficosController.selectedMunicipalesSondeo(codMunicipio);
                     }
                 }
                 lblEscrutado.setText(carmen.getCircunscripcion().getEscrutado() + "");
@@ -895,10 +868,10 @@ public class Main extends javax.swing.JFrame {
                 lblPartHistorica.setText(carmen.getCircunscripcion().getParticipacionHist() + "");
                 lblEscanosTotales.setText(carmen.getCircunscripcion().getEscanios() + "");
                 switch (selectedDb) {
-                    case "DA" -> showDataTableOficialAutonomicas(nombreMunicipio);
-                    case "SA" -> showDataTableSondeoAutonomicas(nombreMunicipio);
-                    case "SM" -> showDataTableSondeoMunicipio(nombreMunicipio);
-                    default -> showDataTableOficialMunicipio(nombreMunicipio);
+                    case "DA" -> showDataTableOficialAutonomicas(carmen);
+                    case "SA" -> showDataTableSondeoAutonomicas(carmen);
+                    case "SM" -> showDataTableSondeoMunicipio(carmen);
+                    default -> showDataTableOficialMunicipio(carmen);
                 }
             }
         });
@@ -1053,12 +1026,12 @@ public class Main extends javax.swing.JFrame {
                     //RESULTADOS
                     case 0 -> {
                         if (!resultadosIn) {
-                            graficosController.entraResultadosMuni();
+                            graficosController.entraSondeoResultadosMuni();
                             resultadosIn = true;
                         } else if (isComunidad) {
-                            graficosController.cambiaResultadosComunidad();
+                            graficosController.cambiaSondeoResultadosComunidad();
                         } else if (isMunicipio) {
-                            graficosController.cambiaResultadosMunicipio();
+                            graficosController.cambiaSondeoResultadosMunicipio();
                         }
                     }
                     //PARTICIPACION
@@ -1124,12 +1097,12 @@ public class Main extends javax.swing.JFrame {
                     //RESULTADOS
                     case 0 -> {
                         if (!resultadosIn) {
-                            graficosController.entraResultadosAuto();
+                            graficosController.entraSondeoResultadosAuto();
                             resultadosIn = true;
                         } else if (isComunidad) {
-                            graficosController.cambiaResultadosComunidad();
+                            graficosController.cambiaSondeoResultadosComunidad();
                         } else if (isMunicipio) {
-                            graficosController.cambiaResultadosMunicipio();
+                            graficosController.cambiaSondeoResultadosMunicipio();
                         }
                     }
                     //PARTICIPACION
@@ -1312,7 +1285,7 @@ public class Main extends javax.swing.JFrame {
                 switch (TablaCartones.getSelectedRow()) {
                     //RESULTADOS
                     case 0 -> {
-                        graficosController.saleResultadosMuni();
+                        graficosController.saleSondeoResultadosMuni();
                         resultadosIn = false;
                     }
                     //PARTICIPACION
@@ -1352,7 +1325,7 @@ public class Main extends javax.swing.JFrame {
                 switch (TablaCartones.getSelectedRow()) {
                     //RESULTADOS
                     case 0 -> {
-                        graficosController.saleResultadosAuto();
+                        graficosController.saleSondeoResultadosAuto();
                         resultadosIn = false;
                     }
                     //PARTICIPACION
@@ -1391,13 +1364,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaleActionPerformed
 
     private void btnSondeoAutonomicasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSondeoAutonomicasActionPerformed
-
         vaciarTablas();
-
         tipoElecciones = 4;
         oficiales = false;
         resaltarBoton(btnSondeoAutonomicas);
         selectedDb = "SA";
+        rellenarCCAA(tipoElecciones);
     }//GEN-LAST:event_btnSondeoAutonomicasActionPerformed
 
     private void btnDatosAutonomicasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosAutonomicasActionPerformed
@@ -1406,6 +1378,7 @@ public class Main extends javax.swing.JFrame {
         oficiales = true;
         resaltarBoton(btnDatosAutonomicas);
         selectedDb = "DA";
+        rellenarCCAA(tipoElecciones);
     }//GEN-LAST:event_btnDatosAutonomicasActionPerformed
 
     private void btnSondeoMunicipalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSondeoMunicipalesActionPerformed
@@ -1414,6 +1387,7 @@ public class Main extends javax.swing.JFrame {
         oficiales = false;
         resaltarBoton(btnSondeoMunicipales);
         selectedDb = "SM";
+        rellenarCCAA(tipoElecciones);
     }//GEN-LAST:event_btnSondeoMunicipalesActionPerformed
 
     private void btnDatosMunicipalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosMunicipalesActionPerformed
@@ -1422,31 +1396,49 @@ public class Main extends javax.swing.JFrame {
         oficiales = true;
         resaltarBoton(btnDatosMunicipales);
         selectedDb = "DM";
+        rellenarCCAA(tipoElecciones);
     }//GEN-LAST:event_btnDatosMunicipalesActionPerformed
 
     private void vaciarTablas() {
+        ((javax.swing.table.DefaultTableModel) tablaComunidades.getModel()).setRowCount(0);
         ((javax.swing.table.DefaultTableModel) tablaMunicipios.getModel()).setRowCount(0);
         ((javax.swing.table.DefaultTableModel) tablaDatos.getModel()).setRowCount(0);
     }
 
+    private void rellenarCCAA(int tipo) {
+        switch (tipo) {
+            case 1, 3 -> {
+                DefaultTableModel tableModel = (DefaultTableModel) tablaComunidades.getModel();
+                List<String> ccaa = cicunscripcionesMunicipales.keySet().stream().filter(x -> !x.endsWith("00000")).toList().subList(0, cicunscripcionesMunicipales.keySet().size() - 2);
+                for (String s : ccaa) {
+                    tableModel.addRow(new Object[]{s});
+                }
+                tablaComunidades.setModel(tableModel);
+            }
+            case 2, 4 -> {
+                DefaultTableModel tableModel = (DefaultTableModel) tablaComunidades.getModel();
+                for (String s : nombreCodigoAuto.keySet()) {
+                    tableModel.addRow(new Object[]{s});
+                }
+                tablaComunidades.setModel(tableModel);
+            }
+        }
+    }
+
     private void TablaCartonesHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_TablaCartonesHierarchyChanged
-        // TODO add your handling code here:
     }//GEN-LAST:event_TablaCartonesHierarchyChanged
 
     private void btnAvance1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvance1ActionPerformed
-        // TODO add your handling code here:
 
         resaltarBotonAvances(btnAvance1);
     }//GEN-LAST:event_btnAvance1ActionPerformed
 
     private void btnAvance2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvance2ActionPerformed
-        // TODO add your handling code here:
 
         resaltarBotonAvances(btnAvance2);
     }//GEN-LAST:event_btnAvance2ActionPerformed
 
     private void btnAvance3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvance3ActionPerformed
-        // TODO add your handling code here:
         resaltarBotonAvances(btnAvance3);
     }//GEN-LAST:event_btnAvance3ActionPerformed
 
