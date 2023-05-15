@@ -19,6 +19,9 @@ public class CpData {
     int escanosHist = 0;
     double porcentajeVoto = 0;
     int votantes = 0;
+    private int escanos_desde_sondeo = 0;
+    private int escanos_hasta_sondeo = 0;
+    private double porcentajeVotoSondeo = 0.0;
 
 
     public static List<CpData> fromCarmenDto(CarmenDTO carmen) {
@@ -27,7 +30,8 @@ public class CpData {
             System.out.println(cpDTO);
             res.add(new CpData(
                     cpDTO.getCodigoPartido(), cpDTO.getSiglas(), cpDTO.getEscanos_desde(), cpDTO.getEscanos_hasta(),
-                    cpDTO.getEscanos_hasta_hist(), cpDTO.getPorcentajeVoto(), cpDTO.getNumVotantes()));
+                    cpDTO.getEscanos_hasta_hist(), cpDTO.getPorcentajeVoto(), cpDTO.getNumVotantes(),
+                    cpDTO.getEscanos_desde_sondeo(), cpDTO.getEscanos_hasta_sondeo(), cpDTO.getPorcentajeVotoSondeo()));
         }
         return res;
     }

@@ -339,6 +339,105 @@ public class GraficosController {
         }
     }
 
+    //CARTONES ARCOS
+
+    public void entraArcoAuto() {
+        try {
+            clienteApi.arcoEntraAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleArcoAuto() {
+        try {
+            clienteApi.arcoSaleAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void pactosArcoAuto() {
+        try {
+            clienteApi.arcoPactosAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraArcoAutoSondeo() {
+        try {
+            clienteApi.arcoSondeoEntraAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleArcoAutoSondeo() {
+        try {
+            clienteApi.arcoSondeoSaleAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void pactosArcoAutoSondeo() {
+        try {
+            clienteApi.arcoSondeoPactosAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraArcoMuni() {
+        try {
+            clienteApi.arcoEntraMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleArcoMuni() {
+        try {
+            clienteApi.arcoSaleMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void pactosArcoMuni() {
+        try {
+            clienteApi.arcoPactosMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraArcoMuniSondeo() {
+        try {
+            clienteApi.arcoSondeoEntraMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleArcoMuniSondeo() {
+        try {
+            clienteApi.arcoSondeoSaleMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void pactosArcoMuniSondeo() {
+        try {
+            clienteApi.arcoSondeoPactosMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //SELECTED
 
     public void selectedAutonomicasOficiales(String codigo) {
         try {
@@ -371,6 +470,8 @@ public class GraficosController {
             throw new RuntimeException(e);
         }
     }
+
+    //RESET
 
     public void resetIPF() {
         try {

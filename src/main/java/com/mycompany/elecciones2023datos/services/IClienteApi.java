@@ -157,8 +157,45 @@ public interface IClienteApi {
     @GET("/autonomicas/load")
     Call<String> loadAutonomicas();
 
+    @GET("/autonomicas/arco/entra")
+    Call<String> arcoEntraAuto();
+
+    @GET("/autonomicas/arco/sale")
+    Call<String> arcoSaleAuto();
+
+    @GET("/autonomicas/arco/pactos")
+    Call<String> arcoPactosAuto();
+
+    @GET("/autonomicas/arco/sondeo/entra")
+    Call<String> arcoSondeoEntraAuto();
+
+    @GET("/autonomicas/arco/sondeo/sale")
+    Call<String> arcoSondeoSaleAuto();
+
+    @GET("/autonomicas/arco/sondeo/pactos")
+    Call<String> arcoSondeoPactosAuto();
+
     @GET("/municipales/load")
     Call<String> loadMunicipales();
+
+    @GET("/autonomicas/arco/entra")
+    Call<String> arcoEntraMuni();
+
+    @GET("/autonomicas/arco/sale")
+    Call<String> arcoSaleMuni();
+
+    @GET("/autonomicas/arco/pactos")
+    Call<String> arcoPactosMuni();
+
+    @GET("/autonomicas/arco/sondeo/entra")
+    Call<String> arcoSondeoEntraMuni();
+
+    @GET("/autonomicas/arco/sondeo/sale")
+    Call<String> arcoSondeoSaleMuni();
+
+    @GET("/autonomicas/arco/sondeo/pactos")
+    Call<String> arcoSondeoPactosMuni();
+
 
     /*
      **************** FALDON INFERIOR
