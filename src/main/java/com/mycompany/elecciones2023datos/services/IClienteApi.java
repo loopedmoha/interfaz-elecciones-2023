@@ -94,9 +94,13 @@ public interface IClienteApi {
 
     @GET("/autonomicas/participacion/entra")
     Call<String> entraParticipacionAuto();
+    @GET("/autonomicas/participacion/entra/delay")
+    Call<String> entraParticipacionAutoDelay();
 
     @GET("/municipales/participacion/entra")
     Call<String> entraParticipacionMuni();
+    @GET("/municipales/participacion/entra/delay")
+    Call<String> entraParticipacionMuniDelay();
 
     @GET("/autonomicas/participacion/cambia")
     Call<String> cambiaParticipacionComunidad();
@@ -116,9 +120,13 @@ public interface IClienteApi {
 
     @GET("/autonomicas/resultados/entra")
     Call<String> entraResultadosAuto();
+    @GET("/autonomicas/resultados/entra/delay")
+    Call<String> entraResultadosAutoDelay();
 
     @GET("/municipales/resultados/entra")
     Call<String> entraResultadosMuni();
+    @GET("/municipales/resultados/entra/delay")
+    Call<String> entraResultadosMuniDelay();
 
     @GET("/autonomicas/resultados/cambia")
     Call<String> cambiaResultadosComunidad();
@@ -135,9 +143,13 @@ public interface IClienteApi {
     //Sondeo
     @GET("/autonomicas/resultados/sondeo/entra")
     Call<String> entraSondeoResultadosAuto();
+    @GET("/autonomicas/resultados/sondeo/entra/delay")
+    Call<String> entraSondeoResultadosAutoDelay();
 
     @GET("/municipales/resultados/sondeo/entra")
     Call<String> entraSondeoResultadosMuni();
+    @GET("/municipales/resultados/sondeo/entra/delay")
+    Call<String> entraSondeoResultadosMuniDelay();
 
     @GET("/autonomicas/resultados/sondeo/cambia")
     Call<String> cambiaSondeoResultadosComunidad();
@@ -159,6 +171,8 @@ public interface IClienteApi {
 
     @GET("/autonomicas/arco/entra")
     Call<String> arcoEntraAuto();
+    @GET("/autonomicas/arco/entra/delay")
+    Call<String> arcoEntraAutoDelay();
 
     @GET("/autonomicas/arco/sale")
     Call<String> arcoSaleAuto();
@@ -168,6 +182,8 @@ public interface IClienteApi {
 
     @GET("/autonomicas/arco/sondeo/entra")
     Call<String> arcoSondeoEntraAuto();
+    @GET("/autonomicas/arco/sondeo/entra/delay")
+    Call<String> arcoSondeoEntraAutoDelay();
 
     @GET("/autonomicas/arco/sondeo/sale")
     Call<String> arcoSondeoSaleAuto();
@@ -180,6 +196,8 @@ public interface IClienteApi {
 
     @GET("/autonomicas/arco/entra")
     Call<String> arcoEntraMuni();
+    @GET("/autonomicas/arco/entra/delay")
+    Call<String> arcoEntraMuniDelay();
 
     @GET("/autonomicas/arco/sale")
     Call<String> arcoSaleMuni();
@@ -189,6 +207,8 @@ public interface IClienteApi {
 
     @GET("/autonomicas/arco/sondeo/entra")
     Call<String> arcoSondeoEntraMuni();
+    @GET("/autonomicas/arco/sondeo/entra/delay")
+    Call<String> arcoSondeoEntraMuniDelay();
 
     @GET("/autonomicas/arco/sondeo/sale")
     Call<String> arcoSondeoSaleMuni();

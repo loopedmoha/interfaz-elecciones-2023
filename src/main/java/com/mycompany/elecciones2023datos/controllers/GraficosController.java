@@ -252,9 +252,24 @@ public class GraficosController {
         }
     }
 
+    public void entraParticipacionAutoDelay() {
+        try {
+            clienteApi.entraParticipacionAutoDelay().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void entraParticipacionMuni() {
         try {
             clienteApi.entraParticipacionMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraParticipacionMuniDelay() {
+        try {
+            clienteApi.entraParticipacionMuniDelay().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -300,6 +315,14 @@ public class GraficosController {
         }
     }
 
+    public void entraResultadosAutoDelay() {
+        try {
+            clienteApi.entraResultadosAutoDelay().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void entraResultadosMuni() {
         try {
             clienteApi.entraResultadosMuni().execute();
@@ -307,6 +330,15 @@ public class GraficosController {
             throw new RuntimeException(e);
         }
     }
+
+    public void entraResultadosMuniDelay() {
+        try {
+            clienteApi.entraResultadosMuniDelay().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void saleResultadosAuto() {
         try {
@@ -348,9 +380,24 @@ public class GraficosController {
         }
     }
 
+    public void entraSondeoResultadosAutoDelay() {
+        try {
+            clienteApi.entraSondeoResultadosAutoDelay().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void entraSondeoResultadosMuni() {
         try {
             clienteApi.entraSondeoResultadosMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraSondeoResultadosMuniDelay() {
+        try {
+            clienteApi.entraSondeoResultadosMuniDelay().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -398,6 +445,13 @@ public class GraficosController {
         }
     }
 
+    public void entraArcoAutoDelay() {
+        try {
+            clienteApi.arcoEntraAutoDelay().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void saleArcoAuto() {
         try {
             clienteApi.arcoSaleAuto().execute();
@@ -417,6 +471,13 @@ public class GraficosController {
     public void entraArcoAutoSondeo() {
         try {
             clienteApi.arcoSondeoEntraAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void entraArcoAutoSondeoDelay() {
+        try {
+            clienteApi.arcoSondeoEntraAutoDelay().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -446,6 +507,14 @@ public class GraficosController {
         }
     }
 
+    public void entraArcoMuniDelay() {
+        try {
+            clienteApi.arcoEntraMuniDelay().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void saleArcoMuni() {
         try {
             clienteApi.arcoSaleMuni().execute();
@@ -470,6 +539,13 @@ public class GraficosController {
         }
     }
 
+    public void entraArcoMuniSondeoDelay() {
+        try {
+            clienteApi.arcoSondeoEntraMuniDelay().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void saleArcoMuniSondeo() {
         try {
             clienteApi.arcoSondeoSaleMuni().execute();
