@@ -929,7 +929,7 @@ public class Main extends javax.swing.JFrame {
                 switch (TablaFaldones.getSelectedRow()) {
                     //INFERIOR
                     case 0 -> {
-                        if (!inferiorMuniIn && !inferiorAutoIn) {
+                        if (!inferiorMuniIn && !inferiorAutoIn && !inferiorAutoSondeoIn && !inferiorMuniSondeoIn) {
                             graficosController.entraFaldonMuni();
                             inferiorMuniIn = true;
                         } else if (inferiorAutoIn) {
@@ -940,8 +940,12 @@ public class Main extends javax.swing.JFrame {
                             graficosController.encadenaFaldonMuni();
                         } else if (inferiorAutoSondeoIn) {
                             graficosController.deAutoSondeoAMuni();
+                            inferiorAutoSondeoIn = false;
+                            inferiorMuniIn = true;
                         } else if (inferiorMuniSondeoIn) {
                             graficosController.deMuniSondeoAMuni();
+                            inferiorMuniSondeoIn = false;
+                            inferiorMuniIn = true;
                         }
                     }
                     //LATERAL
@@ -1009,7 +1013,7 @@ public class Main extends javax.swing.JFrame {
                 switch (TablaFaldones.getSelectedRow()) {
                     //INFERIOR
                     case 0 -> {
-                        if (!inferiorMuniIn && !inferiorAutoIn) {
+                        if (!inferiorMuniIn && !inferiorAutoIn && !inferiorAutoSondeoIn && !inferiorMuniSondeoIn) {
                             graficosController.entraFaldonAuto();
                             inferiorAutoIn = true;
                         } else if (inferiorMuniIn) {
@@ -1018,6 +1022,14 @@ public class Main extends javax.swing.JFrame {
                             inferiorAutoIn = true;
                         } else if (inferiorAutoIn) {
                             graficosController.encadenaFaldonAuto();
+                        } else if (inferiorAutoSondeoIn) {
+                            graficosController.deAutoSondeoAAuto();
+                            inferiorAutoSondeoIn = false;
+                            inferiorAutoIn = true;
+                        } else if (inferiorMuniSondeoIn) {
+                            graficosController.deMuniSondeoAAuto();
+                            inferiorMuniSondeoIn = false;
+                            inferiorAutoIn = true;
                         }
                     }
                     //LATERAL
@@ -1086,15 +1098,20 @@ public class Main extends javax.swing.JFrame {
                     //INFERIOR
                     //TODO: ENCADENA
                     case 0 -> {
-                        if (!inferiorMuniIn && !inferiorAutoIn) {
+                        if (!inferiorMuniIn && !inferiorAutoIn && !inferiorAutoSondeoIn && !inferiorMuniSondeoIn) {
                             graficosController.entraFaldonMuni();
                             inferiorMuniSondeoIn = true;
-                        } else if (inferiorAutoIn) {
-                            graficosController.deAutoaMuniFaldonAuto();
-                            inferiorMuniIn = true;
-                            inferiorAutoIn = false;
-                        } else if (inferiorMuniIn) {
+                        } else if (inferiorAutoSondeoIn) {
+                            graficosController.deAutoSondeoAMuniSondeo();
+                            inferiorMuniSondeoIn = true;
+                            inferiorAutoSondeoIn = false;
+                        } else if (inferiorMuniSondeoIn) {
                             graficosController.encadenaFaldonMuni();
+                        } else if (inferiorMuniIn || inferiorAutoIn) {
+                            inferiorMuniSondeoIn = true;
+                            graficosController.entraFaldonMuni();
+                            inferiorMuniIn = false;
+                            inferiorAutoIn = false;
                         }
                     }
                     //LATERAL
@@ -1166,12 +1183,17 @@ public class Main extends javax.swing.JFrame {
                         if (!inferiorMuniIn && !inferiorAutoIn) {
                             graficosController.entraFaldonAuto();
                             inferiorAutoSondeoIn = true;
-                        } else if (inferiorMuniIn) {
-                            graficosController.deMuniaAutoFaldonMuni();
-                            inferiorMuniIn = false;
-                            inferiorAutoIn = true;
-                        } else if (inferiorAutoIn) {
+                        } else if (inferiorMuniSondeoIn) {
+                            graficosController.deMuniSondeoAAutoSondeo();
+                            inferiorMuniSondeoIn = false;
+                            inferiorAutoSondeoIn = true;
+                        } else if (inferiorAutoSondeoIn) {
                             graficosController.encadenaFaldonAuto();
+                        } else if (inferiorMuniIn || inferiorAutoIn) {
+                            inferiorAutoSondeoIn = true;
+                            graficosController.entraFaldonAuto();
+                            inferiorMuniIn = false;
+                            inferiorAutoIn = false;
                         }
                     }
                     //LATERAL
