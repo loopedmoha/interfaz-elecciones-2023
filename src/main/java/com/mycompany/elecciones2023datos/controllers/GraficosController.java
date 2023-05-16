@@ -114,6 +114,22 @@ public class GraficosController {
         }
     }
 
+    public void entraFaldonAutoSondeo() {
+        try {
+            clienteApi.entraFaldonAutonomicasSondeo().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleFaldonAutoSondeo() {
+        try {
+            clienteApi.saleFaldonAutonomicasSondeo().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void actualizaFaldonAuto() {
         try {
             clienteApi.actualizaFaldonAutonomicas().execute();
@@ -174,6 +190,22 @@ public class GraficosController {
     public void saleFaldonMuni() {
         try {
             clienteApi.saleFaldonMunicipales().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraFaldonMuniSondeo() {
+        try {
+            clienteApi.entraFaldonMunicipalesSondeo().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleFaldonMuniSondeo() {
+        try {
+            clienteApi.saleFaldonMunicipalesSondeo().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -259,6 +291,7 @@ public class GraficosController {
             throw new RuntimeException(e);
         }
     }
+
     public void entraParticipacionMuni() {
         try {
             clienteApi.entraParticipacionMuni().execute();
@@ -387,6 +420,7 @@ public class GraficosController {
             throw new RuntimeException(e);
         }
     }
+
     public void entraSondeoResultadosMuni() {
         try {
             clienteApi.entraSondeoResultadosMuni().execute();
@@ -452,6 +486,7 @@ public class GraficosController {
             throw new RuntimeException(e);
         }
     }
+
     public void saleArcoAuto() {
         try {
             clienteApi.arcoSaleAuto().execute();
@@ -475,6 +510,7 @@ public class GraficosController {
             throw new RuntimeException(e);
         }
     }
+
     public void entraArcoAutoSondeoDelay() {
         try {
             clienteApi.arcoSondeoEntraAutoDelay().execute();
@@ -546,6 +582,7 @@ public class GraficosController {
             throw new RuntimeException(e);
         }
     }
+
     public void saleArcoMuniSondeo() {
         try {
             clienteApi.arcoSondeoSaleMuni().execute();

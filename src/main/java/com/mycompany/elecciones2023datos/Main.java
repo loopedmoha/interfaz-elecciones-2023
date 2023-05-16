@@ -895,8 +895,11 @@ public class Main extends javax.swing.JFrame {
                     //RESULTADOS
                     case 0 -> {
                         if (!resultadosIn) {
-                            sacarCartonAnteriorMuni();
-                            graficosController.entraResultadosMuni();
+                            if (sacarCartonAnteriorMuni()) {
+                                graficosController.entraResultadosMuniDelay();
+                            } else {
+                                graficosController.entraResultadosMuni();
+                            }
                             resultadosIn = true;
                         } else if (isComunidad) {
                             graficosController.cambiaResultadosComunidad();
@@ -907,8 +910,11 @@ public class Main extends javax.swing.JFrame {
                     //PARTICIPACION
                     case 1 -> {
                         if (!participacionIn) {
-                            sacarCartonAnteriorMuni();
-                            graficosController.entraParticipacionMuni();
+                            if (sacarCartonAnteriorMuni()) {
+                                graficosController.entraParticipacionMuniDelay();
+                            } else {
+                                graficosController.entraParticipacionMuni();
+                            }
                             participacionIn = true;
                         } else if (isComunidad) {
                             graficosController.cambiaParticipacionComunidad();
@@ -919,8 +925,11 @@ public class Main extends javax.swing.JFrame {
                     //ARCO
                     case 2 -> {
                         if (!arcoIn) {
-                            sacarCartonAnteriorMuni();
-                            graficosController.entraArcoMuni();
+                            if (sacarCartonAnteriorMuni()) {
+                                graficosController.entraArcoMuniDelay();
+                            } else {
+                                graficosController.entraArcoMuni();
+                            }
                             arcoIn = true;
                         }
                     }
@@ -979,8 +988,11 @@ public class Main extends javax.swing.JFrame {
                     //RESULTADOS
                     case 0 -> {
                         if (!resultadosIn) {
-                            sacarCartonAnteriorAuto();
-                            graficosController.entraResultadosAuto();
+                            if (sacarCartonAnteriorAuto()) {
+                                graficosController.entraResultadosAutoDelay();
+                            } else {
+                                graficosController.entraResultadosAuto();
+                            }
                             resultadosIn = true;
                         } else if (isComunidad) {
                             graficosController.cambiaResultadosComunidad();
@@ -991,8 +1003,11 @@ public class Main extends javax.swing.JFrame {
                     //PARTICIPACION
                     case 1 -> {
                         if (!participacionIn) {
-                            sacarCartonAnteriorAuto();
-                            graficosController.entraParticipacionAuto();
+                            if (sacarCartonAnteriorAuto()) {
+                                graficosController.entraParticipacionAutoDelay();
+                            } else {
+                                graficosController.entraParticipacionAuto();
+                            }
                             participacionIn = true;
                         } else if (isComunidad) {
                             graficosController.cambiaParticipacionComunidad();
@@ -1003,8 +1018,11 @@ public class Main extends javax.swing.JFrame {
                     //ARCO
                     case 2 -> {
                         if (!arcoIn) {
-                            sacarCartonAnteriorAuto();
-                            graficosController.entraArcoAuto();
+                            if (sacarCartonAnteriorAuto()) {
+                                graficosController.entraArcoAutoDelay();
+                            } else {
+                                graficosController.entraArcoAuto();
+                            }
                             arcoIn = true;
                         }
                     }
@@ -1063,8 +1081,11 @@ public class Main extends javax.swing.JFrame {
                     //RESULTADOS
                     case 0 -> {
                         if (!resultadosIn) {
-                            sacarCartonAnteriorMuni();
-                            graficosController.entraSondeoResultadosMuni();
+                            if (sacarCartonAnteriorMuni()) {
+                                graficosController.entraSondeoResultadosMuniDelay();
+                            } else {
+                                graficosController.entraSondeoResultadosMuni();
+                            }
                             resultadosIn = true;
                         } else if (isComunidad) {
                             graficosController.cambiaSondeoResultadosComunidad();
@@ -1075,8 +1096,11 @@ public class Main extends javax.swing.JFrame {
                     //PARTICIPACION
                     case 1 -> {
                         if (!participacionIn) {
-                            sacarCartonAnteriorMuni();
-                            graficosController.entraParticipacionMuni();
+                            if (sacarCartonAnteriorMuni()) {
+                                graficosController.entraParticipacionMuniDelay();
+                            } else {
+                                graficosController.entraParticipacionMuni();
+                            }
                             participacionIn = true;
                         } else if (isComunidad) {
                             graficosController.cambiaParticipacionComunidad();
@@ -1087,8 +1111,12 @@ public class Main extends javax.swing.JFrame {
                     //ARCO
                     case 2 -> {
                         if (!arcoIn) {
-                            sacarCartonAnteriorMuni();
-                            graficosController.entraArcoMuniSondeo();
+                            if (sacarCartonAnteriorMuni()) {
+                                graficosController.entraArcoMuniSondeoDelay();
+                            } else {
+                                graficosController.entraArcoMuniSondeo();
+                            }
+
                             arcoIn = true;
                         }
                     }
@@ -1099,7 +1127,7 @@ public class Main extends javax.swing.JFrame {
                     //TODO: ENCADENA
                     case 0 -> {
                         if (!inferiorMuniIn && !inferiorAutoIn && !inferiorAutoSondeoIn && !inferiorMuniSondeoIn) {
-                            graficosController.entraFaldonMuni();
+                            graficosController.entraFaldonMuniSondeo();
                             inferiorMuniSondeoIn = true;
                         } else if (inferiorAutoSondeoIn) {
                             graficosController.deAutoSondeoAMuniSondeo();
@@ -1109,7 +1137,7 @@ public class Main extends javax.swing.JFrame {
                             graficosController.encadenaFaldonMuni();
                         } else if (inferiorMuniIn || inferiorAutoIn) {
                             inferiorMuniSondeoIn = true;
-                            graficosController.entraFaldonMuni();
+                            graficosController.entraFaldonMuniSondeo();
                             inferiorMuniIn = false;
                             inferiorAutoIn = false;
                         }
@@ -1145,8 +1173,11 @@ public class Main extends javax.swing.JFrame {
                     //RESULTADOS
                     case 0 -> {
                         if (!resultadosIn) {
-                            sacarCartonAnteriorAuto();
-                            graficosController.entraSondeoResultadosAuto();
+                            if (sacarCartonAnteriorAuto()) {
+                                graficosController.entraSondeoResultadosAutoDelay();
+                            } else {
+                                graficosController.entraSondeoResultadosAuto();
+                            }
                             resultadosIn = true;
                         } else if (isComunidad) {
                             graficosController.cambiaSondeoResultadosComunidad();
@@ -1180,8 +1211,8 @@ public class Main extends javax.swing.JFrame {
                     //INFERIOR
                     //TODO: ENCADENA
                     case 0 -> {
-                        if (!inferiorMuniIn && !inferiorAutoIn) {
-                            graficosController.entraFaldonAuto();
+                        if (!inferiorMuniIn && !inferiorAutoIn && !inferiorAutoSondeoIn && !inferiorMuniSondeoIn) {
+                            graficosController.entraFaldonAutoSondeo();
                             inferiorAutoSondeoIn = true;
                         } else if (inferiorMuniSondeoIn) {
                             graficosController.deMuniSondeoAAutoSondeo();
@@ -1191,7 +1222,7 @@ public class Main extends javax.swing.JFrame {
                             graficosController.encadenaFaldonAuto();
                         } else if (inferiorMuniIn || inferiorAutoIn) {
                             inferiorAutoSondeoIn = true;
-                            graficosController.entraFaldonAuto();
+                            graficosController.entraFaldonAutoSondeo();
                             inferiorMuniIn = false;
                             inferiorAutoIn = false;
                         }
@@ -1364,8 +1395,8 @@ public class Main extends javax.swing.JFrame {
                 switch (TablaFaldones.getSelectedRow()) {
                     //INFERIOR
                     case 0 -> {
-                        graficosController.saleFaldonMuni();
-                        inferiorMuniIn = false;
+                        graficosController.saleFaldonMuniSondeo();
+                        inferiorMuniSondeoIn = false;
                     }
                     //LATERAL
                     case 1 -> {
@@ -1405,8 +1436,8 @@ public class Main extends javax.swing.JFrame {
                 switch (TablaFaldones.getSelectedRow()) {
                     //INFERIOR
                     case 0 -> {
-                        graficosController.saleFaldonAuto();
-                        inferiorAutoIn = false;
+                        graficosController.saleFaldonAutoSondeo();
+                        inferiorAutoSondeoIn = false;
                     }
                     //LATERAL
                     case 1 -> {
@@ -1488,10 +1519,12 @@ public class Main extends javax.swing.JFrame {
         }
     }
 
-    private void sacarCartonAnteriorAuto() {
+    private boolean sacarCartonAnteriorAuto() {
+        boolean venimosDeOtro = false;
         if (participacionIn) {
             graficosController.saleParticipacionAuto();
             participacionIn = false;
+            venimosDeOtro = true;
         }
         if (resultadosIn) {
             if (oficiales) {
@@ -1501,6 +1534,7 @@ public class Main extends javax.swing.JFrame {
                 graficosController.saleSondeoResultadosAuto();
             }
             resultadosIn = false;
+            venimosDeOtro = true;
         }
         if (arcoIn) {
             if (oficiales) {
@@ -1509,13 +1543,18 @@ public class Main extends javax.swing.JFrame {
                 graficosController.saleArcoAutoSondeo();
             }
             arcoIn = false;
+            venimosDeOtro = true;
         }
+        return venimosDeOtro;
     }
 
-    private void sacarCartonAnteriorMuni() {
-        if (participacionIn)
+    private boolean sacarCartonAnteriorMuni() {
+        boolean venimosDeOtro = false;
+        if (participacionIn) {
             graficosController.saleParticipacionMuni();
-        participacionIn = false;
+            participacionIn = false;
+            venimosDeOtro = true;
+        }
         if (resultadosIn) {
             if (oficiales) {
                 graficosController.saleResultadosMuni();
@@ -1523,6 +1562,7 @@ public class Main extends javax.swing.JFrame {
                 graficosController.saleSondeoResultadosMuni();
             }
             resultadosIn = false;
+            venimosDeOtro = true;
         }
         if (arcoIn) {
             if (oficiales) {
@@ -1531,7 +1571,9 @@ public class Main extends javax.swing.JFrame {
                 graficosController.saleArcoMuniSondeo();
             }
             arcoIn = false;
+            venimosDeOtro = true;
         }
+        return venimosDeOtro;
     }
 
     private void TablaCartonesHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_TablaCartonesHierarchyChanged
