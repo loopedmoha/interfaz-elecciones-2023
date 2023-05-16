@@ -215,6 +215,15 @@ public interface IClienteApi {
     @GET("/autonomicas/carmen/faldon/deAutoaMuni")
     Call<String> deAutoaMuniFaldonAutonomicas();
 
+    @GET("/autonomicas/carmen/faldon/deAutoSondeoAMuniSondeo")
+    Call<String> deAutoSondeoAMuniSondeo();
+
+    @GET("/autonomicas/carmen/faldon/deAutoSondeoAMuni")
+    Call<String> deAutoSondeoAMuni();
+
+    @GET("/autonomicas/carmen/faldon/deAutoSondeoAAuto")
+    Call<String> deAutoSondeoAAuto();
+
     @GET("/municipales/carmen/faldon/entra")
     Call<String> entraFaldonMunicipales();
 
@@ -229,6 +238,15 @@ public interface IClienteApi {
 
     @GET("/municipales/carmen/faldon/deMuniaAuto")
     Call<String> deMuniaAutoFaldonMunicipales();
+
+    @GET("/municipales/carmen/faldon/deMuniSondeoAAutoSondeo")
+    Call<String> deMuniSondeoAAutoSondeo();
+
+    @GET("/municipales/carmen/faldon/deMuniSondeoAMuni")
+    Call<String> deMuniSondeoAMuni();
+
+    @GET("/municipales/carmen/faldon/deMuniSondeoAAuto")
+    Call<String> deMuniSondeoAAuto();
 
     //DESCARGA DE ARCHIVOS
     @GET("/autonomicas/circunscripciones/selected/oficial/{codigo}")

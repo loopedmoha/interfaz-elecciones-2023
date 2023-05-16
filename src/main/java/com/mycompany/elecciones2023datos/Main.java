@@ -59,7 +59,9 @@ public class Main extends javax.swing.JFrame {
     private int tipoElecciones = 1;
     private boolean lateralIn = false;
     private boolean inferiorAutoIn = false;
+    private boolean inferiorAutoSondeoIn = false;
     private boolean inferiorMuniIn = false;
+    private boolean inferiorMuniSondeoIn = false;
     private boolean participacionIn = false;
     private boolean resultadosIn = false;
     private boolean isComunidad = false;
@@ -936,6 +938,10 @@ public class Main extends javax.swing.JFrame {
                             inferiorAutoIn = false;
                         } else if (inferiorMuniIn) {
                             graficosController.encadenaFaldonMuni();
+                        } else if (inferiorAutoSondeoIn) {
+                            graficosController.deAutoSondeoAMuni();
+                        } else if (inferiorMuniSondeoIn) {
+                            graficosController.deMuniSondeoAMuni();
                         }
                     }
                     //LATERAL
@@ -1002,7 +1008,6 @@ public class Main extends javax.swing.JFrame {
                 }
                 switch (TablaFaldones.getSelectedRow()) {
                     //INFERIOR
-                    //TODO: ENCADENA
                     case 0 -> {
                         if (!inferiorMuniIn && !inferiorAutoIn) {
                             graficosController.entraFaldonAuto();
@@ -1083,7 +1088,7 @@ public class Main extends javax.swing.JFrame {
                     case 0 -> {
                         if (!inferiorMuniIn && !inferiorAutoIn) {
                             graficosController.entraFaldonMuni();
-                            inferiorMuniIn = true;
+                            inferiorMuniSondeoIn = true;
                         } else if (inferiorAutoIn) {
                             graficosController.deAutoaMuniFaldonAuto();
                             inferiorMuniIn = true;
@@ -1160,7 +1165,7 @@ public class Main extends javax.swing.JFrame {
                     case 0 -> {
                         if (!inferiorMuniIn && !inferiorAutoIn) {
                             graficosController.entraFaldonAuto();
-                            inferiorAutoIn = true;
+                            inferiorAutoSondeoIn = true;
                         } else if (inferiorMuniIn) {
                             graficosController.deMuniaAutoFaldonMuni();
                             inferiorMuniIn = false;
@@ -1464,13 +1469,16 @@ public class Main extends javax.swing.JFrame {
     private void sacarCartonAnteriorAuto() {
         if (participacionIn) {
             graficosController.saleParticipacionAuto();
+            participacionIn = false;
         }
         if (resultadosIn) {
             if (oficiales) {
                 graficosController.saleResultadosAuto();
+
             } else {
                 graficosController.saleSondeoResultadosAuto();
             }
+            resultadosIn = false;
         }
         if (arcoIn) {
             if (oficiales) {
@@ -1478,18 +1486,21 @@ public class Main extends javax.swing.JFrame {
             } else {
                 graficosController.saleArcoAutoSondeo();
             }
+            arcoIn = false;
         }
     }
 
     private void sacarCartonAnteriorMuni() {
         if (participacionIn)
             graficosController.saleParticipacionMuni();
+        participacionIn = false;
         if (resultadosIn) {
             if (oficiales) {
                 graficosController.saleResultadosMuni();
             } else {
                 graficosController.saleSondeoResultadosMuni();
             }
+            resultadosIn = false;
         }
         if (arcoIn) {
             if (oficiales) {
@@ -1497,6 +1508,7 @@ public class Main extends javax.swing.JFrame {
             } else {
                 graficosController.saleArcoMuniSondeo();
             }
+            arcoIn = false;
         }
     }
 
