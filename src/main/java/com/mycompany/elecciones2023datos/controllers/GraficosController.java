@@ -138,6 +138,31 @@ public class GraficosController {
         }
     }
 
+    public void deAutoSondeoAMuniSondeo() {
+        try {
+            clienteApi.deAutoSondeoAMuniSondeo().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deAutoSondeoAMuni() {
+        try {
+            clienteApi.deAutoSondeoAMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deAutoSondeoAAuto() {
+        try {
+            clienteApi.deAutoSondeoAAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public void entraFaldonMuni() {
         try {
             clienteApi.entraFaldonMunicipales().execute();
@@ -173,6 +198,30 @@ public class GraficosController {
     public void deMuniaAutoFaldonMuni() {
         try {
             clienteApi.deMuniaAutoFaldonMunicipales().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deMuniSondeoAAutoSondeo() {
+        try {
+            clienteApi.deMuniSondeoAAutoSondeo().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deMuniSondeoAMuni() {
+        try {
+            clienteApi.deMuniSondeoAMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deMuniSondeoAAuto() {
+        try {
+            clienteApi.deMuniSondeoAAuto().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
