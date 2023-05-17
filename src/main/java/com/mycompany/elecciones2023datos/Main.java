@@ -7,6 +7,7 @@ package com.mycompany.elecciones2023datos;
 import com.mycompany.elecciones2023datos.DTO.CarmenDTO;
 import com.mycompany.elecciones2023datos.controllers.GraficosController;
 import com.mycompany.elecciones2023datos.model.Circunscripcion;
+import com.mycompany.elecciones2023datos.model.CircunscripcionPartido;
 import com.mycompany.elecciones2023datos.model.CpData;
 import com.mycompany.elecciones2023datos.services.IClienteApi;
 import retrofit2.Retrofit;
@@ -188,44 +189,45 @@ public class Main extends javax.swing.JFrame {
         tableModel.addColumn("PARTICIPACION");
         tableModel.addColumn("PARTICIPACION H");
 
-        tableModel.addColumn("AVANCE 1");
-        tableModel.addColumn("AVANCE 2");
-        tableModel.addColumn("AVANCE 3");
-        tableModel.addColumn("AVANCE 1 H");
-        tableModel.addColumn("AVANCE 2 H");
-        tableModel.addColumn("AVANCE 3 H");
+        // tableModel.addColumn("AVANCE 1");
+        // tableModel.addColumn("AVANCE 2");
+        // tableModel.addColumn("AVANCE 3");
+        // tableModel.addColumn("AVANCE 1 H");
+        // tableModel.addColumn("AVANCE 2 H");
+        // tableModel.addColumn("AVANCE 3 H");
 
         tablaDatos.setModel(tableModel);
         switch (tipoElecciones) {
             //oficiales municipales
             case 1 -> {
                 esp = clienteApi.getCarmenDtoOficialMuni("9900000").execute().body();
-                System.out.println(esp);
+                //System.out.println(esp);
 
             }
             //oficiales autonomicas
             case 2 -> {
                 esp = clienteApi.getCarmenDtoOficialAuto("9900000").execute().body();
-                System.out.println(esp);
+                // System.out.println(esp);
 
             }
             //sondeo municipales
             case 3 -> {
                 esp = clienteApi.getCarmenDtoSondeoMuni("9900000").execute().body();
-                System.out.println(esp);
+                //System.out.println(esp);
 
             }
             //sondeo autonomicas
             case 4 -> {
                 esp = clienteApi.getCarmenDtoSondeoAuto("9900000").execute().body();
-                System.out.println(esp);
+                //System.out.println(esp);
 
             }
         }
         Circunscripcion espCirc = esp.getCircunscripcion();
         Object[] rowData = {espCirc.getEscrutado(), espCirc.getParticipacion(), espCirc.getParticipacionHist(),
-                espCirc.getAvance1(), espCirc.getAvance2(), espCirc.getAvance3(),
-                espCirc.getAvance1Hist(), espCirc.getAvance2Hist(), espCirc.getAvance3Hist()};
+                // espCirc.getAvance1(), espCirc.getAvance2(), espCirc.getAvance3(),
+                // espCirc.getAvance1Hist(), espCirc.getAvance2Hist(), espCirc.getAvance3Hist()
+        };
 
         tableModel.addRow(rowData);
         tablaDatos.setModel(tableModel);
@@ -268,19 +270,18 @@ public class Main extends javax.swing.JFrame {
             tablaDatos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             jScrollPane1.setViewportView(tablaDatos);
         } else {
-            System.out.println("adios");
             tableModel.addColumn("ESCRUTADO");
             tableModel.addColumn("PARTICIPACION");
             tableModel.addColumn("PARTICIPACION H");
-            tableModel.addColumn("AVANCE 1");
-            tableModel.addColumn("AVANCE 2");
-            tableModel.addColumn("AVANCE 3");
-            tableModel.addColumn("AVANCE 1 H");
-            tableModel.addColumn("AVANCE 2 H");
-            tableModel.addColumn("AVANCE 3 H");
+            // tableModel.addColumn("AVANCE 1");
+            // tableModel.addColumn("AVANCE 2");
+            // tableModel.addColumn("AVANCE 3");
+            // tableModel.addColumn("AVANCE 1 H");
+            // tableModel.addColumn("AVANCE 2 H");
+            // tableModel.addColumn("AVANCE 3 H");
 
             if (oficiales) {
-                System.out.println(list);
+                //System.out.println(list);
                 for (CpData cpDTO : list) {
                     Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
                             cpDTO.getEscanosDesde(), cpDTO.getEscanosHasta(),
@@ -288,7 +289,7 @@ public class Main extends javax.swing.JFrame {
                     tableModel.addRow(rowData);
                 }
             } else {
-                System.out.println(list);
+                //System.out.println(list);
 
                 for (CpData cpDTO : list) {
                     Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
@@ -440,7 +441,27 @@ public class Main extends javax.swing.JFrame {
         JScrollPane scrollPane = new JScrollPane(tablaComunidades);
         tablaComunidades.getTableHeader().setResizingAllowed(false);
         jScrollPane2.setViewportView(tablaComunidades);
-
+        tablaDatos.getSelectionModel().addListSelectionListener(e -> {
+            if (TablaFaldones.getSelectedRow() == 2) {
+                if (tablaDatos.getSelectedRow() != -1) {
+                    String codigo = tablaDatos.getValueAt(tablaDatos.getSelectedRow(), 0).toString();
+                    graficosController.descargarSedesCsv(codigo);
+                }
+            }
+        });
+        TablaFaldones.getSelectionModel().addListSelectionListener(e -> {
+            if (TablaFaldones.getSelectedRow() == 2) {
+                vaciarTablas();
+                List<CircunscripcionPartido> cps = graficosController.getCpsEspania();
+                List<CpData> cpdatas = new ArrayList<>();
+                cps.forEach(cp -> {
+                    String siglas = graficosController.getPartido(cp.getKey().getPartido()).getSiglas();
+                    CpData data = CpData.fromCP(cp, siglas);
+                    cpdatas.add(data);
+                });
+                printData(cpdatas);
+            }
+        });
         tablaComunidades.getSelectionModel().addListSelectionListener(e -> {
             String codAutonomia;
             CarmenDTO carmen = null;
@@ -456,6 +477,13 @@ public class Main extends javax.swing.JFrame {
                             if (TablaCartones.getSelectedRow() != 3) {
                                 carmen = clienteApi.getCarmenDtoOficialAuto(codAutonomia).execute().body();
                                 graficosController.selectedMunicipalesOficiales(codAutonomia);
+                                if (TablaCartones.getSelectedRow() == 0) {
+                                    if (tablaComunidades.getSelectedRow() != -1) {
+                                        String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
+                                        String codigo = nombreCodigoAuto.get(nombreCCAA);
+                                        graficosController.descargarResultadosCsvAuto(codigo);
+                                    }
+                                }
                             } else {
                                 carmen = clienteApi.getCarmenDtoOficialAuto("9900000").execute().body();
                                 graficosController.selectedMunicipalesOficiales("9900000");
@@ -468,6 +496,13 @@ public class Main extends javax.swing.JFrame {
                             if (TablaCartones.getSelectedRow() != 3) {
                                 carmen = clienteApi.getCarmenDtoOficialAuto(codAutonomia).execute().body();
                                 graficosController.selectedMunicipalesOficiales(codAutonomia);
+                                if (TablaCartones.getSelectedRow() == 0) {
+                                    if (tablaComunidades.getSelectedRow() != -1) {
+                                        String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
+                                        String codigo = nombreCodigoAuto.get(nombreCCAA);
+                                        graficosController.descargarResultadosCsvMuni(codigo);
+                                    }
+                                }
                             } else {
                                 carmen = clienteApi.getCarmenDtoOficialAuto("9900000").execute().body();
                                 graficosController.selectedMunicipalesOficiales("9900000");

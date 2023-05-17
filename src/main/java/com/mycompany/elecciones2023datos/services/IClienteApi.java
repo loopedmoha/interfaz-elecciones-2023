@@ -2,6 +2,8 @@ package com.mycompany.elecciones2023datos.services;
 
 import com.mycompany.elecciones2023datos.DTO.CarmenDTO;
 import com.mycompany.elecciones2023datos.model.Circunscripcion;
+import com.mycompany.elecciones2023datos.model.CircunscripcionPartido;
+import com.mycompany.elecciones2023datos.model.Partido;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -48,6 +50,12 @@ public interface IClienteApi {
 
     @GET("/municipales/carmen/sondeo/{codigo}/data")
     Call<CarmenDTO> getCarmenDtoSondeo(@Path("codigo") String codigo);
+
+    @GET("/municipales/cp/espania")
+    Call<List<CircunscripcionPartido>> getCpsEspania();
+
+    @GET("/municipales/partidos/{codigo}")
+    Call<Partido> getPartido(@Path("codigo") String codigo);
 
 
     //---------------- IPF ------------------
@@ -342,6 +350,15 @@ public interface IClienteApi {
 
     @GET("/municipales/circunscripciones/selected/sondeo/{codigo}")
     Call<String> selectedMunicipalesSondeo(@Path("codigo") String codigo);
+
+    @GET("/autonomicas/resultados/{codigo}/csv")
+    Call<String> descargarResultadosCsvAuto(@Path("codigo") String codigo);
+
+    @GET("/municipales/resultados/{codigo}/csv")
+    Call<String> descargarResultadosCsvMuni(@Path("codigo") String codigo);
+
+    @GET("/municipales/sedes/{codigo}/csv")
+    Call<String> descargarSedesCsv(@Path("codigo") String codigo);
 
     //RESET
     @GET("/municipales/reset")

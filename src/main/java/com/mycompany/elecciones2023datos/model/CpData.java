@@ -36,5 +36,14 @@ public class CpData {
         return res;
     }
 
+    public static CpData fromCP(CircunscripcionPartido cp, String siglas) {
+        CpData res = new CpData(
+                cp.getKey().getPartido(), siglas, cp.getEscanos_desde(), cp.getEscanos_hasta(),
+                cp.getEscanos_hasta_hist(), cp.getPorcentajeVoto(), cp.getNumVotantes(),
+                cp.getEscanos_desde_sondeo(), cp.getEscanos_hasta_sondeo(), cp.getPorcentajeVotoSondeo());
+
+        return res;
+    }
+
 
 }

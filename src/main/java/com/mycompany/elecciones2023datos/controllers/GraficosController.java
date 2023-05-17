@@ -1,10 +1,13 @@
 package com.mycompany.elecciones2023datos.controllers;
 
+import com.mycompany.elecciones2023datos.model.CircunscripcionPartido;
+import com.mycompany.elecciones2023datos.model.Partido;
 import com.mycompany.elecciones2023datos.services.IClienteApi;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 public class GraficosController {
     Retrofit retrofit;
@@ -302,6 +305,7 @@ public class GraficosController {
             throw new RuntimeException(e);
         }
     }
+
     public void faldonVotantesHistEntra() {
         try {
             clienteApi.faldonVotantesHistEntra().execute();
@@ -309,6 +313,7 @@ public class GraficosController {
             throw new RuntimeException(e);
         }
     }
+
     public void faldonVotantesSale() {
         try {
             clienteApi.faldonVotantesSale().execute();
@@ -703,6 +708,46 @@ public class GraficosController {
     public void selectedMunicipalesSondeo(String codigo) {
         try {
             clienteApi.selectedMunicipalesSondeo(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void descargarResultadosCsvAuto(String codigo) {
+        try {
+            clienteApi.descargarResultadosCsvAuto(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void descargarResultadosCsvMuni(String codigo) {
+        try {
+            clienteApi.descargarResultadosCsvMuni(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void descargarSedesCsv(String codigo) {
+        try {
+            clienteApi.descargarSedesCsv(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<CircunscripcionPartido> getCpsEspania() {
+        try {
+            return clienteApi.getCpsEspania().execute().body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Partido getPartido(String codigo) {
+        try {
+            return clienteApi.getPartido(codigo).execute().body();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
