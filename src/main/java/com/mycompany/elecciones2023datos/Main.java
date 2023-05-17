@@ -64,6 +64,8 @@ public class Main extends javax.swing.JFrame {
     private boolean inferiorMuniSondeoIn = false;
     private boolean participacionIn = false;
     private boolean resultadosIn = false;
+
+    private boolean votantesIn = false;
     private boolean isComunidad = false;
     private boolean isMunicipio = false;
 
@@ -975,9 +977,16 @@ public class Main extends javax.swing.JFrame {
                         }
                     }
                     //SEDES
-                    case 2 -> System.out.println("SEDES MUNI OFI");
+                    case 2 -> graficosController.faldonSedesEntra();
                     //VOTOS MILLONES
-                    case 3 -> System.out.println("SEDES MUNI OFI");
+                    case 3 -> {
+                        if (votantesIn) {
+                            graficosController.faldonVotantesHistEntra();
+                        } else {
+                            graficosController.faldonVotantesEntra();
+                            votantesIn=true;
+                        }
+                    }
                     default -> System.out.print("");
                 }
 
@@ -1068,9 +1077,16 @@ public class Main extends javax.swing.JFrame {
                         }
                     }
                     //SEDES
-                    case 2 -> System.out.println("SEDES AUTO OFI");
+                    case 2 -> graficosController.faldonSedesEntra();
                     //VOTOS MILLONES
-                    case 3 -> System.out.println("SEDES AUTO OFI");
+                    case 3 -> {
+                        if (votantesIn) {
+                            graficosController.faldonVotantesHistEntra();
+                        } else {
+                            graficosController.faldonVotantesEntra();
+                            votantesIn=true;
+                        }
+                    }
                     default -> System.out.print("");
                 }
 
@@ -1160,9 +1176,16 @@ public class Main extends javax.swing.JFrame {
                         }
                     }
                     //SEDES
-                    case 2 -> System.out.println("SEDES MUNI OFI");
+                    case 2 -> graficosController.faldonSedesEntra();
                     //VOTOS MILLONES
-                    case 3 -> System.out.println("SEDES MUNI OFI");
+                    case 3 -> {
+                        if (votantesIn) {
+                            graficosController.faldonVotantesHistEntra();
+                        } else {
+                            graficosController.faldonVotantesEntra();
+                            votantesIn=true;
+                        }
+                    }
                     default -> System.out.print("");
                 }
 
@@ -1245,9 +1268,16 @@ public class Main extends javax.swing.JFrame {
                         }
                     }
                     //SEDES
-                    case 2 -> System.out.println("SEDES AUTO OFI");
+                    case 2 -> graficosController.faldonSedesEntra();
                     //VOTOS MILLONES
-                    case 3 -> System.out.println("SEDES AUTO OFI");
+                    case 3 -> {
+                        if (votantesIn) {
+                            graficosController.faldonVotantesHistEntra();
+                        } else {
+                            graficosController.faldonVotantesEntra();
+                            votantesIn=true;
+                        }
+                    }
                     default -> System.out.print("");
                 }
             }
@@ -1324,10 +1354,13 @@ public class Main extends javax.swing.JFrame {
                             lateralIn = false;
                         }
                     }
-                    //VOTANTES
-                    case 2 -> System.out.println("Sale Arco principal");
                     //SEDES
-                    case 3 -> System.out.println("Sale Arco comparativo");
+                    case 2 -> graficosController.faldonSedesSale();
+                    //VOTANTES
+                    case 3 -> {
+                        graficosController.faldonVotantesSale();
+                        votantesIn = false;
+                    }
                     default -> System.out.print("");
                 }
             }
@@ -1365,10 +1398,13 @@ public class Main extends javax.swing.JFrame {
                             lateralIn = false;
                         }
                     }
-                    //VOTANTES
-                    case 2 -> System.out.println("Sale Arco principal");
                     //SEDES
-                    case 3 -> System.out.println("Sale Arco comparativo");
+                    case 2 -> graficosController.faldonSedesSale();
+                    //VOTANTES
+                    case 3 -> {
+                        graficosController.faldonVotantesSale();
+                        votantesIn = false;
+                    }
                     default -> System.out.print("");
                 }
             }
@@ -1406,10 +1442,13 @@ public class Main extends javax.swing.JFrame {
                             lateralIn = false;
                         }
                     }
-                    //VOTANTES
-                    case 2 -> System.out.println("Sale Arco principal");
                     //SEDES
-                    case 3 -> System.out.println("Sale Arco comparativo");
+                    case 2 -> graficosController.faldonSedesSale();
+                    //VOTANTES
+                    case 3 -> {
+                        graficosController.faldonVotantesSale();
+                        votantesIn = false;
+                    }
                     default -> System.out.print("");
                 }
             }
@@ -1447,10 +1486,13 @@ public class Main extends javax.swing.JFrame {
                             lateralIn = false;
                         }
                     }
-                    //VOTANTES
-                    case 2 -> System.out.println("Sale Arco principal");
                     //SEDES
-                    case 3 -> System.out.println("Sale Arco comparativo");
+                    case 2 -> graficosController.faldonSedesSale();
+                    //VOTANTES
+                    case 3 -> {
+                        graficosController.faldonVotantesSale();
+                        votantesIn = false;
+                    }
                     default -> System.out.print("");
                 }
             }
@@ -1656,7 +1698,6 @@ public class Main extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnConfigActionPerformed
-
 
     private void resaltarBoton(JButton boton) {
         // Desactivar el resaltado del botón anteriormente seleccionado

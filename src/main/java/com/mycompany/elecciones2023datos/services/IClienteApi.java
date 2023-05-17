@@ -226,6 +226,28 @@ public interface IClienteApi {
     @GET("/autonomicas/arco/sondeo/pactos")
     Call<String> arcoSondeoPactosMuni();
 
+    /*
+     **************** FALDON SEDES
+     */
+    @GET("/autonomicas/carmen/sedes/entra")
+    Call<String> faldonSedesEntra();
+
+    @GET("/autonomicas/carmen/sedes/sale")
+    Call<String> faldonSedesSale();
+
+    /*
+     **************** FALDON VOTANTES
+     */
+
+    @GET("/municipales/carmen/votantes/entra")
+    Call<String> faldonVotantesEntra();
+
+    @GET("/municipales/carmen/votantes/historico")
+    Call<String> faldonVotantesHistEntra();
+
+    @GET("/municipales/carmen/votantes/sale")
+    Call<String> faldonVotantesSale();
+
 
     /*
      **************** FALDON INFERIOR

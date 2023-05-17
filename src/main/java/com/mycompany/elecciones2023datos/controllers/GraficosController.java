@@ -276,6 +276,49 @@ public class GraficosController {
         }
     }
 
+    //FALDON SEDES
+    public void faldonSedesEntra() {
+        try {
+            clienteApi.faldonSedesEntra().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void faldonSedesSale() {
+        try {
+            clienteApi.faldonSedesSale().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //FALDON VOTANTES
+
+    public void faldonVotantesEntra() {
+        try {
+            clienteApi.faldonVotantesEntra().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void faldonVotantesHistEntra() {
+        try {
+            clienteApi.faldonVotantesHistEntra().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void faldonVotantesSale() {
+        try {
+            clienteApi.faldonVotantesSale().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //CARTON PARTICIPACION
+
     public void entraParticipacionAuto() {
         try {
             clienteApi.entraParticipacionAuto().execute();
