@@ -54,6 +54,8 @@ public class Main extends javax.swing.JFrame {
 
     GraficosController graficosController = new GraficosController();
 
+    boolean isEspana = false;
+
 
     private boolean oficiales = true;
     private int tipoElecciones = 1;
@@ -147,6 +149,7 @@ public class Main extends javax.swing.JFrame {
 
     public void showDataTableOficialMunicipio(CarmenDTO carmen) {
         List<CpData> datos = CpData.fromCarmenDto(carmen);
+
         printData(datos);
     }
 
@@ -162,41 +165,144 @@ public class Main extends javax.swing.JFrame {
 
     public void showDataTableSondeoAutonomicas(CarmenDTO carmen) {
         List<CpData> datos = CpData.fromCarmenDto(carmen);
-        printData(datos);
+        try {
+            printDataEsp();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
-    public void printData(List<CpData> list) {
+    public void printDataEsp() throws IOException {
         DefaultTableModel tableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false; // establece todas las celdas no editables
             }
         };
-        tableModel.addColumn("COD");
-        tableModel.addColumn("SIGLAS");
-        tableModel.addColumn("E.D");
-        tableModel.addColumn("E.H");
-        tableModel.addColumn("HIST");
-        tableModel.addColumn("% VOTO");
-        tableModel.addColumn("VOTANTES");
 
-        if (oficiales) {
-            for (CpData cpDTO : list) {
-                Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
-                        cpDTO.getEscanosDesde(), cpDTO.getEscanosHasta(), cpDTO.getEscanosHist(), cpDTO.getPorcentajeVoto(), cpDTO.getVotantes()};
-                tableModel.addRow(rowData);
+        CarmenDTO esp = null;
+
+
+        tableModel.addColumn("ESCRUTADO");
+        tableModel.addColumn("PARTICIPACION");
+        tableModel.addColumn("PARTICIPACION H");
+
+        tableModel.addColumn("AVANCE 1");
+        tableModel.addColumn("AVANCE 2");
+        tableModel.addColumn("AVANCE 3");
+        tableModel.addColumn("AVANCE 1 H");
+        tableModel.addColumn("AVANCE 2 H");
+        tableModel.addColumn("AVANCE 3 H");
+
+        tablaDatos.setModel(tableModel);
+        switch (tipoElecciones) {
+            //oficiales municipales
+            case 1 -> {
+                esp = clienteApi.getCarmenDtoOficialMuni("9900000").execute().body();
+                System.out.println(esp);
+
             }
-        } else {
-            for (CpData cpDTO : list) {
-                Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
-                        cpDTO.getEscanos_desde_sondeo(), cpDTO.getEscanos_hasta_sondeo(), cpDTO.getEscanosHist(), cpDTO.getPorcentajeVotoSondeo(), cpDTO.getVotantes()};
-                tableModel.addRow(rowData);
+            //oficiales autonomicas
+            case 2 -> {
+                esp = clienteApi.getCarmenDtoOficialAuto("9900000").execute().body();
+                System.out.println(esp);
+
+            }
+            //sondeo municipales
+            case 3 -> {
+                esp = clienteApi.getCarmenDtoSondeoMuni("9900000").execute().body();
+                System.out.println(esp);
+
+            }
+            //sondeo autonomicas
+            case 4 -> {
+                esp = clienteApi.getCarmenDtoSondeoAuto("9900000").execute().body();
+                System.out.println(esp);
+
             }
         }
-        JScrollPane scrollPane = new JScrollPane(tablaDatos);
+        Circunscripcion espCirc = esp.getCircunscripcion();
+        Object[] rowData = {espCirc.getEscrutado(), espCirc.getParticipacion(), espCirc.getParticipacionHist(),
+                espCirc.getAvance1(), espCirc.getAvance2(), espCirc.getAvance3(),
+                espCirc.getAvance1Hist(), espCirc.getAvance2Hist(), espCirc.getAvance3Hist()};
+
+        tableModel.addRow(rowData);
         tablaDatos.setModel(tableModel);
         tablaDatos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tablaDatos);
+
+    }
+
+    public void printData(List<CpData> list) {
+        isEspana = (TablaCartones.getSelectedRow() == 3);
+        DefaultTableModel tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // establece todas las celdas no editables
+            }
+        };
+        if (!isEspana) {
+            tableModel.addColumn("COD");
+            tableModel.addColumn("SIGLAS");
+            tableModel.addColumn("E.D");
+            tableModel.addColumn("E.H");
+            tableModel.addColumn("HIST");
+            tableModel.addColumn("% VOTO");
+            tableModel.addColumn("VOTANTES");
+            if (oficiales) {
+                for (CpData cpDTO : list) {
+                    Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
+                            cpDTO.getEscanosDesde(), cpDTO.getEscanosHasta(), cpDTO.getEscanosHist(), cpDTO.getPorcentajeVoto(), cpDTO.getVotantes()};
+                    tableModel.addRow(rowData);
+                }
+            } else {
+                for (CpData cpDTO : list) {
+                    Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
+                            cpDTO.getEscanos_desde_sondeo(), cpDTO.getEscanos_hasta_sondeo(), cpDTO.getEscanosHist(), cpDTO.getPorcentajeVotoSondeo(), cpDTO.getVotantes()};
+                    tableModel.addRow(rowData);
+                }
+            }
+            JScrollPane scrollPane = new JScrollPane(tablaDatos);
+            tablaDatos.setModel(tableModel);
+            tablaDatos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            jScrollPane1.setViewportView(tablaDatos);
+        } else {
+            System.out.println("adios");
+            tableModel.addColumn("ESCRUTADO");
+            tableModel.addColumn("PARTICIPACION");
+            tableModel.addColumn("PARTICIPACION H");
+            tableModel.addColumn("AVANCE 1");
+            tableModel.addColumn("AVANCE 2");
+            tableModel.addColumn("AVANCE 3");
+            tableModel.addColumn("AVANCE 1 H");
+            tableModel.addColumn("AVANCE 2 H");
+            tableModel.addColumn("AVANCE 3 H");
+
+            if (oficiales) {
+                System.out.println(list);
+                for (CpData cpDTO : list) {
+                    Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
+                            cpDTO.getEscanosDesde(), cpDTO.getEscanosHasta(),
+                            cpDTO.getEscanosHist(), cpDTO.getPorcentajeVoto(), cpDTO.getVotantes()};
+                    tableModel.addRow(rowData);
+                }
+            } else {
+                System.out.println(list);
+
+                for (CpData cpDTO : list) {
+                    Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
+                            cpDTO.getEscanos_desde_sondeo(), cpDTO.getEscanos_hasta_sondeo(),
+                            cpDTO.getEscanosHist(), cpDTO.getPorcentajeVotoSondeo(), cpDTO.getVotantes()};
+                    tableModel.addRow(rowData);
+                }
+            }
+            JScrollPane scrollPane = new JScrollPane(tablaDatos);
+            tablaDatos.setModel(tableModel);
+            tablaDatos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            jScrollPane1.setViewportView(tablaDatos);
+        }
+
     }
 
     public Main() {
@@ -214,6 +320,8 @@ public class Main extends javax.swing.JFrame {
 
 
         ListSelectionModel selectionModel = TablaCartones.getSelectionModel();
+
+
         selectionModel.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
@@ -345,43 +453,67 @@ public class Main extends javax.swing.JFrame {
                     codAutonomia = nombreCodigo.get(((String) tablaComunidades.getValueAt(selectedRow, 0)).replaceAll(" ", ""));
                     if (oficiales) {
                         try {
-                            carmen = clienteApi.getCarmenDtoOficialAuto(codAutonomia).execute().body();
+                            if (TablaCartones.getSelectedRow() != 3) {
+                                carmen = clienteApi.getCarmenDtoOficialAuto(codAutonomia).execute().body();
+                                graficosController.selectedMunicipalesOficiales(codAutonomia);
+                            } else {
+                                carmen = clienteApi.getCarmenDtoOficialAuto("9900000").execute().body();
+                                graficosController.selectedMunicipalesOficiales("9900000");
+                            }
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
-                        graficosController.selectedAutonomicasOficiales(codAutonomia);
                     } else {
                         try {
-                            carmen = clienteApi.getCarmenDtoSondeoAuto(codAutonomia).execute().body();
+                            if (TablaCartones.getSelectedRow() != 3) {
+                                carmen = clienteApi.getCarmenDtoOficialAuto(codAutonomia).execute().body();
+                                graficosController.selectedMunicipalesOficiales(codAutonomia);
+                            } else {
+                                carmen = clienteApi.getCarmenDtoOficialAuto("9900000").execute().body();
+                                graficosController.selectedMunicipalesOficiales("9900000");
+                            }
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
-                        graficosController.selectedAutonomicasSondeo(codAutonomia);
                     }
                     //showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
                     showDataTable(carmen);
                 } else {
-                    loadSelectedMunicipales((String) tablaComunidades.getValueAt(selectedRow, 0));
+                    if (TablaCartones.getSelectedRow() != 3)
+                        loadSelectedMunicipales((String) tablaComunidades.getValueAt(selectedRow, 0));
                     codAutonomia = nombreCodigo.get(tablaComunidades.getValueAt(selectedRow, 0));
                     //TODO:Hacer un switch aqui para distinguir con qué datos actualizamos: Oficiales A o M, Sondeo A o M
                     if (oficiales) {
                         try {
-                            carmen = clienteApi.getCarmenDtoOficialMuni(codAutonomia).execute().body();
+                            System.out.println(TablaCartones.getSelectedRow());
+                            if (TablaCartones.getSelectedRow() != 3) {
+                                carmen = clienteApi.getCarmenDtoOficialAuto(codAutonomia).execute().body();
+                                graficosController.selectedMunicipalesOficiales(codAutonomia);
+                            } else {
+                                carmen = clienteApi.getCarmenDtoOficialAuto("9900000").execute().body();
+                                graficosController.selectedMunicipalesOficiales("9900000");
+                            }
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
-                        graficosController.selectedMunicipalesOficiales(codAutonomia);
                     } else {
                         try {
-                            carmen = clienteApi.getCarmenDtoSondeoMuni(codAutonomia).execute().body();
+                            if (TablaCartones.getSelectedRow() != 3) {
+                                carmen = clienteApi.getCarmenDtoOficialAuto(codAutonomia).execute().body();
+                                graficosController.selectedMunicipalesOficiales(codAutonomia);
+                            } else {
+                                carmen = clienteApi.getCarmenDtoOficialAuto("9900000").execute().body();
+                                graficosController.selectedMunicipalesOficiales("9900000");
+                            }
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
-                        graficosController.selectedMunicipalesSondeo(codAutonomia);
                     }
                     //showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
-                    showDataTable(carmen);
+                    if (TablaCartones.getSelectedRow() != 3)
+                        showDataTable(carmen);
                 }
+
                 lblEscrutado.setText(carmen.getCircunscripcion().getEscrutado() + "");
                 lblParticipacion.setText(carmen.getCircunscripcion().getParticipacion() + "");
                 lblPartHistorica.setText(carmen.getCircunscripcion().getParticipacionHist() + "");
@@ -399,7 +531,8 @@ public class Main extends javax.swing.JFrame {
                 new Object[][]{
                         {"Resultados"},
                         {"Participación"},
-                        {"Arco"}
+                        {"Arco"},
+                        {"Participacion España"}
                 },
                 new String[]{
                         "CARTONES"
@@ -492,6 +625,8 @@ public class Main extends javax.swing.JFrame {
         btnSondeoAutonomicas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSondeoAutonomicasActionPerformed(evt);
+                TablaCartones.getSelectionModel().clearSelection();
+
             }
         });
 
@@ -500,6 +635,8 @@ public class Main extends javax.swing.JFrame {
         btnSondeoMunicipales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSondeoMunicipalesActionPerformed(evt);
+                TablaCartones.getSelectionModel().clearSelection();
+
             }
         });
 
@@ -508,6 +645,8 @@ public class Main extends javax.swing.JFrame {
         btnDatosAutonomicas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDatosAutonomicasActionPerformed(evt);
+                TablaCartones.getSelectionModel().clearSelection();
+
             }
         });
 
@@ -516,6 +655,7 @@ public class Main extends javax.swing.JFrame {
         btnDatosMunicipales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDatosMunicipalesActionPerformed(evt);
+                TablaCartones.getSelectionModel().clearSelection();
             }
         });
 
@@ -733,7 +873,11 @@ public class Main extends javax.swing.JFrame {
                                         .addComponent(btnReset))
                                 .addGap(41, 41, 41))
         );
-
+        TablaCartones.getSelectionModel().addListSelectionListener(e -> {
+            if (TablaCartones.getSelectedRow() == 3) {
+                entreParticipacionEsp();
+            }
+        });
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -935,6 +1079,9 @@ public class Main extends javax.swing.JFrame {
                             arcoIn = true;
                         }
                     }
+                    case 3 -> {
+
+                    }
                     default -> System.out.print("");
                 }
                 switch (TablaFaldones.getSelectedRow()) {
@@ -984,7 +1131,7 @@ public class Main extends javax.swing.JFrame {
                             graficosController.faldonVotantesHistEntra();
                         } else {
                             graficosController.faldonVotantesEntra();
-                            votantesIn=true;
+                            votantesIn = true;
                         }
                     }
                     default -> System.out.print("");
@@ -1084,7 +1231,7 @@ public class Main extends javax.swing.JFrame {
                             graficosController.faldonVotantesHistEntra();
                         } else {
                             graficosController.faldonVotantesEntra();
-                            votantesIn=true;
+                            votantesIn = true;
                         }
                     }
                     default -> System.out.print("");
@@ -1183,7 +1330,7 @@ public class Main extends javax.swing.JFrame {
                             graficosController.faldonVotantesHistEntra();
                         } else {
                             graficosController.faldonVotantesEntra();
-                            votantesIn=true;
+                            votantesIn = true;
                         }
                     }
                     default -> System.out.print("");
@@ -1275,7 +1422,7 @@ public class Main extends javax.swing.JFrame {
                             graficosController.faldonVotantesHistEntra();
                         } else {
                             graficosController.faldonVotantesEntra();
-                            votantesIn=true;
+                            votantesIn = true;
                         }
                     }
                     default -> System.out.print("");
@@ -1338,6 +1485,7 @@ public class Main extends javax.swing.JFrame {
                         graficosController.saleArcoMuni();
                         arcoIn = false;
                     }
+
                     default -> System.out.print("");
                 }
                 switch (TablaFaldones.getSelectedRow()) {
@@ -1470,6 +1618,10 @@ public class Main extends javax.swing.JFrame {
                         graficosController.saleArcoAutoSondeo();
                         arcoIn = false;
                     }
+                    case 3 -> {
+                        graficosController.saleParticipacionEspAuto();
+                        participacionIn = false;
+                    }
                     default -> System.out.print("");
                 }
                 switch (TablaFaldones.getSelectedRow()) {
@@ -1545,7 +1697,7 @@ public class Main extends javax.swing.JFrame {
         switch (tipo) {
             case 1, 3 -> {
                 DefaultTableModel tableModel = (DefaultTableModel) tablaComunidades.getModel();
-                List<String> ccaa = cicunscripcionesMunicipales.keySet().stream().filter(x -> !x.endsWith("00000")).toList().subList(0, cicunscripcionesMunicipales.keySet().size() - 2);
+                List<String> ccaa = cicunscripcionesMunicipales.keySet().stream().filter(x -> !x.endsWith("00000") && !x.startsWith("99")).toList();
                 for (String s : ccaa) {
                     tableModel.addRow(new Object[]{s});
                 }
@@ -1554,6 +1706,15 @@ public class Main extends javax.swing.JFrame {
             case 2, 4 -> {
                 DefaultTableModel tableModel = (DefaultTableModel) tablaComunidades.getModel();
                 for (String s : nombreCodigoAuto.keySet()) {
+                    tableModel.addRow(new Object[]{s});
+                }
+                tablaComunidades.setModel(tableModel);
+            }
+            case 5 -> {
+                DefaultTableModel tableModel = (DefaultTableModel) tablaComunidades.getModel();
+                List<String> ccaa = circunscripcionesAutonomicas.keySet().stream()
+                        .filter(s -> s.toLowerCase().equals("total nacional")).toList();
+                for (String s : ccaa) {
                     tableModel.addRow(new Object[]{s});
                 }
                 tablaComunidades.setModel(tableModel);
@@ -1723,6 +1884,16 @@ public class Main extends javax.swing.JFrame {
         botonSeleccionado2 = boton;
         botonSeleccionado2.setBackground(new Color(173, 216, 230));
         botonSeleccionado2.setOpaque(true);
+    }
+
+    private void entreParticipacionEsp() {
+        vaciarTablas();
+        // rellenarCCAA(5);
+        try {
+            printDataEsp();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

@@ -327,6 +327,14 @@ public class GraficosController {
         }
     }
 
+    public void entraParticipacionEspAuto() {
+        try {
+            clienteApi.entraParticipacionEspAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void entraParticipacionAutoDelay() {
         try {
             clienteApi.entraParticipacionAutoDelay().execute();
@@ -343,6 +351,14 @@ public class GraficosController {
         }
     }
 
+    public void entraParticipacionEspMuni() {
+        try {
+            clienteApi.entraParticipacionEspMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void entraParticipacionMuniDelay() {
         try {
             clienteApi.entraParticipacionMuniDelay().execute();
@@ -354,6 +370,22 @@ public class GraficosController {
     public void saleParticipacionAuto() {
         try {
             clienteApi.saleParticipacionAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleParticipacionEspAuto() {
+        try {
+            clienteApi.saleParticipacionEspAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saleParticipacionEspMuni() {
+        try {
+            clienteApi.saleParticipacionEspMuni().execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

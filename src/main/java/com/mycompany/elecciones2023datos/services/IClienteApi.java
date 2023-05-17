@@ -22,6 +22,12 @@ public interface IClienteApi {
     @GET("/autonomicas/carmen/oficial/{codigo}/data")
     Call<CarmenDTO> getCarmenDtoOficialAuto(@Path("codigo") String codigo);
 
+    @GET("/autonomicas/carmen/oficial/9900000/data")
+    Call<CarmenDTO> getCarmenDtoEspAuto();
+
+    @GET("/municipales/carmen/oficial/9900000/data")
+    Call<CarmenDTO> getCarmenDtoEspMuni();
+
     @GET("/municipales/carmen/oficial/{codigo}/data")
     Call<CarmenDTO> getCarmenDtoOficialMuni(@Path("codigo") String codigo);
 
@@ -115,6 +121,18 @@ public interface IClienteApi {
 
     @GET("/municipales/participacion/sale")
     Call<String> saleParticipacionMuni();
+
+    @GET("/autonomicas/participacion/entra/esp")
+    Call<String> entraParticipacionEspAuto();
+
+    @GET("/municipales/participacion/entra/esp")
+    Call<String> entraParticipacionEspMuni();
+
+    @GET("/autonomicas/participacion/sale/esp")
+    Call<String> saleParticipacionEspAuto();
+
+    @GET("/municipales/participacion/sale/esp")
+    Call<String> saleParticipacionEspMuni();
 
     /*
      ****************CARTON RESULTADOS
