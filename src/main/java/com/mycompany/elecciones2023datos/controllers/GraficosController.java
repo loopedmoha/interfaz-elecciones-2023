@@ -1,5 +1,6 @@
 package com.mycompany.elecciones2023datos.controllers;
 
+import com.mycompany.elecciones2023datos.DTO.CarmenDTO;
 import com.mycompany.elecciones2023datos.model.CircunscripcionPartido;
 import com.mycompany.elecciones2023datos.model.Partido;
 import com.mycompany.elecciones2023datos.services.IClienteApi;
@@ -18,6 +19,38 @@ public class GraficosController {
                 .baseUrl("http://localhost:9090")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         clienteApi = retrofit.create(IClienteApi.class);
+    }
+
+    public CarmenDTO getCarmenDtoOficialAuto(String codigo) {
+        try {
+            return clienteApi.getCarmenDtoOficialAuto(codigo).execute().body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public CarmenDTO getCarmenDtoOficialMuni(String codigo) {
+        try {
+            return clienteApi.getCarmenDtoOficialMuni(codigo).execute().body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public CarmenDTO getCarmenDtoSondeoAuto(String codigo) {
+        try {
+            return clienteApi.getCarmenDtoSondeoAuto(codigo).execute().body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public CarmenDTO getCarmenDtoSondeoMuni(String codigo) {
+        try {
+            return clienteApi.getCarmenDtoSondeoMuni(codigo).execute().body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

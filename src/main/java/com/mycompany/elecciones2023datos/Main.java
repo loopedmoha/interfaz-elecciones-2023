@@ -5,6 +5,7 @@
 package com.mycompany.elecciones2023datos;
 
 import com.mycompany.elecciones2023datos.DTO.CarmenDTO;
+import com.mycompany.elecciones2023datos.DTO.CircunscripcionDTO;
 import com.mycompany.elecciones2023datos.controllers.GraficosController;
 import com.mycompany.elecciones2023datos.model.Circunscripcion;
 import com.mycompany.elecciones2023datos.model.CircunscripcionPartido;
@@ -223,7 +224,7 @@ public class Main extends javax.swing.JFrame {
 
             }
         }
-        Circunscripcion espCirc = esp.getCircunscripcion();
+        CircunscripcionDTO espCirc = esp.getCircunscripcion();
         Object[] rowData = {espCirc.getEscrutado(), espCirc.getParticipacion(), espCirc.getParticipacionHist(),
                 // espCirc.getAvance1(), espCirc.getAvance2(), espCirc.getAvance3(),
                 // espCirc.getAvance1Hist(), espCirc.getAvance2Hist(), espCirc.getAvance3Hist()
@@ -1479,7 +1480,39 @@ public class Main extends javax.swing.JFrame {
         pactometro2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pactometro2.setLocation(screenWidth/4, screenHeight/9);
         pactometro2.setVisible(true);*/
-        JFrame pactos = new PactosOpcion2();
+        JFrame pactos = null;
+        int arcoOFaldon = 0;
+        if (TablaCartones.getSelectedRow() == 2) {
+            arcoOFaldon = 1;
+        }
+        if (TablaFaldones.getSelectedRow() == 0) {
+            arcoOFaldon = 2;
+        }
+        switch (tipoElecciones) {
+            case 1, 3 -> {
+                String codigo;
+                if (tablaMunicipios.getSelectedRow() != -1) {
+                    codigo = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(tablaMunicipios.getSelectedRow(), 0).toString());
+                } else if (tablaComunidades.getSelectedRow() != -1) {
+                    codigo = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString());
+                } else {
+                    codigo = null;
+                }
+                pactos = new PactosOpcion2(arcoOFaldon, codigo, tipoElecciones, oficiales);
+            }
+
+            case 2, 4 -> {
+                String codigo;
+                if (tablaMunicipios.getSelectedRow() != -1) {
+                    codigo = nombreCodigoAutonomicas.get(tablaMunicipios.getValueAt(tablaMunicipios.getSelectedRow(), 0).toString());
+                } else if (tablaComunidades.getSelectedRow() != -1) {
+                    codigo = nombreCodigoAutonomicas.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString());
+                } else {
+                    codigo = null;
+                }
+                pactos = new PactosOpcion2(arcoOFaldon, codigo, tipoElecciones, oficiales);
+            }
+        }
         pactos.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pactos.setLocation(screenWidth / 4, screenHeight / 2);
         pactos.setVisible(true);
@@ -1846,7 +1879,7 @@ public class Main extends javax.swing.JFrame {
 
         if (configFile.exists()) {
             // El archivo ya existe
-            System.out.println("existe");
+            //System.out.println("existe");
             JFrame config;
             try {
                 config = new config();
