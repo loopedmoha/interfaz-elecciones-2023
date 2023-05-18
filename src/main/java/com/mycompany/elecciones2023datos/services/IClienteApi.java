@@ -252,6 +252,12 @@ public interface IClienteApi {
     @GET("/autonomicas/arco/sondeo/pactos")
     Call<String> arcoSondeoPactosMuni();
 
+    @GET("/autonomicas/arco/reset")
+    Call<String> resetArcoAuto();
+
+    @GET("/municipales/arco/reset")
+    Call<String> resetArcoMuni();
+
     //ENTRADA Y SALIDA DE PARTIDOS
     @GET("/autonomicas/arco/oficial/{circunscripcion}/{partido}/entraIzq")
     Call<String> entraPartidoIzqOficial(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);

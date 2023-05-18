@@ -711,6 +711,22 @@ public class GraficosController {
             throw new RuntimeException(e);
         }
     }
+
+    public void resetArcoAuto() {
+        try {
+            clienteApi.resetArcoAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void resetArcoMuni() {
+        try {
+            clienteApi.resetArcoMuni().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     //ENTRADA Y SALIDA DE PARTIDOS EN ARCO
 
     public void entraPartidoIzqOficial(String circunscripcion, String partido) {

@@ -540,10 +540,22 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     private void btnEntraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraActionPerformed
         if (arcoOFaldon == 1) {
             switch (tipoElecciones) {
-                case 1 -> graficosController.pactosArcoAuto();
-                case 2 -> graficosController.pactosArcoMuni();
-                case 3 -> graficosController.pactosArcoAutoSondeo();
-                case 4 -> graficosController.pactosArcoMuniSondeo();
+                case 1 -> {
+                    graficosController.pactosArcoAuto();
+                    graficosController.resetArcoMuni();
+                }
+                case 2 -> {
+                    graficosController.pactosArcoMuni();
+                    graficosController.resetArcoAuto();
+                }
+                case 3 -> {
+                    graficosController.pactosArcoAutoSondeo();
+                    graficosController.resetArcoMuni();
+                }
+                case 4 -> {
+                    graficosController.pactosArcoMuniSondeo();
+                    graficosController.resetArcoAuto();
+                }
             }
         } else if (arcoOFaldon == 2) {
             switch (tipoElecciones) {
@@ -558,10 +570,10 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     private void btnSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraPartidoDerActionPerformed
         if (arcoOFaldon == 1) {
             switch (tipoElecciones) {
-                case 1 -> graficosController.pactosArcoAuto();
-                case 2 -> graficosController.pactosArcoMuni();
-                case 3 -> graficosController.pactosArcoAutoSondeo();
-                case 4 -> graficosController.pactosArcoMuniSondeo();
+                case 1 -> graficosController.resetArcoMuni();
+                case 2 -> graficosController.resetArcoAuto();
+                case 3 -> graficosController.resetArcoMuni();
+                case 4 -> graficosController.resetArcoAuto();
             }
         } else if (arcoOFaldon == 2) {
             switch (tipoElecciones) {

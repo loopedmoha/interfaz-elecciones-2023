@@ -85,11 +85,14 @@ public class Main extends javax.swing.JFrame {
 
     public void initCircunscripcionesAutonomicas() {
         try {
-            var autonomiasMuni = clienteApi.getAllAutonomiasMuni().execute().body();
+            List<Circunscripcion> autonomiasMuni;
+
+            autonomiasMuni = clienteApi.getAllAutonomiasMuni().execute().body();
             autonomiasMuni.stream().filter(x -> x.getCodigo().endsWith("00000"))
                     .map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> circunscripcionesAutonomicas.put(auto, null));
 
-            var autonomiasAuto = clienteApi.getAllAutonomiasAuto().execute().body();
+            List<Circunscripcion> autonomiasAuto;
+            autonomiasAuto = clienteApi.getAllAutonomiasAuto().execute().body();
             autonomiasAuto.stream().map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> circunscripcionesAutonomicas.put(auto, null));
 
             for (Circunscripcion autonomia : autonomiasMuni) {
@@ -451,6 +454,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         TablaFaldones.getSelectionModel().addListSelectionListener(e -> {
+            rellenarCCAA(tipoElecciones);
             if (TablaFaldones.getSelectedRow() == 2) {
                 vaciarTablas();
                 List<CircunscripcionPartido> cps = graficosController.getCpsEspania();
@@ -909,6 +913,7 @@ public class Main extends javax.swing.JFrame {
                                 .addGap(41, 41, 41))
         );
         TablaCartones.getSelectionModel().addListSelectionListener(e -> {
+            rellenarCCAA(tipoElecciones);
             if (TablaCartones.getSelectedRow() == 3) {
                 entreParticipacionEsp();
             }
@@ -1519,7 +1524,7 @@ public class Main extends javax.swing.JFrame {
                 if (tablaMunicipios.getSelectedRow() != -1) {
                     codigo = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(tablaMunicipios.getSelectedRow(), 0).toString());
                 } else if (tablaComunidades.getSelectedRow() != -1) {
-                    codigo = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString());
+                    codigo = nombreCodigo.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString());
                 } else {
                     codigo = null;
                 }
@@ -1801,10 +1806,12 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void rellenarCCAA(int tipo) {
+        vaciarTablas();
         switch (tipo) {
             case 1, 3 -> {
                 DefaultTableModel tableModel = (DefaultTableModel) tablaComunidades.getModel();
-                List<String> ccaa = cicunscripcionesMunicipales.keySet().stream().filter(x -> !x.endsWith("00000") && !x.startsWith("99")).toList();
+                List<String> ccaa = cicunscripcionesMunicipales.keySet().stream().filter(x -> !x.endsWith("00000")).toList();
+                ccaa = ccaa.subList(0, ccaa.size() - 1);
                 for (String s : ccaa) {
                     tableModel.addRow(new Object[]{s});
                 }
@@ -1812,7 +1819,8 @@ public class Main extends javax.swing.JFrame {
             }
             case 2, 4 -> {
                 DefaultTableModel tableModel = (DefaultTableModel) tablaComunidades.getModel();
-                for (String s : nombreCodigoAuto.keySet()) {
+                var lista = nombreCodigoAuto.keySet().stream().toList().subList(0, nombreCodigoAuto.keySet().stream().toList().size() - 1);
+                for (String s : lista) {
                     tableModel.addRow(new Object[]{s});
                 }
                 tablaComunidades.setModel(tableModel);
