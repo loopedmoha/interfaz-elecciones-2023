@@ -5,6 +5,7 @@
 package com.mycompany.elecciones2023datos;
 
 import com.mycompany.elecciones2023datos.DTO.CarmenDTO;
+import com.mycompany.elecciones2023datos.DTO.CpDTO;
 import com.mycompany.elecciones2023datos.controllers.GraficosController;
 import com.mycompany.elecciones2023datos.model.Partido;
 
@@ -16,14 +17,7 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -49,7 +43,12 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
     private int arcoOFaldon;
 
-    List<Partido> partidos;
+    private List<Partido> partidos;
+
+    private List<CpDTO> partidosIzqDentro;
+    private List<CpDTO> partidosDerDentro;
+
+    private CarmenDTO dto;
 
     public PactosOpcion2() {
         initComponents();
@@ -66,22 +65,33 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         this.oficiales = oficiales;
         this.arcoOFaldon = arcoOFaldon;
         partidos = new ArrayList<>();
+        partidosIzqDentro = new ArrayList<>();
+        partidosDerDentro = new ArrayList<>();
         tablaIzq.setModel(modeltablaIzq);
         tablaDcha.setModel(modeltablaDcha);
         cargarDatos();
     }
 
     private void cargarDatos() {
+
+        switch (tipoElecciones) {
+            case 1 -> tipoDatos.setText("MUNICIPALES OFICIALES");
+            case 2 -> tipoDatos.setText("AUTONÓMICAS OFICIALES");
+            case 3 -> tipoDatos.setText("MUNICIPALES SONDEO");
+            case 4 -> tipoDatos.setText("AUTONÓMICAS SONDEO");
+        }
+
         if (codigo != null) {
             modeltablaIzq.addColumn("PARTIDOS IZQ");
             modeltablaDcha.addColumn("PARTIDOS DCHA");
-            CarmenDTO dto = switch (tipoElecciones) {
+            dto = switch (tipoElecciones) {
                 case 1 -> graficosController.getCarmenDtoOficialMuni(codigo);
                 case 2 -> graficosController.getCarmenDtoOficialAuto(codigo);
                 case 3 -> graficosController.getCarmenDtoSondeoMuni(codigo);
                 case 4 -> graficosController.getCarmenDtoSondeoAuto(codigo);
                 default -> null;
             };
+            lblNombreCircunscripcion.setText(dto.getCircunscripcion().getNombreCircunscripcion());
             dto.getCpDTO().forEach(cp -> {
                 Partido p = graficosController.getPartido(cp.getCodigoPartido());
                 partidos.add(p);
@@ -119,7 +129,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         tablaPactosDcha = new javax.swing.JTable();
         jScrollPane8 = new javax.swing.JScrollPane();
         tablaDcha = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        lblNombreCircunscripcion = new javax.swing.JLabel();
         tipoDatos = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lblMayoriaAbsoluta = new javax.swing.JLabel();
@@ -281,10 +291,10 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             tablaDcha.getColumnModel().getColumn(0).setResizable(false);
         }
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Circunscripción");
-        jLabel1.setToolTipText("");
+        lblNombreCircunscripcion.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblNombreCircunscripcion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNombreCircunscripcion.setText("Circunscripción");
+        lblNombreCircunscripcion.setToolTipText("");
 
         tipoDatos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         tipoDatos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -353,7 +363,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                                                         .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(228, 228, 228)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblNombreCircunscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -370,7 +380,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                                         .addComponent(btnEntra, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(btnSale, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel1)
+                                .addComponent(lblNombreCircunscripcion)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -410,7 +420,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                                 .addGap(16, 16, 16))
         );
 
-        jLabel1.getAccessibleContext().setAccessibleName("lblCircunscripcion");
+        lblNombreCircunscripcion.getAccessibleContext().setAccessibleName("lblCircunscripcion");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -418,7 +428,6 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     private void btnEntraPartidoIzquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraPartidoIzquierdaActionPerformed
         int filaSeleccionada = tablaIzq.getSelectedRow();
         if (filaSeleccionada != -1) {
-
             String texto = (String) tablaIzq.getValueAt(filaSeleccionada, 0);
             tablaIzq.setValueAt(texto, filaSeleccionada, 0);
             DefaultTableModel modelPactos = (DefaultTableModel) tablaPactosIzq.getModel();
@@ -432,8 +441,28 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             }
             if (!repetido) {
                 modelPactos.addRow(new Object[]{texto});
-            }
+                partidosIzqDentro.add(dto.getCpDTO().get(filaSeleccionada));
+                int escanos;
+                if (oficiales) {
+                    escanos = Integer.parseInt(lblEscTotalesIzq.getText()) + dto.getCpDTO().get(filaSeleccionada).getEscanos_hasta();
+                } else {
+                    escanos = Integer.parseInt(lblEscTotalesIzq.getText()) + dto.getCpDTO().get(filaSeleccionada).getEscanos_hasta_sondeo();
+                }
+                lblEscTotalesIzq.setText(escanos + "");
 
+                if (arcoOFaldon == 1) {
+                    switch (tipoElecciones) {
+                        case 1 ->
+                                graficosController.entraPartidoIzqOficial(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                        case 2 ->
+                                graficosController.entraPartidoIzqOficial(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                        case 3 ->
+                                graficosController.entraPartidoIzqSondeo(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                        case 4 ->
+                                graficosController.entraPartidoIzqSondeo(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                    }
+                }
+            }
 
             TableCellRenderer renderer = tablaIzq.getCellRenderer(filaSeleccionada, 0);
             Component componente = tablaIzq.prepareRenderer(renderer, filaSeleccionada, 0);
@@ -469,13 +498,22 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                 }
             }
 
+            int escanos;
+            if (oficiales) {
+                escanos = Integer.parseInt(lblEscTotalesIzq.getText()) - partidosIzqDentro.get(filaSeleccionada).getEscanos_hasta();
+            } else {
+                escanos = Integer.parseInt(lblEscTotalesIzq.getText()) - partidosIzqDentro.get(filaSeleccionada).getEscanos_hasta_sondeo();
+            }
+            lblEscTotalesIzq.setText(escanos + "");
+
             // Eliminar fila seleccionada de tablaPactosIzq
             modelPactos.removeRow(filaSeleccionada);
+            partidosIzqDentro.remove(filaSeleccionada);
         }
     }//GEN-LAST:event_btnSalePartidoIzqActionPerformed
 
     private void btnEntraPartidoDerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraPartidoDerActionPerformed
-      //  resaltarBoton(btnEntraPartidoDer);
+        //  resaltarBoton(btnEntraPartidoDer);
     }//GEN-LAST:event_btnEntraPartidoDerActionPerformed
 
     private void btnSalePartidoDerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalePartidoDerActionPerformed
@@ -552,13 +590,8 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PactosOpcion2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PactosOpcion2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PactosOpcion2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(PactosOpcion2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -583,7 +616,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     private javax.swing.JButton btnEntraPartidoDer;
     private javax.swing.JButton btnEntra;
     private javax.swing.JButton btnSale;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblNombreCircunscripcion;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

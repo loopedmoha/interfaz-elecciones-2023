@@ -711,6 +711,31 @@ public class GraficosController {
             throw new RuntimeException(e);
         }
     }
+    //ENTRADA Y SALIDA DE PARTIDOS EN ARCO
+
+    public void entraPartidoIzqOficial(String circunscripcion, String partido) {
+        try {
+            clienteApi.entraPartidoIzqOficial(circunscripcion, partido).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraPartidoIzqPrincipales(String circunscripcion, String partido) {
+        try {
+            clienteApi.entraPartidoIzqPrincipales(circunscripcion, partido).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraPartidoIzqSondeo(String circunscripcion, String partido) {
+        try {
+            clienteApi.entraPartidoIzqSondeo(circunscripcion, partido).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     //SELECTED
 
@@ -785,6 +810,7 @@ public class GraficosController {
             throw new RuntimeException(e);
         }
     }
+
 
     //RESET
 
