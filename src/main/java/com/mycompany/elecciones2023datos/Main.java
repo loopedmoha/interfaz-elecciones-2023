@@ -476,7 +476,7 @@ public class Main extends javax.swing.JFrame {
                         try {
                             if (TablaCartones.getSelectedRow() != 3) {
                                 carmen = clienteApi.getCarmenDtoOficialAuto(codAutonomia).execute().body();
-                                graficosController.selectedMunicipalesOficiales(codAutonomia);
+                                graficosController.selectedAutonomicasOficiales(codAutonomia);
                                 if (TablaCartones.getSelectedRow() == 0) {
                                     if (tablaComunidades.getSelectedRow() != -1) {
                                         String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
@@ -486,7 +486,7 @@ public class Main extends javax.swing.JFrame {
                                 }
                             } else {
                                 carmen = clienteApi.getCarmenDtoOficialAuto("9900000").execute().body();
-                                graficosController.selectedMunicipalesOficiales("9900000");
+                                graficosController.selectedAutonomicasOficiales("9900000");
                             }
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
@@ -494,24 +494,23 @@ public class Main extends javax.swing.JFrame {
                     } else {
                         try {
                             if (TablaCartones.getSelectedRow() != 3) {
-                                carmen = clienteApi.getCarmenDtoOficialAuto(codAutonomia).execute().body();
-                                graficosController.selectedMunicipalesOficiales(codAutonomia);
+                                carmen = clienteApi.getCarmenDtoSondeoAuto(codAutonomia).execute().body();
+                                graficosController.selectedAutonomicasSondeo(codAutonomia);
                                 if (TablaCartones.getSelectedRow() == 0) {
                                     if (tablaComunidades.getSelectedRow() != -1) {
                                         String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
                                         String codigo = nombreCodigoAuto.get(nombreCCAA);
-                                        graficosController.descargarResultadosCsvMuni(codigo);
+                                        graficosController.descargarResultadosCsvAuto(codigo);
                                     }
                                 }
                             } else {
-                                carmen = clienteApi.getCarmenDtoOficialAuto("9900000").execute().body();
-                                graficosController.selectedMunicipalesOficiales("9900000");
+                                carmen = clienteApi.getCarmenDtoSondeoAuto("9900000").execute().body();
+                                graficosController.selectedAutonomicasSondeo("9900000");
                             }
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
                     }
-                    //showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
                     showDataTable(carmen);
                 } else {
                     if (TablaCartones.getSelectedRow() != 3)
@@ -520,12 +519,12 @@ public class Main extends javax.swing.JFrame {
                     //TODO:Hacer un switch aqui para distinguir con qué datos actualizamos: Oficiales A o M, Sondeo A o M
                     if (oficiales) {
                         try {
-                            System.out.println(TablaCartones.getSelectedRow());
+                            //System.out.println(TablaCartones.getSelectedRow());
                             if (TablaCartones.getSelectedRow() != 3) {
-                                carmen = clienteApi.getCarmenDtoOficialAuto(codAutonomia).execute().body();
+                                carmen = clienteApi.getCarmenDtoOficialMuni(codAutonomia).execute().body();
                                 graficosController.selectedMunicipalesOficiales(codAutonomia);
                             } else {
-                                carmen = clienteApi.getCarmenDtoOficialAuto("9900000").execute().body();
+                                carmen = clienteApi.getCarmenDtoOficialMuni("9900000").execute().body();
                                 graficosController.selectedMunicipalesOficiales("9900000");
                             }
                         } catch (IOException ex) {
@@ -534,19 +533,19 @@ public class Main extends javax.swing.JFrame {
                     } else {
                         try {
                             if (TablaCartones.getSelectedRow() != 3) {
-                                carmen = clienteApi.getCarmenDtoOficialAuto(codAutonomia).execute().body();
-                                graficosController.selectedMunicipalesOficiales(codAutonomia);
+                                carmen = clienteApi.getCarmenDtoSondeoMuni(codAutonomia).execute().body();
+                                graficosController.selectedMunicipalesSondeo(codAutonomia);
                             } else {
-                                carmen = clienteApi.getCarmenDtoOficialAuto("9900000").execute().body();
-                                graficosController.selectedMunicipalesOficiales("9900000");
+                                carmen = clienteApi.getCarmenDtoSondeoMuni("9900000").execute().body();
+                                graficosController.selectedMunicipalesSondeo("9900000");
                             }
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
                     }
                     //showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
-                    if (TablaCartones.getSelectedRow() != 3)
-                        showDataTable(carmen);
+                    //if (TablaCartones.getSelectedRow() != 3)
+                    showDataTable(carmen);
                 }
 
                 lblEscrutado.setText(carmen.getCircunscripcion().getEscrutado() + "");
