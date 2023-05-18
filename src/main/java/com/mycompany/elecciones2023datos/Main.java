@@ -1115,6 +1115,10 @@ public class Main extends javax.swing.JFrame {
                         }
                     }
                     case 3 -> {
+                        if (!participacionIn) {
+                            graficosController.entraParticipacionEspMuni();
+                            participacionIn = true;
+                        }
 
                     }
                     default -> System.out.print("");
@@ -1217,6 +1221,14 @@ public class Main extends javax.swing.JFrame {
                             arcoIn = true;
                         }
                     }
+
+                    case 3 -> {
+                        if (!participacionIn) {
+                            graficosController.entraParticipacionEspAuto();
+                            participacionIn = true;
+                        }
+
+                    }
                     default -> System.out.print("");
                 }
                 switch (TablaFaldones.getSelectedRow()) {
@@ -1318,6 +1330,13 @@ public class Main extends javax.swing.JFrame {
                             arcoIn = true;
                         }
                     }
+                    case 3 -> {
+                        if (!participacionIn) {
+                            graficosController.entraParticipacionEspMuni();
+                            participacionIn = true;
+                        }
+
+                    }
                     default -> System.out.print("");
                 }
                 switch (TablaFaldones.getSelectedRow()) {
@@ -1408,6 +1427,12 @@ public class Main extends javax.swing.JFrame {
                             sacarCartonAnteriorAuto();
                             graficosController.entraArcoAutoSondeo();
                             arcoIn = true;
+                        }
+                    }
+                    case 3 -> {
+                        if (!participacionIn) {
+                            graficosController.entraParticipacionEspAuto();
+                            participacionIn = true;
                         }
                     }
                     default -> System.out.print("");
@@ -1552,6 +1577,11 @@ public class Main extends javax.swing.JFrame {
                         graficosController.saleArcoMuni();
                         arcoIn = false;
                     }
+                    case 3 -> {
+                        graficosController.saleParticipacionEspMuni();
+                        participacionIn = false;
+
+                    }
 
                     default -> System.out.print("");
                 }
@@ -1597,6 +1627,11 @@ public class Main extends javax.swing.JFrame {
                         graficosController.saleArcoAuto();
                         arcoIn = false;
                     }
+                    case 3 -> {
+                        graficosController.saleParticipacionEspAuto();
+                        participacionIn = false;
+
+                    }
                     default -> System.out.print("");
                 }
                 switch (TablaFaldones.getSelectedRow()) {
@@ -1640,6 +1675,11 @@ public class Main extends javax.swing.JFrame {
                     case 2 -> {
                         graficosController.saleArcoMuniSondeo();
                         arcoIn = false;
+                    }
+                    case 3 -> {
+                        graficosController.saleParticipacionEspMuni();
+                        participacionIn = false;
+
                     }
                     default -> System.out.print("");
                 }
