@@ -729,25 +729,109 @@ public class GraficosController {
     }
     //ENTRADA Y SALIDA DE PARTIDOS EN ARCO
 
-    public void entraPartidoIzqOficial(String circunscripcion, String partido) {
+    public void entraPartidoIzqOficialAuto(String circunscripcion, String partido) {
         try {
-            clienteApi.entraPartidoIzqOficial(circunscripcion, partido).execute();
+            clienteApi.entraPartidoIzqOficialAuto(circunscripcion, partido).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void entraPartidoIzqPrincipales(String circunscripcion, String partido) {
+    public void entraPartidoIzqPrincipalesAuto(String circunscripcion, String partido) {
         try {
-            clienteApi.entraPartidoIzqPrincipales(circunscripcion, partido).execute();
+            clienteApi.entraPartidoIzqPrincipalesAuto(circunscripcion, partido).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void entraPartidoIzqSondeo(String circunscripcion, String partido) {
+    public void entraPartidoIzqSondeoAuto(String circunscripcion, String partido) {
         try {
-            clienteApi.entraPartidoIzqSondeo(circunscripcion, partido).execute();
+            clienteApi.entraPartidoIzqSondeoAuto(circunscripcion, partido).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraPartidoIzqOficialMuni(String circunscripcion, String partido) {
+        try {
+            clienteApi.entraPartidoIzqOficialMuni(circunscripcion, partido).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraPartidoIzqPrincipalesMuni(String circunscripcion, String partido) {
+        try {
+            clienteApi.entraPartidoIzqPrincipalesMuni(circunscripcion, partido).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraPartidoIzqSondeoMuni(String circunscripcion, String partido) {
+        try {
+            clienteApi.entraPartidoIzqSondeoMuni(circunscripcion, partido).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //ENTRA DERECHA
+
+    public void entraPartidoDerOficialAuto(String circunscripcion, String partido) {
+        try {
+            clienteApi.entraPartidoDerOficialAuto(circunscripcion, partido).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraPartidoDerPrincipalesAuto(String circunscripcion, String partido) {
+        try {
+            clienteApi.entraPartidoDerPrincipalesAuto(circunscripcion, partido).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraPartidoDerSondeoAuto(String circunscripcion, String partido) {
+        try {
+            clienteApi.entraPartidoDerSondeoAuto(circunscripcion, partido).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraPartidoDerOficialMuni(String circunscripcion, String partido) {
+        try {
+            clienteApi.entraPartidoDerOficialMuni(circunscripcion, partido).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraPartidoDerPrincipalesMuni(String circunscripcion, String partido) {
+        try {
+            clienteApi.entraPartidoDerPrincipalesMuni(circunscripcion, partido).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraPartidoDerSondeoMuni(String circunscripcion, String partido) {
+        try {
+            clienteApi.entraPartidoDerSondeoMuni(circunscripcion, partido).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //BORRAR
+
+    public void borrarPartido(String circunscripcion, String partido, int tipoArco) {
+        try {
+            clienteApi.borrarPartido(circunscripcion, partido, tipoArco).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

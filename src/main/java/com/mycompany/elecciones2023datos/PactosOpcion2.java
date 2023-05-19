@@ -11,17 +11,9 @@ import com.mycompany.elecciones2023datos.model.Partido;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -471,13 +463,13 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                 if (arcoOFaldon == 1) {
                     switch (tipoElecciones) {
                         case 1 ->
-                                graficosController.entraPartidoIzqOficial(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoIzqOficialMuni(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                         case 2 ->
-                                graficosController.entraPartidoIzqOficial(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoIzqOficialAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                         case 3 ->
-                                graficosController.entraPartidoIzqSondeo(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoIzqSondeoMuni(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                         case 4 ->
-                                graficosController.entraPartidoIzqSondeo(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoIzqSondeoAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                     }
                 }
             }
@@ -536,12 +528,11 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             // Eliminar fila seleccionada de tablaPactosIzq
             modelPactos.removeRow(filaSeleccionada);
             partidosIzqDentro.remove(filaSeleccionada);
+            graficosController.borrarPartido(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido(), tipoElecciones);
         }
     }//GEN-LAST:event_btnSalePartidoIzqActionPerformed
 
     private void btnEntraPartidoDerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraPartidoDerActionPerformed
-        //  resaltarBoton(btnEntraPartidoDer);
-        
         int filaSeleccionada = tablaDcha.getSelectedRow();
         if (filaSeleccionada != -1) {
             String texto = (String) tablaDcha.getValueAt(filaSeleccionada, 0);
@@ -555,44 +546,40 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                     break;
                 }
             }
-            
             if (!repetido) {
                 modelPactos.addRow(new Object[]{texto});
-                //partidosIzqDentro.add(dto.getCpDTO().get(filaSeleccionada));
+                partidosDerDentro.add(dto.getCpDTO().get(filaSeleccionada));
                 int escanos;
                 if (oficiales) {
-                    escanos = Integer.parseInt(lblEscTotalesIzq.getText()) + dto.getCpDTO().get(filaSeleccionada).getEscanos_hasta();
+                    escanos = Integer.parseInt(lblEscTotalesDcha.getText()) + dto.getCpDTO().get(filaSeleccionada).getEscanos_hasta();
                 } else {
-                    escanos = Integer.parseInt(lblEscTotalesIzq.getText()) + dto.getCpDTO().get(filaSeleccionada).getEscanos_hasta_sondeo();
+                    escanos = Integer.parseInt(lblEscTotalesDcha.getText()) + dto.getCpDTO().get(filaSeleccionada).getEscanos_hasta_sondeo();
                 }
-                lblEscTotalesIzq.setText(escanos + "");
+                lblEscTotalesDcha.setText(escanos + "");
 
                 if (arcoOFaldon == 1) {
                     switch (tipoElecciones) {
                         case 1 ->
-                                graficosController.entraPartidoIzqOficial(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoDerOficialMuni(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                         case 2 ->
-                                graficosController.entraPartidoIzqOficial(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoDerOficialAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                         case 3 ->
-                                graficosController.entraPartidoIzqSondeo(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoDerSondeoMuni(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                         case 4 ->
-                                graficosController.entraPartidoIzqSondeo(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoDerSondeoAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                     }
                 }
             }
-            
             TableCellRenderer renderer = tablaDcha.getCellRenderer(filaSeleccionada, 0);
             Component componente = tablaDcha.prepareRenderer(renderer, filaSeleccionada, 0);
             //componente.setBackground(Color.LIGHT_GRAY);
             tablaDcha.clearSelection(); // deseleccionar la fila seleccionada
         }
-        
-        
     }//GEN-LAST:event_btnEntraPartidoDerActionPerformed
 
     private void btnSalePartidoDerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalePartidoDerActionPerformed
         System.out.println("sale partido derecha");
-        
+
         int filaSeleccionada = tablaPactosDcha.getSelectedRow();
         if (filaSeleccionada != -1) {
             DefaultTableModel modelPactos = (DefaultTableModel) tablaPactosDcha.getModel();
@@ -702,7 +689,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     private void btnReset1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReset1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReset1ActionPerformed
-                                
+
 
     /**
      * @param args the command line arguments
