@@ -17,6 +17,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -327,26 +329,49 @@ public class Main extends javax.swing.JFrame {
         ListSelectionModel selectionModel = TablaCartones.getSelectionModel();
 
 
-        selectionModel.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    tablaComunidades.clearSelection();
+        TablaCartones.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
                     tablaMunicipios.clearSelection();
+                    tablaComunidades.clearSelection();
+                    tablaDatos.clearSelection();
                     TablaFaldones.clearSelection();
+                    System.out.println(TablaCartones.getValueAt(TablaCartones.getSelectedRow(), 0));
                 }
             }
         });
-
-        ListSelectionModel selectionModel2 = TablaFaldones.getSelectionModel();
-        selectionModel2.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
+        TablaFaldones.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
                     tablaComunidades.clearSelection();
                     tablaMunicipios.clearSelection();
+                    tablaDatos.clearSelection();
                     TablaCartones.clearSelection();
+                    System.out.println(TablaFaldones.getValueAt(TablaFaldones.getSelectedRow(), 0));
                 }
             }
         });
+        
+//        selectionModel.addListSelectionListener(new ListSelectionListener() {
+//            public void valueChanged(ListSelectionEvent e) {
+//                if (!e.getValueIsAdjusting()) {
+//                    tablaComunidades.clearSelection();
+//                    tablaMunicipios.clearSelection();
+//                    TablaFaldones.clearSelection();
+//                }
+//            }
+//        });
+//
+//        ListSelectionModel selectionModel2 = TablaFaldones.getSelectionModel();
+//        selectionModel2.addListSelectionListener(new ListSelectionListener() {
+//            public void valueChanged(ListSelectionEvent e) {
+//                if (!e.getValueIsAdjusting()) {
+//                    tablaComunidades.clearSelection();
+//                    tablaMunicipios.clearSelection();
+//                    TablaCartones.clearSelection();
+//                }
+//            }
+//        });
 
         ClassLoader classLoader = getClass().getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream("Imagenes/iconconfig.png");
