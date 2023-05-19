@@ -453,13 +453,13 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                 if (arcoOFaldon == 1) {
                     switch (tipoElecciones) {
                         case 1 ->
-                                graficosController.entraPartidoIzqOficial(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoIzqOficialMuni(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                         case 2 ->
-                                graficosController.entraPartidoIzqOficial(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoIzqOficialAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                         case 3 ->
-                                graficosController.entraPartidoIzqSondeo(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoIzqSondeoMuni(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                         case 4 ->
-                                graficosController.entraPartidoIzqSondeo(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoIzqSondeoAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                     }
                 }
             }
@@ -509,6 +509,8 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             // Eliminar fila seleccionada de tablaPactosIzq
             modelPactos.removeRow(filaSeleccionada);
             partidosIzqDentro.remove(filaSeleccionada);
+
+            graficosController.borrarPartido(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido(), tipoElecciones);
         }
     }//GEN-LAST:event_btnSalePartidoIzqActionPerformed
 

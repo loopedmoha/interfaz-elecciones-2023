@@ -260,13 +260,43 @@ public interface IClienteApi {
 
     //ENTRADA Y SALIDA DE PARTIDOS
     @GET("/autonomicas/arco/oficial/{circunscripcion}/{partido}/entraIzq")
-    Call<String> entraPartidoIzqOficial(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+    Call<String> entraPartidoIzqOficialAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
     @GET("/autonomicas/arco/principales/{circunscripcion}/{partido}/entraIzq")
-    Call<String> entraPartidoIzqPrincipales(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+    Call<String> entraPartidoIzqPrincipalesAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
     @GET("/autonomicas/arco/sondeo/{circunscripcion}/{partido}/entraIzq")
-    Call<String> entraPartidoIzqSondeo(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+    Call<String> entraPartidoIzqSondeoAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+
+    @GET("/municipales/arco/oficial/{circunscripcion}/{partido}/entraIzq")
+    Call<String> entraPartidoIzqOficialMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+
+    @GET("/municipales/arco/principales/{circunscripcion}/{partido}/entraIzq")
+    Call<String> entraPartidoIzqPrincipalesMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+
+    @GET("/municipales/arco/sondeo/{circunscripcion}/{partido}/entraIzq")
+    Call<String> entraPartidoIzqSondeoMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+
+    @GET("/autonomicas/arco/oficial/{circunscripcion}/{partido}/entraDer")
+    Call<String> entraPartidoDerOficialAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+
+    @GET("/autonomicas/arco/principales/{circunscripcion}/{partido}/entraDer")
+    Call<String> entraPartidoDerPrincipalesAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+
+    @GET("/autonomicas/arco/sondeo/{circunscripcion}/{partido}/entraDer")
+    Call<String> entraPartidoDerSondeoAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+
+    @GET("/municipales/arco/oficial/{circunscripcion}/{partido}/entraDer")
+    Call<String> entraPartidoDerOficialMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+
+    @GET("/municipales/arco/principales/{circunscripcion}/{partido}/entraDer")
+    Call<String> entraPartidoDerPrincipalesMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+
+    @GET("/municipales/arco/sondeo/{circunscripcion}/{partido}/entraDer")
+    Call<String> entraPartidoDerSondeoMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+
+    @GET("/arco/{circunscripcion}/{partido}/{tipoArco}/borrar")
+    Call<String> borrarPartido(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido, @Path("tipoArco") int tipoArco);
 
 
     /*
