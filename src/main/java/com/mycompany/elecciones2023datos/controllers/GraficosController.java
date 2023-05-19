@@ -21,6 +21,14 @@ public class GraficosController {
         clienteApi = retrofit.create(IClienteApi.class);
     }
 
+    public void initListeners() {
+        try {
+            clienteApi.initListeners().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public CarmenDTO getCarmenDtoOficialAuto(String codigo) {
         try {
             return clienteApi.getCarmenDtoOficialAuto(codigo).execute().body();

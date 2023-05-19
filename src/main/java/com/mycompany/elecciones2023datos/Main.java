@@ -315,6 +315,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         retrofit = new Retrofit.Builder().baseUrl("http://localhost:9090").addConverterFactory(GsonConverterFactory.create()).build();
         clienteApi = retrofit.create(IClienteApi.class);
+        graficosController.initListeners();
         initCircunscripcionesAutonomicas();
         initCircunscripcionesMunicipales();
         initComponents();
@@ -2079,6 +2080,7 @@ public class Main extends javax.swing.JFrame {
 
             }
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

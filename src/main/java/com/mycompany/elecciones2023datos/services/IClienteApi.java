@@ -11,6 +11,9 @@ import retrofit2.http.Path;
 import java.util.List;
 
 public interface IClienteApi {
+    //Iniciar Listeners
+    @GET("/init/listeners")
+    Call<String> initListeners();
 
     //Leer las autonomias
     @GET("/autonomicas/circunscripciones/autonomias")
