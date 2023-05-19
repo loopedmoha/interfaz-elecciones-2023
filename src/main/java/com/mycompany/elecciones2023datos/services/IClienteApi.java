@@ -295,7 +295,7 @@ public interface IClienteApi {
     @GET("/municipales/arco/sondeo/{circunscripcion}/{partido}/entraDer")
     Call<String> entraPartidoDerSondeoMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
-    @GET("/arco/{circunscripcion}/{partido}/{tipoArco}/borrar")
+    @GET("/autonomicas/arco/{circunscripcion}/{partido}/{tipoArco}/borrar")
     Call<String> borrarPartido(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido, @Path("tipoArco") int tipoArco);
 
 

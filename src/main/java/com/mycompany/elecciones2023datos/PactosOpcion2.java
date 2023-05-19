@@ -509,7 +509,6 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             // Eliminar fila seleccionada de tablaPactosIzq
             modelPactos.removeRow(filaSeleccionada);
             partidosIzqDentro.remove(filaSeleccionada);
-
             graficosController.borrarPartido(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido(), tipoElecciones);
         }
     }//GEN-LAST:event_btnSalePartidoIzqActionPerformed

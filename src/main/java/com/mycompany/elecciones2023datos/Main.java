@@ -518,16 +518,20 @@ public class Main extends javax.swing.JFrame {
                     }
                     showDataTable(carmen);
                 } else {
-                    if (TablaCartones.getSelectedRow() != 3)
-                        loadSelectedMunicipales((String) tablaComunidades.getValueAt(selectedRow, 0));
-                    codAutonomia = nombreCodigo.get(tablaComunidades.getValueAt(selectedRow, 0));
-                    //TODO:Hacer un switch aqui para distinguir con qué datos actualizamos: Oficiales A o M, Sondeo A o M
+                    loadSelectedMunicipales((String) tablaComunidades.getValueAt(selectedRow, 0));
+                    codAutonomia = nombreCodigo.get(((String) tablaComunidades.getValueAt(selectedRow, 0)).replaceAll(" ", ""));
                     if (oficiales) {
                         try {
-                            //System.out.println(TablaCartones.getSelectedRow());
                             if (TablaCartones.getSelectedRow() != 3) {
                                 carmen = clienteApi.getCarmenDtoOficialMuni(codAutonomia).execute().body();
                                 graficosController.selectedMunicipalesOficiales(codAutonomia);
+                                if (TablaCartones.getSelectedRow() == 0) {
+                                    if (tablaComunidades.getSelectedRow() != -1) {
+                                        String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
+                                        String codigo = nombreCodigo.get(nombreCCAA);
+                                        graficosController.descargarResultadosCsvMuni(codigo);
+                                    }
+                                }
                             } else {
                                 carmen = clienteApi.getCarmenDtoOficialMuni("9900000").execute().body();
                                 graficosController.selectedMunicipalesOficiales("9900000");
@@ -540,6 +544,13 @@ public class Main extends javax.swing.JFrame {
                             if (TablaCartones.getSelectedRow() != 3) {
                                 carmen = clienteApi.getCarmenDtoSondeoMuni(codAutonomia).execute().body();
                                 graficosController.selectedMunicipalesSondeo(codAutonomia);
+                                if (TablaCartones.getSelectedRow() == 0) {
+                                    if (tablaComunidades.getSelectedRow() != -1) {
+                                        String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
+                                        String codigo = nombreCodigo.get(nombreCCAA);
+                                        graficosController.descargarResultadosCsvMuni(codigo);
+                                    }
+                                }
                             } else {
                                 carmen = clienteApi.getCarmenDtoSondeoMuni("9900000").execute().body();
                                 graficosController.selectedMunicipalesSondeo("9900000");
@@ -548,8 +559,6 @@ public class Main extends javax.swing.JFrame {
                             throw new RuntimeException(ex);
                         }
                     }
-                    //showDataTable((String) tablaComunidades.getValueAt(selectedRow, 0));
-                    //if (TablaCartones.getSelectedRow() != 3)
                     showDataTable(carmen);
                 }
 
