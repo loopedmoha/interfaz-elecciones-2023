@@ -351,7 +351,7 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         });
-        
+
 //        selectionModel.addListSelectionListener(new ListSelectionListener() {
 //            public void valueChanged(ListSelectionEvent e) {
 //                if (!e.getValueIsAdjusting()) {
@@ -479,7 +479,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
         TablaFaldones.getSelectionModel().addListSelectionListener(e -> {
-            rellenarCCAA(tipoElecciones);
             if (TablaFaldones.getSelectedRow() == 2) {
                 vaciarTablas();
                 List<CircunscripcionPartido> cps = graficosController.getCpsEspania();
@@ -490,6 +489,8 @@ public class Main extends javax.swing.JFrame {
                     cpdatas.add(data);
                 });
                 printData(cpdatas);
+            } else if (TablaFaldones.getSelectedRow() != -1) {
+                rellenarCCAA(tipoElecciones);
             }
         });
         tablaComunidades.getSelectionModel().addListSelectionListener(e -> {
@@ -947,9 +948,10 @@ public class Main extends javax.swing.JFrame {
                                 .addGap(41, 41, 41))
         );
         TablaCartones.getSelectionModel().addListSelectionListener(e -> {
-            rellenarCCAA(tipoElecciones);
             if (TablaCartones.getSelectedRow() == 3) {
                 entreParticipacionEsp();
+            } else if (TablaCartones.getSelectedRow() != -1) {
+                rellenarCCAA(tipoElecciones);
             }
         });
         pack();

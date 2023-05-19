@@ -24,18 +24,20 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
 
     private JButton botonSeleccionado = null;
-    DefaultTableModel modeltablaIzq = new DefaultTableModel(){
+    DefaultTableModel modeltablaIzq = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
         }
-    };;
-    DefaultTableModel modeltablaDcha = new DefaultTableModel(){
+    };
+    ;
+    DefaultTableModel modeltablaDcha = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
         }
-    };;;
+    };
+    ;;
     private int filaSeleccionadaAnterior = -1;
     private int filaSeleccionadaAnteriorDcha = -1;
 
@@ -203,19 +205,19 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
         tablaPactosIzq.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tablaPactosIzq.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object[][]{
 
-            },
-            new String [] {
-                "PACTOS IZQ"
-            }
+                },
+                new String[]{
+                        "PACTOS IZQ"
+                }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false
+            boolean[] canEdit = new boolean[]{
+                    false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         jScrollPane5.setViewportView(tablaPactosIzq);
@@ -225,22 +227,22 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
         tablaIzq.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tablaIzq.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
-            },
-            new String [] {
-                "PARTIDOS IZQ"
-            }
+                new Object[][]{
+                        {null},
+                        {null},
+                        {null},
+                        {null}
+                },
+                new String[]{
+                        "PARTIDOS IZQ"
+                }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false
+            boolean[] canEdit = new boolean[]{
+                    false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         jScrollPane6.setViewportView(tablaIzq);
@@ -250,19 +252,19 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
         tablaPactosDcha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tablaPactosDcha.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object[][]{
 
-            },
-            new String [] {
-                "PACTOS DCHA"
-            }
+                },
+                new String[]{
+                        "PACTOS DCHA"
+                }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false
+            boolean[] canEdit = new boolean[]{
+                    false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         jScrollPane7.setViewportView(tablaPactosDcha);
@@ -272,22 +274,22 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
         tablaDcha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tablaDcha.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
-            },
-            new String [] {
-                "PARTIDOS DCHA"
-            }
+                new Object[][]{
+                        {null},
+                        {null},
+                        {null},
+                        {null}
+                },
+                new String[]{
+                        "PARTIDOS DCHA"
+                }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false
+            boolean[] canEdit = new boolean[]{
+                    false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         jScrollPane8.setViewportView(tablaDcha);
@@ -335,105 +337,114 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnEntra, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSale, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnReset1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tipoDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(256, 256, 256)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblEscTotalesIzq, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(45, 45, 45)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblEscTotalesDcha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(btnSalePartidoIzq, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(btnEntraPartidoIzquierda, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnEntraPartidoDer, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnSalePartidoDer, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(228, 228, 228)
-                        .addComponent(lblNombreCircunscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(55, 55, 55))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblMayoriaAbsoluta, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(373, 373, 373))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(41, 41, 41)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(btnEntra, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(btnSale, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(btnReset1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(tipoDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                .addGap(256, 256, 256)
+                                                                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addComponent(lblEscTotalesIzq, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                .addGap(45, 45, 45)
+                                                                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                .addComponent(lblEscTotalesDcha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addComponent(btnSalePartidoIzq, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(btnEntraPartidoIzquierda, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addGap(18, 18, 18)
+                                                                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(btnEntraPartidoDer, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(btnSalePartidoDer, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(228, 228, 228)
+                                                .addComponent(lblNombreCircunscripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(55, 55, 55))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblMayoriaAbsoluta, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(373, 373, 373))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEntra, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSale, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblNombreCircunscripcion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(lblMayoriaAbsoluta))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(lblEscTotalesDcha)
-                    .addComponent(jLabel3)
-                    .addComponent(lblEscTotalesIzq))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnEntraPartidoIzquierda)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSalePartidoIzq)
-                        .addGap(85, 85, 85))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(88, 88, 88)
-                            .addComponent(btnEntraPartidoDer)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnSalePartidoDer))
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tipoDatos)
-                    .addComponent(btnReset1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btnEntra, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnSale, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblNombreCircunscripcion)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel2)
+                                        .addComponent(lblMayoriaAbsoluta))
+                                .addGap(12, 12, 12)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel4)
+                                        .addComponent(lblEscTotalesDcha)
+                                        .addComponent(jLabel3)
+                                        .addComponent(lblEscTotalesIzq))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(btnEntraPartidoIzquierda)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnSalePartidoIzq)
+                                                .addGap(85, 85, 85))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(layout.createSequentialGroup()
+                                                        .addGap(88, 88, 88)
+                                                        .addComponent(btnEntraPartidoDer)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(btnSalePartidoDer))
+                                                .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(tipoDatos)
+                                        .addComponent(btnReset1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(16, 16, 16))
         );
 
         lblNombreCircunscripcion.getAccessibleContext().setAccessibleName("lblCircunscripcion");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void vaciarTablas() {
+
+        DefaultTableModel modelPactosIzq = (DefaultTableModel) tablaPactosIzq.getModel();
+        DefaultTableModel modelPactosDcha = (DefaultTableModel) tablaPactosDcha.getModel();
+
+        modelPactosIzq.setRowCount(0);
+        modelPactosDcha.setRowCount(0);
+    }
 
     private void btnEntraPartidoIzquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraPartidoIzquierdaActionPerformed
         int filaSeleccionada = tablaIzq.getSelectedRow();
@@ -483,15 +494,6 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnEntraPartidoIzquierdaActionPerformed
 
-    private void vaciarTablas(){
-        
-        DefaultTableModel modelPactosIzq = (DefaultTableModel) tablaPactosIzq.getModel();
-        DefaultTableModel modelPactosDcha = (DefaultTableModel) tablaPactosDcha.getModel();
-        
-        modelPactosIzq.setRowCount(0);
-        modelPactosDcha.setRowCount(0);
-    }
-    
     private void btnSalePartidoIzqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalePartidoIzqActionPerformed
         int filaSeleccionada = tablaPactosIzq.getSelectedRow();
         if (filaSeleccionada != -1) {
@@ -515,7 +517,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 //                }
 //            }
             int escanos;
-            if (oficiales) {          
+            if (oficiales) {
                 escanos = Integer.parseInt(lblEscTotalesIzq.getText()) - partidosIzqDentro.get(filaSeleccionada).getEscanos_hasta();
             } else {
                 escanos = Integer.parseInt(lblEscTotalesIzq.getText()) - partidosIzqDentro.get(filaSeleccionada).getEscanos_hasta_sondeo();
@@ -579,14 +581,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntraPartidoDerActionPerformed
 
     private void btnSalePartidoDerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalePartidoDerActionPerformed
-        System.out.println("sale partido derecha");
-
-        int filaSeleccionada = tablaPactosDcha.getSelectedRow();
-        if (filaSeleccionada != -1) {
-            DefaultTableModel modelPactos = (DefaultTableModel) tablaPactosDcha.getModel();
-            String texto = (String) modelPactos.getValueAt(filaSeleccionada, 0);
-
-//            // Restaurar color de fila seleccionada anteriormente (si la hay)
+        //            // Restaurar color de fila seleccionada anteriormente (si la hay)
 //            if (filaSeleccionadaAnterior != -1) {
 //                tablaIzq.getCellRenderer(filaSeleccionadaAnterior, 0).getTableCellRendererComponent(tablaIzq,
 //                                tablaIzq.getValueAt(filaSeleccionadaAnterior, 0), false, false, filaSeleccionadaAnterior, 0)
@@ -611,10 +606,43 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 //                escanos = Integer.parseInt(lblEscTotalesIzq.getText()) - partidosIzqDentro.get(filaSeleccionada).getEscanos_hasta_sondeo();
 //            }
 //            lblEscTotalesIzq.setText(escanos + "");
+        int filaSeleccionada = tablaPactosDcha.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            DefaultTableModel modelPactos = (DefaultTableModel) tablaPactosDcha.getModel();
+            //String texto = (String) modelPactos.getValueAt(filaSeleccionada, 0);
+//            // Restaurar color de fila seleccionada anteriormente (si la hay)
+//            if (filaSeleccionadaAnterior != -1) {
+//                tablaIzq.getCellRenderer(filaSeleccionadaAnterior, 0).getTableCellRendererComponent(tablaIzq,
+//                                tablaIzq.getValueAt(filaSeleccionadaAnterior, 0), false, false, filaSeleccionadaAnterior, 0)
+//                        .setBackground(Color.WHITE);
+//            }
+
+//            // Actualizar color de fila seleccionada actual
+//            for (int i = 0; i < tablaIzq.getRowCount(); i++) {
+//                String textoFila = (String) tablaIzq.getValueAt(i, 0);
+//                if (texto.equals(textoFila)) {
+//                    tablaIzq.getCellRenderer(i, 0).getTableCellRendererComponent(tablaIzq, texto, false, false, i, 0)
+//                            .setBackground(Color.WHITE);
+//                    filaSeleccionadaAnterior = i; // Actualizar fila seleccionada anteriormente
+//                    break;
+//                }
+//            }
+            int escanos;
+            if (oficiales) {
+                escanos = Integer.parseInt(lblEscTotalesDcha.getText()) - partidosDerDentro.get(filaSeleccionada).getEscanos_hasta();
+            } else {
+                escanos = Integer.parseInt(lblEscTotalesDcha.getText()) - partidosDerDentro.get(filaSeleccionada).getEscanos_hasta_sondeo();
+            }
+            lblEscTotalesDcha.setText(escanos + "");
+
+            String siglas = tablaPactosDcha.getValueAt(tablaPactosDcha.getSelectedRow(), 0).toString();
+            String cod = partidos.stream().filter(partido -> partido.getSiglas().equals(siglas)).
+                    findFirst().orElse(null).getCodigo();
+            graficosController.borrarPartido(dto.getCircunscripcion().getCodigo(), cod, tipoElecciones);
 
             // Eliminar fila seleccionada de tablaPactosIzq
             modelPactos.removeRow(filaSeleccionada);
-            partidosIzqDentro.remove(filaSeleccionada);
+            partidosDerDentro.remove(filaSeleccionada);
         }
     }//GEN-LAST:event_btnSalePartidoDerActionPerformed
 
@@ -636,6 +664,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     }
 
     private void btnEntraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraActionPerformed
+        vaciarTablas();
         if (arcoOFaldon == 1) {
             switch (tipoElecciones) {
                 case 1 -> {
@@ -666,9 +695,9 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntraActionPerformed
 
     private void btnSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleActionPerformed
-       
+
         vaciarTablas();
-        
+
         if (arcoOFaldon == 1) {
             switch (tipoElecciones) {
                 case 1 -> graficosController.resetArcoMuni();
