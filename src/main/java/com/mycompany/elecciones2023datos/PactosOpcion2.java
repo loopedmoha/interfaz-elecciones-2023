@@ -11,17 +11,9 @@ import com.mycompany.elecciones2023datos.model.Partido;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -520,8 +512,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalePartidoIzqActionPerformed
 
     private void btnEntraPartidoDerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraPartidoDerActionPerformed
-        //  resaltarBoton(btnEntraPartidoDer);
-        
+         //  resaltarBoton(btnEntraPartidoDer);
         int filaSeleccionada = tablaDcha.getSelectedRow();
         if (filaSeleccionada != -1) {
             String texto = (String) tablaDcha.getValueAt(filaSeleccionada, 0);
@@ -550,13 +541,13 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                 if (arcoOFaldon == 1) {
                     switch (tipoElecciones) {
                         case 1 ->
-                                graficosController.entraPartidoIzqOficial(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoIzqOficialMuni(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                         case 2 ->
-                                graficosController.entraPartidoIzqOficial(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoIzqOficialAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                         case 3 ->
-                                graficosController.entraPartidoIzqSondeo(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoIzqSondeoMuni(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                         case 4 ->
-                                graficosController.entraPartidoIzqSondeo(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
+                                graficosController.entraPartidoIzqSondeoAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                     }
                 }
             }

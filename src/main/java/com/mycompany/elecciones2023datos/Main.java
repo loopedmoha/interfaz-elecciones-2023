@@ -1032,6 +1032,8 @@ public class Main extends javax.swing.JFrame {
         tablaMunicipios.getSelectionModel().addListSelectionListener(e -> {
             int selectedRow = tablaMunicipios.getSelectedRow();
             if (selectedRow != -1) {
+                isComunidad = false;
+                isMunicipio = true;
                 String nombreMunicipio = (String) tablaMunicipios.getValueAt(selectedRow, 0);
                 String codMunicipio = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
                 CarmenDTO carmen = null;
