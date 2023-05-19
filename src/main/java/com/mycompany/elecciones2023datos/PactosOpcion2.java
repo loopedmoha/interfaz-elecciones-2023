@@ -472,12 +472,10 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntraPartidoIzquierdaActionPerformed
 
     private void btnSalePartidoIzqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalePartidoIzqActionPerformed
-
         int filaSeleccionada = tablaPactosIzq.getSelectedRow();
         if (filaSeleccionada != -1) {
             DefaultTableModel modelPactos = (DefaultTableModel) tablaPactosIzq.getModel();
-            String texto = (String) modelPactos.getValueAt(filaSeleccionada, 0);
-
+            //String texto = (String) modelPactos.getValueAt(filaSeleccionada, 0);
 //            // Restaurar color de fila seleccionada anteriormente (si la hay)
 //            if (filaSeleccionadaAnterior != -1) {
 //                tablaIzq.getCellRenderer(filaSeleccionadaAnterior, 0).getTableCellRendererComponent(tablaIzq,
@@ -495,7 +493,6 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 //                    break;
 //                }
 //            }
-
             int escanos;
             if (oficiales) {
                 escanos = Integer.parseInt(lblEscTotalesIzq.getText()) - partidosIzqDentro.get(filaSeleccionada).getEscanos_hasta();
@@ -504,10 +501,14 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             }
             lblEscTotalesIzq.setText(escanos + "");
 
+            String siglas = tablaPactosIzq.getValueAt(tablaPactosIzq.getSelectedRow(), 0).toString();
+            String cod = partidos.stream().filter(partido -> partido.getSiglas().equals(siglas)).
+                    findFirst().orElse(null).getCodigo();
+            graficosController.borrarPartido(dto.getCircunscripcion().getCodigo(), cod, tipoElecciones);
+
             // Eliminar fila seleccionada de tablaPactosIzq
             modelPactos.removeRow(filaSeleccionada);
             partidosIzqDentro.remove(filaSeleccionada);
-            graficosController.borrarPartido(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido(), tipoElecciones);
         }
     }//GEN-LAST:event_btnSalePartidoIzqActionPerformed
 
