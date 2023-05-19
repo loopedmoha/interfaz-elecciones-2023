@@ -11,11 +11,14 @@ import com.mycompany.elecciones2023datos.model.Partido;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import org.apache.poi.ss.usermodel.Cell;
 
 /**
  * @author Fede
@@ -38,6 +41,8 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     };;;
     private int filaSeleccionadaAnterior = -1;
     private int filaSeleccionadaAnteriorDcha = -1;
+    List<Point> celdasPintadas = new ArrayList<>();
+    List<Point> celdasPintadasTDcha = new ArrayList<>();
 
     GraficosController graficosController = new GraficosController();
 
@@ -60,6 +65,8 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         tablaDcha.setModel(modeltablaDcha);
         cargarDatos();
         tablaDcha.setDragEnabled(false);
+        
+        
 
     }
 
@@ -80,6 +87,104 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         tablaIzq.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaPactosIzq.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
+    
+    private void pintarCelda(JTable table, int fila, int columna, Color color) {
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                if (row == fila && column == columna) {
+                    component.setBackground(color);
+                } else {
+                    component.setBackground(table.getBackground());
+                }
+
+                return component;
+            }
+        });
+
+        table.repaint();
+    }
+    
+    private void pintarCeldasGuardadas(JTable table, Color color) {
+         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                if (celdasPintadas.contains(new Point(row, column))) {
+                    c.setBackground(color);
+                     // Almacenar el color original del texto
+                    Color originalForeground = c.getForeground();
+                    c.setForeground(originalForeground);
+                } else {
+                    // Restaurar el color de fondo predeterminado para las demás celdas
+                    c.setBackground(table.getBackground());
+                        // Restaurar el color de texto predeterminado
+                     c.setForeground(table.getForeground());
+                }
+                
+               
+
+                return c;
+            }
+        };
+
+        // Establecer el renderer personalizado para todas las columnas de la tabla
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
+
+        table.repaint();
+    }
+
+    private void pintarCeldasGuardadasDcha(JTable table, Color color) {
+         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                if (celdasPintadasTDcha.contains(new Point(row, column))) {
+                    c.setBackground(color);
+                     // Almacenar el color original del texto
+                    Color originalForeground = c.getForeground();
+                    c.setForeground(originalForeground);
+                } else {
+                    // Restaurar el color de fondo predeterminado para las demás celdas
+                    c.setBackground(table.getBackground());
+                        // Restaurar el color de texto predeterminado
+                     c.setForeground(table.getForeground());
+                }
+                
+               
+
+                return c;
+            }
+        };
+
+        // Establecer el renderer personalizado para todas las columnas de la tabla
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
+
+        table.repaint();
+    }
+    public void restaurarColorCeldas(JTable table, ArrayList<Point> celdasGuardadas) {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+
+        for (Point punto : celdasGuardadas) {
+            int fila = punto.x;
+            int columna = punto.y;
+            Component component = table.prepareRenderer(renderer, fila, columna);
+            component.setBackground(table.getBackground());
+        }
+
+        table.repaint();
+    }
+
+
+
 
     private void cargarDatos() {
 
@@ -437,6 +542,21 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
     private void btnEntraPartidoIzquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraPartidoIzquierdaActionPerformed
         int filaSeleccionada = tablaIzq.getSelectedRow();
+        celdasPintadas.add(new Point(filaSeleccionada, 0));
+        pintarCeldasGuardadas(tablaIzq, Color.GREEN);
+        
+        
+        
+        for (Point celda : celdasPintadas) {
+            int fila = (int) celda.getX();
+            int columna = (int) celda.getY();
+            System.out.println("Fila: " + fila + ", Columna: " + columna);
+            System.out.println(" ");
+        }
+
+
+        
+        
         if (filaSeleccionada != -1) {
             String texto = (String) tablaIzq.getValueAt(filaSeleccionada, 0);
             tablaIzq.setValueAt(texto, filaSeleccionada, 0);
@@ -494,6 +614,10 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     
     private void btnSalePartidoIzqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalePartidoIzqActionPerformed
 
+//        restaurarCelda(tablaDcha, tablaDcha.getSelectedRow(), 0, Color.yellow);
+        
+        celdasPintadas.clear();
+
         int filaSeleccionada = tablaPactosIzq.getSelectedRow();
         if (filaSeleccionada != -1) {
             DefaultTableModel modelPactos = (DefaultTableModel) tablaPactosIzq.getModel();
@@ -534,6 +658,10 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
     private void btnEntraPartidoDerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraPartidoDerActionPerformed
         int filaSeleccionada = tablaDcha.getSelectedRow();
+        
+        celdasPintadasTDcha.add(new Point(filaSeleccionada, 0));
+        pintarCeldasGuardadasDcha(tablaDcha, Color.GREEN);
+        
         if (filaSeleccionada != -1) {
             String texto = (String) tablaDcha.getValueAt(filaSeleccionada, 0);
             tablaDcha.setValueAt(texto, filaSeleccionada, 0);
@@ -635,6 +763,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     }
 
     private void btnEntraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraActionPerformed
+        pintarCelda(tablaIzq, 1, 0, Color.yellow);
         if (arcoOFaldon == 1) {
             switch (tipoElecciones) {
                 case 1 -> {
@@ -664,8 +793,29 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEntraActionPerformed
 
+    private void restaurarCelda(JTable table, int fila, int columna, Color color) {
+    table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            if (row == fila && column == columna) {
+                component.setBackground(color);
+            } else {
+                component.setBackground(table.getBackground());
+            }
+
+            return component;
+        }
+    });
+
+    table.repaint();
+}
+    
     private void btnSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleActionPerformed
        
+        restaurarCelda(tablaIzq, 2, 0, Color.yellow);
+                
         vaciarTablas();
         
         if (arcoOFaldon == 1) {
