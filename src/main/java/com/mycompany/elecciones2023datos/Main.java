@@ -1395,7 +1395,7 @@ public class Main extends javax.swing.JFrame {
                             inferiorMuniSondeoIn = true;
                             inferiorAutoSondeoIn = false;
                         } else if (inferiorMuniSondeoIn) {
-                            graficosController.encadenaFaldonMuni();
+                            graficosController.encadenaFaldonMunicipalesSondeo();
                         } else if (inferiorMuniIn || inferiorAutoIn) {
                             inferiorMuniSondeoIn = true;
                             graficosController.entraFaldonMuniSondeo();
@@ -1493,7 +1493,7 @@ public class Main extends javax.swing.JFrame {
                             inferiorMuniSondeoIn = false;
                             inferiorAutoSondeoIn = true;
                         } else if (inferiorAutoSondeoIn) {
-                            graficosController.encadenaFaldonAuto();
+                            graficosController.encadenaFaldonAutonomicasSondeo();
                         } else if (inferiorMuniIn || inferiorAutoIn) {
                             inferiorAutoSondeoIn = true;
                             graficosController.entraFaldonAutoSondeo();

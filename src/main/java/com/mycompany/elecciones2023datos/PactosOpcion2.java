@@ -474,7 +474,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                                 graficosController.entraPartidoIzqSondeoAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                     }
                 } else if (arcoOFaldon == 2) {
-                    graficosController.entraIzqPactos(filaSeleccionada);
+                    graficosController.entraIzqPactos(filaSeleccionada + 1);
                 }
             }
 
@@ -571,7 +571,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                                 graficosController.entraPartidoDerSondeoAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                     }
                 } else if (arcoOFaldon == 2) {
-                    graficosController.entraDerPactos(filaSeleccionada);
+                    graficosController.entraDerPactos(filaSeleccionada + 1);
                 }
             }
             TableCellRenderer renderer = tablaDcha.getCellRenderer(filaSeleccionada, 0);

@@ -346,6 +346,9 @@ public interface IClienteApi {
     @GET("/autonomicas/carmen/faldon/encadena")
     Call<String> encadenaFaldonAutonomicas();
 
+    @GET("/autonomicas/carmen/faldon/sondeo/encadena")
+    Call<String> encadenaFaldonSondeoAutonomicas();
+
     @GET("/autonomicas/carmen/faldon/deAutoaMuni")
     Call<String> deAutoaMuniFaldonAutonomicas();
 
@@ -375,6 +378,9 @@ public interface IClienteApi {
 
     @GET("/municipales/carmen/faldon/encadena")
     Call<String> encadenaFaldonMunicipales();
+
+    @GET("/municipales/carmen/faldon/sondeo/encadena")
+    Call<String> encadenaFaldonMunicipalesSondeo();
 
     @GET("/municipales/carmen/faldon/deMuniaAuto")
     Call<String> deMuniaAutoFaldonMunicipales();
