@@ -320,6 +320,48 @@ public class GraficosController {
         }
     }
 
+    //PACTOS
+
+    public void entraPactos() {
+        try {
+            clienteApi.entraPactos().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void salePactos() {
+        try {
+            clienteApi.salePactos().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void reinicioPactos() {
+        try {
+            clienteApi.reinicioPactos().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraIzqPactos(int posicion) {
+        try {
+            clienteApi.entraIzqPactos(posicion).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraDerPactos(int posicion) {
+        try {
+            clienteApi.entraDerPactos(posicion).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //FALDON SEDES
     public void faldonSedesEntra() {
         try {

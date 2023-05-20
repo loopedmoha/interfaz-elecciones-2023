@@ -25,8 +25,6 @@ import org.apache.poi.ss.usermodel.Cell;
  * @author Fede
  */
 public class PactosOpcion2 extends javax.swing.JFrame {
-
-
     private JButton botonSeleccionado = null;
     DefaultTableModel modeltablaIzq = new DefaultTableModel() {
         @Override
@@ -34,33 +32,27 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             return false;
         }
     };
-    ;
     DefaultTableModel modeltablaDcha = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
         }
     };
-    ;;
     private int filaSeleccionadaAnterior = -1;
     private int filaSeleccionadaAnteriorDcha = -1;
     List<Point> celdasPintadas = new ArrayList<>();
     List<Point> celdasPintadasTDcha = new ArrayList<>();
 
     GraficosController graficosController = new GraficosController();
-
     private String codigo;
     private int tipoElecciones;
     private boolean oficiales;
-
     private int arcoOFaldon;
-
     private List<Partido> partidos;
-
     private List<CpDTO> partidosIzqDentro;
     private List<CpDTO> partidosDerDentro;
-
     private CarmenDTO dto;
+    boolean pactosIn = false;
 
     public PactosOpcion2() {
         initComponents();
@@ -563,12 +555,12 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             int fila = (int) celda.getX();
             int columna = (int) celda.getY();
             System.out.println("Fila: " + fila + ", Columna: " + columna);
-            System.out.println(" ");
+            
         }
 
 
         
-        
+        System.out.println(" ");
         if (filaSeleccionada != -1) {
             String texto = (String) tablaIzq.getValueAt(filaSeleccionada, 0);
             tablaIzq.setValueAt(texto, filaSeleccionada, 0);
@@ -603,6 +595,8 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                         case 4 ->
                                 graficosController.entraPartidoIzqSondeoAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                     }
+                } else if (arcoOFaldon == 2) {
+                    graficosController.entraIzqPactos(filaSeleccionada);
                 }
             }
 
@@ -619,50 +613,40 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         int filaSeleccionada = tablaPactosIzq.getSelectedRow();
         
         int columnaSeleccionada = tablaIzq.getSelectedColumn();
-        String textoCeldaSeleccionada = tablaPactosIzq.getValueAt(filaSeleccionada, 0).toString();
+       // String textoCeldaSeleccionada = tablaPactosIzq.getValueAt(filaSeleccionada, 0).toString();
 
-        // Recorre el ArrayList y elimina el elemento con el mismo texto
-        Iterator<Point> iter = celdasPintadas.iterator();
-        while (iter.hasNext()) {
-            Point punto = iter.next();
+       DefaultTableModel modelPactosIzq = (DefaultTableModel) tablaPactosIzq.getModel();
+       
+//       System.out.println("seleccionado:" + modelPactosIzq.getValueAt(filaSeleccionada, 0));
+       
+        for (int i = 0; i < celdasPintadas.size(); i++) {
+            Point punto = celdasPintadas.get(i);
             int x = (int) punto.getX();
             int y = (int) punto.getY();
+
+            
+//            
+//            System.out.println(x + " " + y);
+//            System.out.println(modeltablaIzq.getValueAt(x, y));
+            // Realiza las operaciones que desees con cada punto
             
             
-            //NO ELIMINA DEL ARRAYLIST
-            
-            
-            
-            String textoCelda = tablaPactosIzq.getValueAt(0, x).toString();
-            if (textoCelda.equals(textoCeldaSeleccionada)) {
-                iter.remove();
-                break;  // Detén el bucle una vez que encuentres el elemento y lo elimines
+            if(modelPactosIzq.getValueAt(filaSeleccionada, 0)==modeltablaIzq.getValueAt(x, y)){
+                System.out.println("Se eliminara:" + modeltablaIzq.getValueAt(x, y));
+                System.out.println("Se eliminara:" + modelPactosIzq.getValueAt(filaSeleccionada, 0));
+                
+               // Eliminar el elemento del ArrayList
+                celdasPintadas.remove(i);
+                pintarCeldasGuardadas(tablaIzq, Color.GREEN);
+                // Actualizar el índice para continuar la iteración correctamente
+                i--;
             }
         }
-
-        pintarCeldasGuardadas(tablaIzq, Color.white);
 
         
         if (filaSeleccionada != -1) {
             DefaultTableModel modelPactos = (DefaultTableModel) tablaPactosIzq.getModel();
-            //String texto = (String) modelPactos.getValueAt(filaSeleccionada, 0);
-//            // Restaurar color de fila seleccionada anteriormente (si la hay)
-//            if (filaSeleccionadaAnterior != -1) {
-//                tablaIzq.getCellRenderer(filaSeleccionadaAnterior, 0).getTableCellRendererComponent(tablaIzq,
-//                                tablaIzq.getValueAt(filaSeleccionadaAnterior, 0), false, false, filaSeleccionadaAnterior, 0)
-//                        .setBackground(Color.WHITE);
-//            }
-
-//            // Actualizar color de fila seleccionada actual
-//            for (int i = 0; i < tablaIzq.getRowCount(); i++) {
-//                String textoFila = (String) tablaIzq.getValueAt(i, 0);
-//                if (texto.equals(textoFila)) {
-//                    tablaIzq.getCellRenderer(i, 0).getTableCellRendererComponent(tablaIzq, texto, false, false, i, 0)
-//                            .setBackground(Color.WHITE);
-//                    filaSeleccionadaAnterior = i; // Actualizar fila seleccionada anteriormente
-//                    break;
-//                }
-//            }
+            
             int escanos;
             if (oficiales) {
                 escanos = Integer.parseInt(lblEscTotalesIzq.getText()) - partidosIzqDentro.get(filaSeleccionada).getEscanos_hasta();
@@ -672,9 +656,15 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             lblEscTotalesIzq.setText(escanos + "");
 
             String siglas = tablaPactosIzq.getValueAt(tablaPactosIzq.getSelectedRow(), 0).toString();
-            String cod = partidos.stream().filter(partido -> partido.getSiglas().equals(siglas)).
-                    findFirst().orElse(null).getCodigo();
-            graficosController.borrarPartido(dto.getCircunscripcion().getCodigo(), cod, tipoElecciones);
+            Partido seleccionado = partidos.stream().filter(partido -> partido.getSiglas().equals(siglas)).
+                    findFirst().orElse(null);
+            String cod = seleccionado.getCodigo();
+            //int posicion = partidos.indexOf(seleccionado);
+            if (arcoOFaldon == 1) {
+                graficosController.borrarPartido(dto.getCircunscripcion().getCodigo(), cod, tipoElecciones);
+            } else if (arcoOFaldon == 2) {
+                // graficosController.salePactosIzq();
+            }
 
             // Eliminar fila seleccionada de tablaPactosIzq
             modelPactos.removeRow(filaSeleccionada);
@@ -687,6 +677,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         
         celdasPintadasTDcha.add(new Point(filaSeleccionada, 0));
         pintarCeldasGuardadasDcha(tablaDcha, Color.GREEN);
+        
         
         if (filaSeleccionada != -1) {
             String texto = (String) tablaDcha.getValueAt(filaSeleccionada, 0);
@@ -722,6 +713,8 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                         case 4 ->
                                 graficosController.entraPartidoDerSondeoAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                     }
+                } else if (arcoOFaldon == 2) {
+                    graficosController.entraDerPactos(filaSeleccionada);
                 }
             }
             TableCellRenderer renderer = tablaDcha.getCellRenderer(filaSeleccionada, 0);
@@ -732,52 +725,41 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntraPartidoDerActionPerformed
 
     private void btnSalePartidoDerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalePartidoDerActionPerformed
-        //            // Restaurar color de fila seleccionada anteriormente (si la hay)
-//            if (filaSeleccionadaAnterior != -1) {
-//                tablaIzq.getCellRenderer(filaSeleccionadaAnterior, 0).getTableCellRendererComponent(tablaIzq,
-//                                tablaIzq.getValueAt(filaSeleccionadaAnterior, 0), false, false, filaSeleccionadaAnterior, 0)
-//                        .setBackground(Color.WHITE);
-//            }
-
-//            // Actualizar color de fila seleccionada actual
-//            for (int i = 0; i < tablaIzq.getRowCount(); i++) {
-//                String textoFila = (String) tablaIzq.getValueAt(i, 0);
-//                if (texto.equals(textoFila)) {
-//                    tablaIzq.getCellRenderer(i, 0).getTableCellRendererComponent(tablaIzq, texto, false, false, i, 0)
-//                            .setBackground(Color.WHITE);
-//                    filaSeleccionadaAnterior = i; // Actualizar fila seleccionada anteriormente
-//                    break;
-//                }
-//            }
-
-//            int escanos;
-//            if (oficiales) {
-//                escanos = Integer.parseInt(lblEscTotalesIzq.getText()) - partidosIzqDentro.get(filaSeleccionada).getEscanos_hasta();
-//            } else {
-//                escanos = Integer.parseInt(lblEscTotalesIzq.getText()) - partidosIzqDentro.get(filaSeleccionada).getEscanos_hasta_sondeo();
-//            }
-//            lblEscTotalesIzq.setText(escanos + "");
         int filaSeleccionada = tablaPactosDcha.getSelectedRow();
+        
+        int columnaSeleccionada = tablaDcha.getSelectedColumn();
+       // String textoCeldaSeleccionada = tablaPactosIzq.getValueAt(filaSeleccionada, 0).toString();
+
+       DefaultTableModel modelPactosDcha = (DefaultTableModel) tablaPactosDcha.getModel();
+       
+//       System.out.println("seleccionado:" + modelPactosIzq.getValueAt(filaSeleccionada, 0));
+       
+        for (int i = 0; i < celdasPintadasTDcha.size(); i++) {
+            Point punto = celdasPintadasTDcha.get(i);
+            int x = (int) punto.getX();
+            int y = (int) punto.getY();
+
+            
+//            
+//            System.out.println(x + " " + y);
+//            System.out.println(modeltablaIzq.getValueAt(x, y));
+            // Realiza las operaciones que desees con cada punto
+            
+            
+            if(modelPactosDcha.getValueAt(filaSeleccionada, 0)==modeltablaDcha.getValueAt(x, y)){
+                System.out.println("Se eliminara:" + modeltablaDcha.getValueAt(x, y));
+                System.out.println("Se eliminara:" + modelPactosDcha.getValueAt(filaSeleccionada, 0));
+                
+               // Eliminar el elemento del ArrayList
+                celdasPintadasTDcha.remove(i);
+                pintarCeldasGuardadasDcha(tablaDcha, Color.GREEN);
+                // Actualizar el índice para continuar la iteración correctamente
+                i--;
+            }
+        }
         if (filaSeleccionada != -1) {
             DefaultTableModel modelPactos = (DefaultTableModel) tablaPactosDcha.getModel();
-            //String texto = (String) modelPactos.getValueAt(filaSeleccionada, 0);
-//            // Restaurar color de fila seleccionada anteriormente (si la hay)
-//            if (filaSeleccionadaAnterior != -1) {
-//                tablaIzq.getCellRenderer(filaSeleccionadaAnterior, 0).getTableCellRendererComponent(tablaIzq,
-//                                tablaIzq.getValueAt(filaSeleccionadaAnterior, 0), false, false, filaSeleccionadaAnterior, 0)
-//                        .setBackground(Color.WHITE);
-//            }
-
-//            // Actualizar color de fila seleccionada actual
-//            for (int i = 0; i < tablaIzq.getRowCount(); i++) {
-//                String textoFila = (String) tablaIzq.getValueAt(i, 0);
-//                if (texto.equals(textoFila)) {
-//                    tablaIzq.getCellRenderer(i, 0).getTableCellRendererComponent(tablaIzq, texto, false, false, i, 0)
-//                            .setBackground(Color.WHITE);
-//                    filaSeleccionadaAnterior = i; // Actualizar fila seleccionada anteriormente
-//                    break;
-//                }
-//            }
+            
             int escanos;
             if (oficiales) {
                 escanos = Integer.parseInt(lblEscTotalesDcha.getText()) - partidosDerDentro.get(filaSeleccionada).getEscanos_hasta();
@@ -837,11 +819,11 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                 }
             }
         } else if (arcoOFaldon == 2) {
-            switch (tipoElecciones) {
-                //  case 1 -> graficosController.pactosInferiorAuto();
-                //  case 2 -> graficosController.pactosInferiorMuni();
-                // case 3 -> graficosController.pactosInferiorAutoSondeo();
-                // case 4 -> graficosController.pactosInferiorMuniSondeo();
+            if (!pactosIn) {
+                graficosController.entraPactos();
+                pactosIn = true;
+            } else {
+                graficosController.reinicioPactos();
             }
         }
     }//GEN-LAST:event_btnEntraActionPerformed
@@ -860,24 +842,54 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
         if (arcoOFaldon == 1) {
             switch (tipoElecciones) {
-                case 1 -> graficosController.resetArcoMuni();
-                case 2 -> graficosController.resetArcoAuto();
-                case 3 -> graficosController.resetArcoMuni();
-                case 4 -> graficosController.resetArcoAuto();
+                case 1 -> {
+                    graficosController.pactosArcoAuto();
+                    graficosController.resetArcoMuni();
+                }
+                case 2 -> {
+                    graficosController.pactosArcoMuni();
+                    graficosController.resetArcoAuto();
+                }
+                case 3 -> {
+                    graficosController.pactosArcoAutoSondeo();
+                    graficosController.resetArcoMuni();
+                }
+                case 4 -> {
+                    graficosController.pactosArcoMuniSondeo();
+                    graficosController.resetArcoAuto();
+                }
             }
         } else if (arcoOFaldon == 2) {
-            switch (tipoElecciones) {
-                //  case 1 -> graficosController.pactosInferiorAuto();
-                // case 2 -> graficosController.pactosInferiorMuni();
-                // case 3 -> graficosController.pactosInferiorAutoSondeo();
-                // case 4 -> graficosController.pactosInferiorMuniSondeo();
-            }
+            graficosController.salePactos();
+            pactosIn = false;
         }
 
     }//GEN-LAST:event_btnSaleActionPerformed
 
     private void btnReset1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReset1ActionPerformed
-        // TODO add your handling code here:
+        if (arcoOFaldon == 1) {
+            switch (tipoElecciones) {
+                case 1 -> {
+                    graficosController.pactosArcoAuto();
+                    graficosController.resetArcoMuni();
+                }
+                case 2 -> {
+                    graficosController.pactosArcoMuni();
+                    graficosController.resetArcoAuto();
+                }
+                case 3 -> {
+                    graficosController.pactosArcoAutoSondeo();
+                    graficosController.resetArcoMuni();
+                }
+                case 4 -> {
+                    graficosController.pactosArcoMuniSondeo();
+                    graficosController.resetArcoAuto();
+                }
+            }
+        } else if (arcoOFaldon == 2) {
+            graficosController.reinicioPactos();
+        }
+
     }//GEN-LAST:event_btnReset1ActionPerformed
 
 
