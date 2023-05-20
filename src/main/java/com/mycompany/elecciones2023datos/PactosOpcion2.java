@@ -795,7 +795,6 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         botonSeleccionado.setBackground(Color.YELLOW);
         botonSeleccionado.setOpaque(true);
     }
-
     private void btnEntraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraActionPerformed
         vaciarTablas();
         lblEscTotalesIzq.setText("0");
@@ -828,12 +827,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnEntraActionPerformed
-
-    
-    
     private void btnSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleActionPerformed
-
-        
         celdasPintadas.clear();
         pintarCeldasGuardadas(tablaIzq, Color.white);
         celdasPintadasTDcha.clear();
