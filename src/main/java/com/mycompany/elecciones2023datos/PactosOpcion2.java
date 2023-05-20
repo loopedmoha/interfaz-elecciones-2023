@@ -21,8 +21,6 @@ import javax.swing.table.TableCellRenderer;
  * @author Fede
  */
 public class PactosOpcion2 extends javax.swing.JFrame {
-
-
     private JButton botonSeleccionado = null;
     DefaultTableModel modeltablaIzq = new DefaultTableModel() {
         @Override
@@ -30,31 +28,24 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             return false;
         }
     };
-    ;
     DefaultTableModel modeltablaDcha = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
         }
     };
-    ;;
     private int filaSeleccionadaAnterior = -1;
     private int filaSeleccionadaAnteriorDcha = -1;
-
     GraficosController graficosController = new GraficosController();
-
     private String codigo;
     private int tipoElecciones;
     private boolean oficiales;
-
     private int arcoOFaldon;
-
     private List<Partido> partidos;
-
     private List<CpDTO> partidosIzqDentro;
     private List<CpDTO> partidosDerDentro;
-
     private CarmenDTO dto;
+    boolean pactosIn = false;
 
     public PactosOpcion2() {
         initComponents();
@@ -482,6 +473,8 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                         case 4 ->
                                 graficosController.entraPartidoIzqSondeoAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                     }
+                } else if (arcoOFaldon == 2) {
+                    graficosController.entraIzqPactos(filaSeleccionada);
                 }
             }
 
@@ -525,9 +518,15 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             lblEscTotalesIzq.setText(escanos + "");
 
             String siglas = tablaPactosIzq.getValueAt(tablaPactosIzq.getSelectedRow(), 0).toString();
-            String cod = partidos.stream().filter(partido -> partido.getSiglas().equals(siglas)).
-                    findFirst().orElse(null).getCodigo();
-            graficosController.borrarPartido(dto.getCircunscripcion().getCodigo(), cod, tipoElecciones);
+            Partido seleccionado = partidos.stream().filter(partido -> partido.getSiglas().equals(siglas)).
+                    findFirst().orElse(null);
+            String cod = seleccionado.getCodigo();
+            //int posicion = partidos.indexOf(seleccionado);
+            if (arcoOFaldon == 1) {
+                graficosController.borrarPartido(dto.getCircunscripcion().getCodigo(), cod, tipoElecciones);
+            } else if (arcoOFaldon == 2) {
+                // graficosController.salePactosIzq();
+            }
 
             // Eliminar fila seleccionada de tablaPactosIzq
             modelPactos.removeRow(filaSeleccionada);
@@ -571,6 +570,8 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                         case 4 ->
                                 graficosController.entraPartidoDerSondeoAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                     }
+                } else if (arcoOFaldon == 2) {
+                    graficosController.entraDerPactos(filaSeleccionada);
                 }
             }
             TableCellRenderer renderer = tablaDcha.getCellRenderer(filaSeleccionada, 0);
@@ -685,11 +686,11 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                 }
             }
         } else if (arcoOFaldon == 2) {
-            switch (tipoElecciones) {
-                //  case 1 -> graficosController.pactosInferiorAuto();
-                //  case 2 -> graficosController.pactosInferiorMuni();
-                // case 3 -> graficosController.pactosInferiorAutoSondeo();
-                // case 4 -> graficosController.pactosInferiorMuniSondeo();
+            if (!pactosIn) {
+                graficosController.entraPactos();
+                pactosIn = true;
+            } else {
+                graficosController.reinicioPactos();
             }
         }
     }//GEN-LAST:event_btnEntraActionPerformed
@@ -700,24 +701,54 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
         if (arcoOFaldon == 1) {
             switch (tipoElecciones) {
-                case 1 -> graficosController.resetArcoMuni();
-                case 2 -> graficosController.resetArcoAuto();
-                case 3 -> graficosController.resetArcoMuni();
-                case 4 -> graficosController.resetArcoAuto();
+                case 1 -> {
+                    graficosController.pactosArcoAuto();
+                    graficosController.resetArcoMuni();
+                }
+                case 2 -> {
+                    graficosController.pactosArcoMuni();
+                    graficosController.resetArcoAuto();
+                }
+                case 3 -> {
+                    graficosController.pactosArcoAutoSondeo();
+                    graficosController.resetArcoMuni();
+                }
+                case 4 -> {
+                    graficosController.pactosArcoMuniSondeo();
+                    graficosController.resetArcoAuto();
+                }
             }
         } else if (arcoOFaldon == 2) {
-            switch (tipoElecciones) {
-                //  case 1 -> graficosController.pactosInferiorAuto();
-                // case 2 -> graficosController.pactosInferiorMuni();
-                // case 3 -> graficosController.pactosInferiorAutoSondeo();
-                // case 4 -> graficosController.pactosInferiorMuniSondeo();
-            }
+            graficosController.salePactos();
+            pactosIn = false;
         }
 
     }//GEN-LAST:event_btnSaleActionPerformed
 
     private void btnReset1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReset1ActionPerformed
-        // TODO add your handling code here:
+        if (arcoOFaldon == 1) {
+            switch (tipoElecciones) {
+                case 1 -> {
+                    graficosController.pactosArcoAuto();
+                    graficosController.resetArcoMuni();
+                }
+                case 2 -> {
+                    graficosController.pactosArcoMuni();
+                    graficosController.resetArcoAuto();
+                }
+                case 3 -> {
+                    graficosController.pactosArcoAutoSondeo();
+                    graficosController.resetArcoMuni();
+                }
+                case 4 -> {
+                    graficosController.pactosArcoMuniSondeo();
+                    graficosController.resetArcoAuto();
+                }
+            }
+        } else if (arcoOFaldon == 2) {
+            graficosController.reinicioPactos();
+        }
+
     }//GEN-LAST:event_btnReset1ActionPerformed
 
 

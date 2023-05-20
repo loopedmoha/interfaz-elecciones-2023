@@ -388,6 +388,23 @@ public interface IClienteApi {
     @GET("/municipales/carmen/faldon/deMuniSondeoAAuto")
     Call<String> deMuniSondeoAAuto();
 
+    //PACTOS INFERIOR
+
+    @GET("/autonomicas/carmen/pactos/entra")
+    Call<String> entraPactos();
+
+    @GET("/autonomicas/carmen/pactos/sale")
+    Call<String> salePactos();
+
+    @GET("/autonomicas/carmen/pactos/reinicio")
+    Call<String> reinicioPactos();
+
+    @GET("/autonomicas/carmen/pactos/{posicion}/entraIzq")
+    Call<String> entraIzqPactos(@Path("posicion") int posicion);
+
+    @GET("/autonomicas/carmen/pactos/{posicion}/entraDer")
+    Call<String> entraDerPactos(@Path("posicion") int posicion);
+
     //DESCARGA DE ARCHIVOS
     @GET("/autonomicas/circunscripciones/selected/oficial/{codigo}")
     Call<String> selectedAutonomicasOficiales(@Path("codigo") String codigo);
