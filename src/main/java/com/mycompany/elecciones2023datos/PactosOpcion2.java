@@ -596,7 +596,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                                 graficosController.entraPartidoIzqSondeoAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                     }
                 } else if (arcoOFaldon == 2) {
-                    graficosController.entraIzqPactos(filaSeleccionada);
+                    graficosController.entraIzqPactos(filaSeleccionada + 1);
                 }
             }
 
@@ -714,7 +714,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
                                 graficosController.entraPartidoDerSondeoAuto(dto.getCircunscripcion().getCodigo(), dto.getCpDTO().get(filaSeleccionada).getCodigoPartido());
                     }
                 } else if (arcoOFaldon == 2) {
-                    graficosController.entraDerPactos(filaSeleccionada);
+                    graficosController.entraDerPactos(filaSeleccionada + 1);
                 }
             }
             TableCellRenderer renderer = tablaDcha.getCellRenderer(filaSeleccionada, 0);
@@ -798,7 +798,8 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
     private void btnEntraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraActionPerformed
         vaciarTablas();
-        pintarCelda(tablaIzq, 1, 0, Color.yellow);
+        lblEscTotalesIzq.setText("0");
+        lblEscTotalesDcha.setText("0");
         if (arcoOFaldon == 1) {
             switch (tipoElecciones) {
                 case 1 -> {
@@ -839,7 +840,8 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         pintarCeldasGuardadasDcha(tablaIzq, Color.white);
                 
         vaciarTablas();
-
+        lblEscTotalesIzq.setText("0");
+        lblEscTotalesDcha.setText("0");
         if (arcoOFaldon == 1) {
             switch (tipoElecciones) {
                 case 1 -> {
@@ -867,6 +869,8 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaleActionPerformed
 
     private void btnReset1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReset1ActionPerformed
+        lblEscTotalesIzq.setText("0");
+        lblEscTotalesDcha.setText("0");
         if (arcoOFaldon == 1) {
             switch (tipoElecciones) {
                 case 1 -> {

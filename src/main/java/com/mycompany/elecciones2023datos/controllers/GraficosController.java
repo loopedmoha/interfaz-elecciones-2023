@@ -271,6 +271,22 @@ public class GraficosController {
         }
     }
 
+    public void encadenaFaldonMunicipalesSondeo() {
+        try {
+            clienteApi.encadenaFaldonMunicipalesSondeo().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void encadenaFaldonAutonomicasSondeo() {
+        try {
+            clienteApi.encadenaFaldonSondeoAutonomicas().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void deMuniaAutoFaldonMuni() {
         try {
             clienteApi.deMuniaAutoFaldonMunicipales().execute();
