@@ -666,6 +666,8 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
     private void btnEntraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraActionPerformed
         vaciarTablas();
+        lblEscTotalesIzq.setText("0");
+        lblEscTotalesDcha.setText("0");
         if (arcoOFaldon == 1) {
             switch (tipoElecciones) {
                 case 1 -> {
@@ -696,9 +698,9 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntraActionPerformed
 
     private void btnSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleActionPerformed
-
         vaciarTablas();
-
+        lblEscTotalesIzq.setText("0");
+        lblEscTotalesDcha.setText("0");
         if (arcoOFaldon == 1) {
             switch (tipoElecciones) {
                 case 1 -> {
@@ -726,6 +728,8 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaleActionPerformed
 
     private void btnReset1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReset1ActionPerformed
+        lblEscTotalesIzq.setText("0");
+        lblEscTotalesDcha.setText("0");
         if (arcoOFaldon == 1) {
             switch (tipoElecciones) {
                 case 1 -> {
