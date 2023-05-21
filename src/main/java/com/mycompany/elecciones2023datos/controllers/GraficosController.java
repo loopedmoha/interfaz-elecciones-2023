@@ -989,5 +989,31 @@ public class GraficosController {
         }
     }
 
+    // CAMBIOS ENTRE BD
+
+    public void conectPrincipal() {
+        try {
+            clienteApi.conectPrincipal().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void conectReserva() {
+        try {
+            clienteApi.conectReserva().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void conectLocal() {
+        try {
+            clienteApi.conectLocal().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

@@ -440,4 +440,17 @@ public interface IClienteApi {
     @GET("/autonomicas/reset")
     Call<String> resetIPFAuto();
 
+    /*
+     * CAMBIO ENTRE BD PRINCIPAL, RESERVA, LOCAL
+     */
+
+    @GET("/bd/principal")
+    Call<String> conectPrincipal();
+
+    @GET("/bd/reserva")
+    Call<String> conectReserva();
+
+    @GET("/bd/local")
+    Call<String> conectLocal();
+
 }
