@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -59,9 +61,13 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         tablaIzq.setModel(modeltablaIzq);
         tablaDcha.setModel(modeltablaDcha);
         cargarDatos();
-        tablaDcha.setDragEnabled(false);
+        
+        DefaultListSelectionModel selectionModel = new DefaultListSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tablaIzq.setSelectionModel(selectionModel);
         
         
+
 
     }
 
@@ -78,29 +84,16 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         tablaDcha.setModel(modeltablaDcha);
         cargarDatos();
         tablaPactosDcha.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tablaDcha.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tablaIzq.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaPactosIzq.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        
+        
     }
     
-    private void pintarCelda(JTable table, int fila, int columna, Color color) {
-        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+    
+    
 
-                if (row == fila && column == columna) {
-                    component.setBackground(color);
-                } else {
-                    component.setBackground(table.getBackground());
-                }
-
-                return component;
-            }
-        });
-
-        table.repaint();
-    }
+    
     
     private void pintarCeldasGuardadas(JTable table, Color color) {
          DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
@@ -796,6 +789,11 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         botonSeleccionado.setOpaque(true);
     }
     private void btnEntraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraActionPerformed
+        celdasPintadas.clear();
+        pintarCeldasGuardadas(tablaIzq, Color.white);
+        celdasPintadasTDcha.clear();
+        pintarCeldasGuardadasDcha(tablaDcha, Color.white);
+        
         vaciarTablas();
         lblEscTotalesIzq.setText("0");
         lblEscTotalesDcha.setText("0");
@@ -831,7 +829,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         celdasPintadas.clear();
         pintarCeldasGuardadas(tablaIzq, Color.white);
         celdasPintadasTDcha.clear();
-        pintarCeldasGuardadasDcha(tablaIzq, Color.white);
+        pintarCeldasGuardadasDcha(tablaDcha, Color.white);
                 
         vaciarTablas();
         lblEscTotalesIzq.setText("0");
@@ -863,6 +861,13 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaleActionPerformed
 
     private void btnReset1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReset1ActionPerformed
+
+        celdasPintadas.clear();
+        pintarCeldasGuardadas(tablaIzq, Color.white);
+        celdasPintadasTDcha.clear();
+        pintarCeldasGuardadasDcha(tablaDcha, Color.white);
+
+
         lblEscTotalesIzq.setText("0");
         lblEscTotalesDcha.setText("0");
         if (arcoOFaldon == 1) {
