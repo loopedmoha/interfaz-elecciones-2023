@@ -895,9 +895,9 @@ public class GraficosController {
 
     //BORRAR
 
-    public void borrarPartido(String circunscripcion, String partido, int tipoArco) {
+    public void borrarPartido(String circunscripcion, String partido, int tipoArco, int izquierda) {
         try {
-            clienteApi.borrarPartido(circunscripcion, partido, tipoArco).execute();
+            clienteApi.borrarPartido(circunscripcion, partido, tipoArco, izquierda).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

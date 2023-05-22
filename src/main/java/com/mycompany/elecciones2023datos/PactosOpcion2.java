@@ -13,15 +13,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import org.apache.poi.ss.usermodel.Cell;
+
 
 /**
  * @author Fede
@@ -61,12 +58,10 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         tablaIzq.setModel(modeltablaIzq);
         tablaDcha.setModel(modeltablaDcha);
         cargarDatos();
-        
+
         DefaultListSelectionModel selectionModel = new DefaultListSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         tablaIzq.setSelectionModel(selectionModel);
-        
-        
 
 
     }
@@ -85,35 +80,29 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         cargarDatos();
         tablaPactosDcha.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaPactosIzq.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        
-        
-    }
-    
-    
-    
 
-    
-    
+
+    }
+
+
     private void pintarCeldasGuardadas(JTable table, Color color) {
-         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
                 if (celdasPintadas.contains(new Point(row, column))) {
                     c.setBackground(color);
-                     // Almacenar el color original del texto
+                    // Almacenar el color original del texto
                     Color originalForeground = c.getForeground();
                     c.setForeground(originalForeground);
                 } else {
                     // Restaurar el color de fondo predeterminado para las demás celdas
                     c.setBackground(table.getBackground());
-                        // Restaurar el color de texto predeterminado
-                     c.setForeground(table.getForeground());
+                    // Restaurar el color de texto predeterminado
+                    c.setForeground(table.getForeground());
                 }
-                
-               
+
 
                 return c;
             }
@@ -128,24 +117,23 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     }
 
     private void pintarCeldasGuardadasDcha(JTable table, Color color) {
-         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
                 if (celdasPintadasTDcha.contains(new Point(row, column))) {
                     c.setBackground(color);
-                     // Almacenar el color original del texto
+                    // Almacenar el color original del texto
                     Color originalForeground = c.getForeground();
                     c.setForeground(originalForeground);
                 } else {
                     // Restaurar el color de fondo predeterminado para las demás celdas
                     c.setBackground(table.getBackground());
-                        // Restaurar el color de texto predeterminado
-                     c.setForeground(table.getForeground());
+                    // Restaurar el color de texto predeterminado
+                    c.setForeground(table.getForeground());
                 }
-                
-               
+
 
                 return c;
             }
@@ -158,6 +146,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
         table.repaint();
     }
+
     public void restaurarColorCeldas(JTable table, ArrayList<Point> celdasGuardadas) {
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 
@@ -170,8 +159,6 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
         table.repaint();
     }
-
-
 
 
     private void cargarDatos() {
@@ -541,18 +528,16 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         int filaSeleccionada = tablaIzq.getSelectedRow();
         celdasPintadas.add(new Point(filaSeleccionada, 0));
         pintarCeldasGuardadas(tablaIzq, Color.GREEN);
-        
-        
-        
+
+
         for (Point celda : celdasPintadas) {
             int fila = (int) celda.getX();
             int columna = (int) celda.getY();
             System.out.println("Fila: " + fila + ", Columna: " + columna);
-            
+
         }
 
 
-        
         System.out.println(" ");
         if (filaSeleccionada != -1) {
             String texto = (String) tablaIzq.getValueAt(filaSeleccionada, 0);
@@ -604,31 +589,31 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
     private void btnSalePartidoIzqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalePartidoIzqActionPerformed
         int filaSeleccionada = tablaPactosIzq.getSelectedRow();
-        
-        int columnaSeleccionada = tablaIzq.getSelectedColumn();
-       // String textoCeldaSeleccionada = tablaPactosIzq.getValueAt(filaSeleccionada, 0).toString();
 
-       DefaultTableModel modelPactosIzq = (DefaultTableModel) tablaPactosIzq.getModel();
-       
+        int columnaSeleccionada = tablaIzq.getSelectedColumn();
+        // String textoCeldaSeleccionada = tablaPactosIzq.getValueAt(filaSeleccionada, 0).toString();
+
+        DefaultTableModel modelPactosIzq = (DefaultTableModel) tablaPactosIzq.getModel();
+
 //       System.out.println("seleccionado:" + modelPactosIzq.getValueAt(filaSeleccionada, 0));
-       
+
         for (int i = 0; i < celdasPintadas.size(); i++) {
             Point punto = celdasPintadas.get(i);
             int x = (int) punto.getX();
             int y = (int) punto.getY();
 
-            
+
 //            
 //            System.out.println(x + " " + y);
 //            System.out.println(modeltablaIzq.getValueAt(x, y));
             // Realiza las operaciones que desees con cada punto
-            
-            
-            if(modelPactosIzq.getValueAt(filaSeleccionada, 0)==modeltablaIzq.getValueAt(x, y)){
+
+
+            if (modelPactosIzq.getValueAt(filaSeleccionada, 0) == modeltablaIzq.getValueAt(x, y)) {
                 System.out.println("Se eliminara:" + modeltablaIzq.getValueAt(x, y));
                 System.out.println("Se eliminara:" + modelPactosIzq.getValueAt(filaSeleccionada, 0));
-                
-               // Eliminar el elemento del ArrayList
+
+                // Eliminar el elemento del ArrayList
                 celdasPintadas.remove(i);
                 pintarCeldasGuardadas(tablaIzq, Color.GREEN);
                 // Actualizar el índice para continuar la iteración correctamente
@@ -636,10 +621,10 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             }
         }
 
-        
+
         if (filaSeleccionada != -1) {
             DefaultTableModel modelPactos = (DefaultTableModel) tablaPactosIzq.getModel();
-            
+
             int escanos;
             if (oficiales) {
                 escanos = Integer.parseInt(lblEscTotalesIzq.getText()) - partidosIzqDentro.get(filaSeleccionada).getEscanos_hasta();
@@ -654,7 +639,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             String cod = seleccionado.getCodigo();
             //int posicion = partidos.indexOf(seleccionado);
             if (arcoOFaldon == 1) {
-                graficosController.borrarPartido(dto.getCircunscripcion().getCodigo(), cod, tipoElecciones);
+                graficosController.borrarPartido(dto.getCircunscripcion().getCodigo(), cod, tipoElecciones, 1);
             } else if (arcoOFaldon == 2) {
                 // graficosController.salePactosIzq();
             }
@@ -667,11 +652,11 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
     private void btnEntraPartidoDerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraPartidoDerActionPerformed
         int filaSeleccionada = tablaDcha.getSelectedRow();
-        
+
         celdasPintadasTDcha.add(new Point(filaSeleccionada, 0));
         pintarCeldasGuardadasDcha(tablaDcha, Color.GREEN);
-        
-        
+
+
         if (filaSeleccionada != -1) {
             String texto = (String) tablaDcha.getValueAt(filaSeleccionada, 0);
             tablaDcha.setValueAt(texto, filaSeleccionada, 0);
@@ -719,31 +704,31 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
     private void btnSalePartidoDerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalePartidoDerActionPerformed
         int filaSeleccionada = tablaPactosDcha.getSelectedRow();
-        
-        int columnaSeleccionada = tablaDcha.getSelectedColumn();
-       // String textoCeldaSeleccionada = tablaPactosIzq.getValueAt(filaSeleccionada, 0).toString();
 
-       DefaultTableModel modelPactosDcha = (DefaultTableModel) tablaPactosDcha.getModel();
-       
+        int columnaSeleccionada = tablaDcha.getSelectedColumn();
+        // String textoCeldaSeleccionada = tablaPactosIzq.getValueAt(filaSeleccionada, 0).toString();
+
+        DefaultTableModel modelPactosDcha = (DefaultTableModel) tablaPactosDcha.getModel();
+
 //       System.out.println("seleccionado:" + modelPactosIzq.getValueAt(filaSeleccionada, 0));
-       
+
         for (int i = 0; i < celdasPintadasTDcha.size(); i++) {
             Point punto = celdasPintadasTDcha.get(i);
             int x = (int) punto.getX();
             int y = (int) punto.getY();
 
-            
+
 //            
 //            System.out.println(x + " " + y);
 //            System.out.println(modeltablaIzq.getValueAt(x, y));
             // Realiza las operaciones que desees con cada punto
-            
-            
-            if(modelPactosDcha.getValueAt(filaSeleccionada, 0)==modeltablaDcha.getValueAt(x, y)){
+
+
+            if (modelPactosDcha.getValueAt(filaSeleccionada, 0) == modeltablaDcha.getValueAt(x, y)) {
                 System.out.println("Se eliminara:" + modeltablaDcha.getValueAt(x, y));
                 System.out.println("Se eliminara:" + modelPactosDcha.getValueAt(filaSeleccionada, 0));
-                
-               // Eliminar el elemento del ArrayList
+
+                // Eliminar el elemento del ArrayList
                 celdasPintadasTDcha.remove(i);
                 pintarCeldasGuardadasDcha(tablaDcha, Color.GREEN);
                 // Actualizar el índice para continuar la iteración correctamente
@@ -752,7 +737,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         }
         if (filaSeleccionada != -1) {
             DefaultTableModel modelPactos = (DefaultTableModel) tablaPactosDcha.getModel();
-            
+
             int escanos;
             if (oficiales) {
                 escanos = Integer.parseInt(lblEscTotalesDcha.getText()) - partidosDerDentro.get(filaSeleccionada).getEscanos_hasta();
@@ -764,7 +749,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             String siglas = tablaPactosDcha.getValueAt(tablaPactosDcha.getSelectedRow(), 0).toString();
             String cod = partidos.stream().filter(partido -> partido.getSiglas().equals(siglas)).
                     findFirst().orElse(null).getCodigo();
-            graficosController.borrarPartido(dto.getCircunscripcion().getCodigo(), cod, tipoElecciones);
+            graficosController.borrarPartido(dto.getCircunscripcion().getCodigo(), cod, tipoElecciones, 0);
 
             // Eliminar fila seleccionada de tablaPactosIzq
             modelPactos.removeRow(filaSeleccionada);
@@ -788,12 +773,13 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         botonSeleccionado.setBackground(Color.YELLOW);
         botonSeleccionado.setOpaque(true);
     }
+
     private void btnEntraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntraActionPerformed
         celdasPintadas.clear();
         pintarCeldasGuardadas(tablaIzq, Color.white);
         celdasPintadasTDcha.clear();
         pintarCeldasGuardadasDcha(tablaDcha, Color.white);
-        
+
         vaciarTablas();
         lblEscTotalesIzq.setText("0");
         lblEscTotalesDcha.setText("0");
@@ -825,12 +811,13 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnEntraActionPerformed
+
     private void btnSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleActionPerformed
         celdasPintadas.clear();
         pintarCeldasGuardadas(tablaIzq, Color.white);
         celdasPintadasTDcha.clear();
         pintarCeldasGuardadasDcha(tablaDcha, Color.white);
-                
+
         vaciarTablas();
         lblEscTotalesIzq.setText("0");
         lblEscTotalesDcha.setText("0");
