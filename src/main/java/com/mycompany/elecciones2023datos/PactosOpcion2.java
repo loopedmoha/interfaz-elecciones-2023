@@ -607,17 +607,18 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 //            System.out.println(x + " " + y);
 //            System.out.println(modeltablaIzq.getValueAt(x, y));
             // Realiza las operaciones que desees con cada punto
+            
+            if(tablaPactosIzq.getSelectedRow() >= 0 && x >= 0 && y >= 0) {
+                if (modelPactosIzq.getValueAt(filaSeleccionada, 0) == modeltablaIzq.getValueAt(x, y)) {
+                    System.out.println("Se eliminara:" + modeltablaIzq.getValueAt(x, y));
+                    System.out.println("Se eliminara:" + modelPactosIzq.getValueAt(filaSeleccionada, 0));
 
-
-            if (modelPactosIzq.getValueAt(filaSeleccionada, 0) == modeltablaIzq.getValueAt(x, y)) {
-                System.out.println("Se eliminara:" + modeltablaIzq.getValueAt(x, y));
-                System.out.println("Se eliminara:" + modelPactosIzq.getValueAt(filaSeleccionada, 0));
-
-                // Eliminar el elemento del ArrayList
-                celdasPintadas.remove(i);
-                pintarCeldasGuardadas(tablaIzq, Color.GREEN);
-                // Actualizar el índice para continuar la iteración correctamente
-                i--;
+                    // Eliminar el elemento del ArrayList
+                    celdasPintadas.remove(i);
+                    pintarCeldasGuardadas(tablaIzq, Color.GREEN);
+                    // Actualizar el índice para continuar la iteración correctamente
+                    i--;
+                }
             }
         }
 
@@ -723,16 +724,17 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 //            System.out.println(modeltablaIzq.getValueAt(x, y));
             // Realiza las operaciones que desees con cada punto
 
+            if(tablaPactosDcha.getSelectedRow() >= 0 && x >= 0 && y >= 0) {
+                if (modelPactosDcha.getValueAt(filaSeleccionada, 0) == modeltablaDcha.getValueAt(x, y)) {
+                    System.out.println("Se eliminara:" + modeltablaDcha.getValueAt(x, y));
+                    System.out.println("Se eliminara:" + modelPactosDcha.getValueAt(filaSeleccionada, 0));
 
-            if (modelPactosDcha.getValueAt(filaSeleccionada, 0) == modeltablaDcha.getValueAt(x, y)) {
-                System.out.println("Se eliminara:" + modeltablaDcha.getValueAt(x, y));
-                System.out.println("Se eliminara:" + modelPactosDcha.getValueAt(filaSeleccionada, 0));
-
-                // Eliminar el elemento del ArrayList
-                celdasPintadasTDcha.remove(i);
-                pintarCeldasGuardadasDcha(tablaDcha, Color.GREEN);
-                // Actualizar el índice para continuar la iteración correctamente
-                i--;
+                    // Eliminar el elemento del ArrayList
+                    celdasPintadasTDcha.remove(i);
+                    pintarCeldasGuardadasDcha(tablaDcha, Color.GREEN);
+                    // Actualizar el índice para continuar la iteración correctamente
+                    i--;
+                }
             }
         }
         if (filaSeleccionada != -1) {
