@@ -326,7 +326,7 @@ public class Main extends javax.swing.JFrame {
 
                 } catch (IOException | InterruptedException ex) {
                     System.out.println("Cliente cerrado");
-                }finally {
+                } finally {
                     try {
                         clienteApiGestion.cerrarGestion().execute().wait();
                     } catch (InterruptedException ex) {
@@ -1221,7 +1221,7 @@ public class Main extends javax.swing.JFrame {
                                 graficosController.entraParticipacionEspMuniDelay();
 
                             } else {
-                            graficosController.entraParticipacionEspMuni();
+                                graficosController.entraParticipacionEspMuni();
                             }
 
                             participacionEspIn = true;
@@ -1444,7 +1444,7 @@ public class Main extends javax.swing.JFrame {
                             if (sacarCartonAnteriorMuni()) {
                                 graficosController.entraParticipacionEspMuniDelay();
                             } else {
-                            graficosController.entraParticipacionEspMuni();
+                                graficosController.entraParticipacionEspMuni();
                             }
                             participacionEspIn = true;
                         }
@@ -2096,7 +2096,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfigActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // TODO add your handling code here:
+        graficosController.update();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void resaltarBoton(JButton boton) {

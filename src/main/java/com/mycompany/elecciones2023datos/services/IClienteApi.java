@@ -463,4 +463,11 @@ public interface IClienteApi {
     @GET("/bd/local")
     Call<String> conectLocal();
 
+    /*
+     * UPDATE
+     */
+
+    @GET("/autonomicas/update")
+    Call<String> update();
+
 }

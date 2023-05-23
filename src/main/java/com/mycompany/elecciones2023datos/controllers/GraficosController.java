@@ -1031,5 +1031,13 @@ public class GraficosController {
         }
     }
 
+    public void update() {
+        try {
+            clienteApi.update().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
