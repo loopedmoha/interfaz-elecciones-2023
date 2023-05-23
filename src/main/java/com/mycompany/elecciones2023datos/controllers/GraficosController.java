@@ -921,33 +921,65 @@ public class GraficosController {
 
     //SELECTED
 
-    public void selectedAutonomicasOficiales(String codigo) {
+    public void selectCircunscripcionAutonomiaOficialAuto(String codigo) {
         try {
-            clienteApi.selectedAutonomicasOficiales(codigo).execute();
+            clienteApi.selectCircunscripcionAutonomiaOficialAuto(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void selectedAutonomicasSondeo(String codigo) {
+    public void selectCircunscripcionMapaOficialAuto(String codigo) {
         try {
-            clienteApi.selectedAutonomicasSondeo(codigo).execute();
+            clienteApi.selectCircunscripcionMapaOficialAuto(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void selectedMunicipalesOficiales(String codigo) {
+    public void selectCircunscripcionAutnomiaSondeoAuto(String codigo) {
         try {
-            clienteApi.selectedMunicipalesOficiales(codigo).execute();
+            clienteApi.selectCircunscripcionAutnomiaSondeoAuto(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void selectedMunicipalesSondeo(String codigo) {
+    public void selectCircunscripcionMapaSondeoAuto(String codigo) {
         try {
-            clienteApi.selectedMunicipalesSondeo(codigo).execute();
+            clienteApi.selectCircunscripcionMapaSondeoAuto(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void selectCircunscripcionAutonomiaOficialMuni(String codigo) {
+        try {
+            clienteApi.selectCircunscripcionAutonomiaOficialMuni(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void selectCircunscripcionMapaOficialMuni(String codigo) {
+        try {
+            clienteApi.selectCircunscripcionMapaOficialMuni(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void selectCircunscripcionAutnomiaSondeoMuni(String codigo) {
+        try {
+            clienteApi.selectCircunscripcionAutnomiaSondeoMuni(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void selectCircunscripcionMapaSondeoMuni(String codigo) {
+        try {
+            clienteApi.selectCircunscripcionMapaSondeoMuni(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

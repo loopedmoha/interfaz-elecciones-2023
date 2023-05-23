@@ -548,7 +548,12 @@ public class Main extends javax.swing.JFrame {
                                 try {
                                     if (TablaCartones.getSelectedRow() != 3) {
                                         carmen = clienteApi.getCarmenDtoOficialAuto(codAutonomia).execute().body();
-                                        graficosController.selectedAutonomicasOficiales(codAutonomia);
+                                        if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
+                                            graficosController.selectCircunscripcionMapaOficialAuto(codAutonomia);
+                                        }
+                                        if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
+                                            graficosController.selectCircunscripcionAutonomiaOficialAuto(codAutonomia);
+                                        }
                                         if (TablaCartones.getSelectedRow() == 0) {
                                             if (tablaComunidades.getSelectedRow() != -1) {
                                                 String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
@@ -558,7 +563,7 @@ public class Main extends javax.swing.JFrame {
                                         }
                                     } else {
                                         carmen = clienteApi.getCarmenDtoOficialAuto("9900000").execute().body();
-                                        graficosController.selectedAutonomicasOficiales("9900000");
+                                        graficosController.selectCircunscripcionMapaOficialAuto("9900000");
                                     }
                                 } catch (IOException ex) {
                                     throw new RuntimeException(ex);
@@ -567,7 +572,12 @@ public class Main extends javax.swing.JFrame {
                                 try {
                                     if (TablaCartones.getSelectedRow() != 3) {
                                         carmen = clienteApi.getCarmenDtoSondeoAuto(codAutonomia).execute().body();
-                                        graficosController.selectedAutonomicasSondeo(codAutonomia);
+                                        if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
+                                            graficosController.selectCircunscripcionMapaSondeoAuto(codAutonomia);
+                                        }
+                                        if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
+                                            graficosController.selectCircunscripcionAutnomiaSondeoAuto(codAutonomia);
+                                        }
                                         if (TablaCartones.getSelectedRow() == 0) {
                                             if (tablaComunidades.getSelectedRow() != -1) {
                                                 String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
@@ -577,7 +587,7 @@ public class Main extends javax.swing.JFrame {
                                         }
                                     } else {
                                         carmen = clienteApi.getCarmenDtoSondeoAuto("9900000").execute().body();
-                                        graficosController.selectedAutonomicasSondeo("9900000");
+                                        graficosController.selectCircunscripcionMapaSondeoAuto("9900000");
                                     }
                                 } catch (IOException ex) {
                                     throw new RuntimeException(ex);
@@ -591,7 +601,12 @@ public class Main extends javax.swing.JFrame {
                                 try {
                                     if (TablaCartones.getSelectedRow() != 3) {
                                         carmen = clienteApi.getCarmenDtoOficialMuni(codAutonomia).execute().body();
-                                        graficosController.selectedMunicipalesOficiales(codAutonomia);
+                                        if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
+                                            graficosController.selectCircunscripcionMapaOficialMuni(codAutonomia);
+                                        }
+                                        if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
+                                            graficosController.selectCircunscripcionAutonomiaOficialMuni(codAutonomia);
+                                        }
                                         if (TablaCartones.getSelectedRow() == 0) {
                                             if (tablaComunidades.getSelectedRow() != -1) {
                                                 String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
@@ -601,7 +616,7 @@ public class Main extends javax.swing.JFrame {
                                         }
                                     } else {
                                         carmen = clienteApi.getCarmenDtoOficialMuni("9900000").execute().body();
-                                        graficosController.selectedMunicipalesOficiales("9900000");
+                                        graficosController.selectCircunscripcionMapaOficialMuni("9900000");
                                     }
                                 } catch (IOException ex) {
                                     throw new RuntimeException(ex);
@@ -610,7 +625,12 @@ public class Main extends javax.swing.JFrame {
                                 try {
                                     if (TablaCartones.getSelectedRow() != 3) {
                                         carmen = clienteApi.getCarmenDtoSondeoMuni(codAutonomia).execute().body();
-                                        graficosController.selectedMunicipalesSondeo(codAutonomia);
+                                        if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
+                                            graficosController.selectCircunscripcionMapaSondeoMuni(codAutonomia);
+                                        }
+                                        if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
+                                            graficosController.selectCircunscripcionAutnomiaSondeoMuni(codAutonomia);
+                                        }
                                         if (TablaCartones.getSelectedRow() == 0) {
                                             if (tablaComunidades.getSelectedRow() != -1) {
                                                 String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
@@ -620,7 +640,7 @@ public class Main extends javax.swing.JFrame {
                                         }
                                     } else {
                                         carmen = clienteApi.getCarmenDtoSondeoMuni("9900000").execute().body();
-                                        graficosController.selectedMunicipalesSondeo("9900000");
+                                        graficosController.selectCircunscripcionMapaSondeoMuni("9900000");
                                     }
                                 } catch (IOException ex) {
                                     throw new RuntimeException(ex);
@@ -1048,14 +1068,24 @@ public class Main extends javax.swing.JFrame {
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
-                            graficosController.selectedAutonomicasOficiales(codMunicipio);
+                            if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
+                                graficosController.selectCircunscripcionMapaOficialAuto(codMunicipio);
+                            }
+                            if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
+                                graficosController.selectCircunscripcionAutonomiaOficialAuto(codMunicipio);
+                            }
                         } else {
                             try {
                                 carmen = clienteApi.getCarmenDtoSondeoAuto(codMunicipio).execute().body();
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
-                            graficosController.selectedAutonomicasSondeo(codMunicipio);
+                            if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
+                                graficosController.selectCircunscripcionMapaSondeoAuto(codMunicipio);
+                            }
+                            if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
+                                graficosController.selectCircunscripcionAutnomiaSondeoAuto(codMunicipio);
+                            }
                         }
                     } else {
                         codMunicipio = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
@@ -1065,7 +1095,12 @@ public class Main extends javax.swing.JFrame {
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
-                            graficosController.selectedMunicipalesOficiales(codMunicipio);
+                            if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
+                                graficosController.selectCircunscripcionMapaOficialMuni(codMunicipio);
+                            }
+                            if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
+                                graficosController.selectCircunscripcionAutnomiaSondeoMuni(codMunicipio);
+                            }
                         } else {
                             try {
                                 carmen = clienteApi.getCarmenDtoSondeoMuni(codMunicipio).execute().body();
@@ -1113,55 +1148,74 @@ public class Main extends javax.swing.JFrame {
         tablaMunicipios = new JTable(tableModel);
         jScrollPane4.setViewportView(tablaMunicipios);
         tablaMunicipios.getSelectionModel().addListSelectionListener(e -> {
-            int selectedRow = tablaMunicipios.getSelectedRow();
-            if (selectedRow != -1) {
-                isComunidad = false;
-                isMunicipio = true;
-                String nombreMunicipio = (String) tablaMunicipios.getValueAt(selectedRow, 0);
-                String codMunicipio = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
-                CarmenDTO carmen = null;
-                if (tipoElecciones == 2 || tipoElecciones == 4) {
-                    if (oficiales) {
-                        try {
-                            carmen = clienteApi.getCarmenDtoOficialAuto(codMunicipio).execute().body();
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = tablaMunicipios.getSelectedRow();
+                if (selectedRow != -1) {
+                    String nombreMunicipio = (String) tablaMunicipios.getValueAt(selectedRow, 0);
+                    String codMunicipio;
+                    CarmenDTO carmen = null;
+                    isComunidad = false;
+                    isMunicipio = true;
+                    if (tipoElecciones == 2 || tipoElecciones == 4) {
+                        codMunicipio = nombreCodigoAutonomicas.get(tablaMunicipios.getValueAt(selectedRow, 0));
+                        if (oficiales) {
+                            try {
+                                carmen = clienteApi.getCarmenDtoOficialAuto(codMunicipio).execute().body();
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                            if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
+                                graficosController.selectCircunscripcionMapaOficialAuto(codMunicipio);
+                            }
+                            if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
+                                graficosController.selectCircunscripcionAutonomiaOficialAuto(codMunicipio);
+                            }
+                        } else {
+                            try {
+                                carmen = clienteApi.getCarmenDtoSondeoAuto(codMunicipio).execute().body();
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                            if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
+                                graficosController.selectCircunscripcionMapaSondeoAuto(codMunicipio);
+                            }
+                            if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
+                                graficosController.selectCircunscripcionAutnomiaSondeoAuto(codMunicipio);
+                            }
                         }
-                        graficosController.selectedAutonomicasOficiales(codMunicipio);
                     } else {
-                        try {
-                            carmen = clienteApi.getCarmenDtoSondeoAuto(codMunicipio).execute().body();
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
+                        codMunicipio = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(selectedRow, 0));
+                        if (oficiales) {
+                            try {
+                                carmen = clienteApi.getCarmenDtoOficialMuni(codMunicipio).execute().body();
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                            if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
+                                graficosController.selectCircunscripcionMapaOficialMuni(codMunicipio);
+                            }
+                            if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
+                                graficosController.selectCircunscripcionAutnomiaSondeoMuni(codMunicipio);
+                            }
+                        } else {
+                            try {
+                                carmen = clienteApi.getCarmenDtoSondeoMuni(codMunicipio).execute().body();
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                            //graficosController.selectedMunicipalesSondeo(codMunicipio);
                         }
-                        graficosController.selectedAutonomicasSondeo(codMunicipio);
                     }
-                } else {
-                    if (oficiales) {
-                        try {
-                            carmen = clienteApi.getCarmenDtoOficialMuni(codMunicipio).execute().body();
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                        graficosController.selectedMunicipalesOficiales(codMunicipio);
-                    } else {
-                        try {
-                            carmen = clienteApi.getCarmenDtoSondeoMuni(codMunicipio).execute().body();
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                        graficosController.selectedMunicipalesSondeo(codMunicipio);
+                    lblEscrutado.setText(carmen.getCircunscripcion().getEscrutado() + "");
+                    lblParticipacion.setText(carmen.getCircunscripcion().getParticipacion() + "");
+                    lblPartHistorica.setText(carmen.getCircunscripcion().getParticipacionHist() + "");
+                    lblEscanosTotales.setText(carmen.getCircunscripcion().getEscanios() + "");
+                    switch (selectedDb) {
+                        case "DA" -> showDataTableOficialAutonomicas(carmen);
+                        case "SA" -> showDataTableSondeoAutonomicas(carmen);
+                        case "SM" -> showDataTableSondeoMunicipio(carmen);
+                        default -> showDataTableOficialMunicipio(carmen);
                     }
-                }
-                lblEscrutado.setText(carmen.getCircunscripcion().getEscrutado() + "");
-                lblParticipacion.setText(carmen.getCircunscripcion().getParticipacion() + "");
-                lblPartHistorica.setText(carmen.getCircunscripcion().getParticipacionHist() + "");
-                lblEscanosTotales.setText(carmen.getCircunscripcion().getEscanios() + "");
-                switch (selectedDb) {
-                    case "DA" -> showDataTableOficialAutonomicas(carmen);
-                    case "SA" -> showDataTableSondeoAutonomicas(carmen);
-                    case "SM" -> showDataTableSondeoMunicipio(carmen);
-                    default -> showDataTableOficialMunicipio(carmen);
                 }
             }
         });
@@ -1171,9 +1225,7 @@ public class Main extends javax.swing.JFrame {
         switch (tipoElecciones) {
             //OFICIALES MUNICIPALES
             case 1 -> {
-
                 switch (TablaCartones.getSelectedRow()) {
-
                     //RESULTADOS
                     case 0 -> {
                         if (!resultadosIn) {

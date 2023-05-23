@@ -422,11 +422,29 @@ public interface IClienteApi {
     Call<String> entraDerPactos(@Path("posicion") int posicion);
 
     //DESCARGA DE ARCHIVOS
-    @GET("/autonomicas/circunscripciones/selected/oficial/{codigo}")
-    Call<String> selectedAutonomicasOficiales(@Path("codigo") String codigo);
+    @GET("/autonomicas/circunscripciones/selected/oficial/f_autonomicas/{codigo}")
+    Call<String> selectCircunscripcionAutonomiaOficialAuto(@Path("codigo") String codigo);
 
-    @GET("/autonomicas/circunscripciones/selected/sondeo/{codigo}")
-    Call<String> selectedAutonomicasSondeo(@Path("codigo") String codigo);
+    @GET("/autonomicas/circunscripciones/selected/oficial/mapa_mayorias/{codigo}")
+    Call<String> selectCircunscripcionMapaOficialAuto(@Path("codigo") String codigo);
+
+    @GET("/autonomicas/circunscripciones/selected/sondeo/f_autonomicas/{codigo}")
+    Call<String> selectCircunscripcionAutnomiaSondeoAuto(@Path("codigo") String codigo);
+
+    @GET("/autonomicas/circunscripciones/selected/sondeo/mapa_mayorias/{codigo}")
+    Call<String> selectCircunscripcionMapaSondeoAuto(@Path("codigo") String codigo);
+
+    @GET("/municipales/circunscripciones/selected/oficial/f_autonomicas/{codigo}")
+    Call<String> selectCircunscripcionAutonomiaOficialMuni(@Path("codigo") String codigo);
+
+    @GET("/municipales/circunscripciones/selected/oficial/mapa_mayorias/{codigo}")
+    Call<String> selectCircunscripcionMapaOficialMuni(@Path("codigo") String codigo);
+
+    @GET("/municipales/circunscripciones/selected/sondeo/f_autonomicas/{codigo}")
+    Call<String> selectCircunscripcionAutnomiaSondeoMuni(@Path("codigo") String codigo);
+
+    @GET("/municipales/circunscripciones/selected/sondeo/mapa_mayorias/{codigo}")
+    Call<String> selectCircunscripcionMapaSondeoMuni(@Path("codigo") String codigo);
 
     @GET("/municipales/circunscripciones/selected/oficial/{codigo}")
     Call<String> selectedMunicipalesOficiales(@Path("codigo") String codigo);
