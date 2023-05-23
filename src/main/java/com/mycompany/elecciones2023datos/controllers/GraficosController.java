@@ -535,6 +535,22 @@ public class GraficosController {
         }
     }
 
+    public void entraParticipacionEspAutoDelay() {
+        try {
+            clienteApi.entraParticipacionEspAutoDelay().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void entraParticipacionEspMuniDelay() {
+        try {
+            clienteApi.entraParticipacionEspMuniDelay().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void entraResultadosMuni() {
         try {
             clienteApi.entraResultadosMuni().execute();

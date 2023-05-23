@@ -136,8 +136,14 @@ public interface IClienteApi {
     @GET("/autonomicas/participacion/entra/esp")
     Call<String> entraParticipacionEspAuto();
 
+    @GET("/autonomicas/participacion/entra/esp/delay")
+    Call<String> entraParticipacionEspAutoDelay();
+
     @GET("/municipales/participacion/entra/esp")
     Call<String> entraParticipacionEspMuni();
+
+    @GET("/municipales/participacion/entra/esp/delay")
+    Call<String> entraParticipacionEspMuniDelay();
 
     @GET("/autonomicas/participacion/sale/esp")
     Call<String> saleParticipacionEspAuto();
@@ -299,7 +305,7 @@ public interface IClienteApi {
     Call<String> entraPartidoDerSondeoMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
     @GET("/autonomicas/arco/{circunscripcion}/{partido}/{tipoArco}/{izquierda}/borrar")
-    Call<String> borrarPartido(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido, @Path("tipoArco") int tipoArco,@Path("izquierda") int izquierda);
+    Call<String> borrarPartido(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido, @Path("tipoArco") int tipoArco, @Path("izquierda") int izquierda);
 
 
     /*
