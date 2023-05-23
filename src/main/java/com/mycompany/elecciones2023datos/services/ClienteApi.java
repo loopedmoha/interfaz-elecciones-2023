@@ -5,11 +5,14 @@ import retrofit2.Retrofit;
 public class ClienteApi {
     private static ClienteApi instance = null;
     private Retrofit retrofit = null;
+
+
     private static IClienteApi clienteApi;
 
     private ClienteApi() {
         retrofit = new Retrofit.Builder().baseUrl("http://localhost:9090").build();
         clienteApi = retrofit.create(IClienteApi.class);
+
     }
 
     public static ClienteApi getInstance() {

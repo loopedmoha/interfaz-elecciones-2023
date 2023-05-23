@@ -11,14 +11,14 @@ import com.mycompany.elecciones2023datos.model.Circunscripcion;
 import com.mycompany.elecciones2023datos.model.CircunscripcionPartido;
 import com.mycompany.elecciones2023datos.model.CpData;
 import com.mycompany.elecciones2023datos.services.IClienteApi;
+import com.mycompany.elecciones2023datos.services.IClienteApiGestion;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -42,7 +42,10 @@ import javax.swing.table.DefaultTableModel;
 public class Main extends javax.swing.JFrame {
 
     Retrofit retrofit;
+    Retrofit retrofitGestion;
     IClienteApi clienteApi;
+    IClienteApiGestion clienteApiGestion;
+
 
     TreeMap<String, List<Circunscripcion>> circunscripcionesAutonomicas = new TreeMap<>();
     TreeMap<String, List<Circunscripcion>> cicunscripcionesMunicipales = new TreeMap<>();
@@ -306,8 +309,35 @@ public class Main extends javax.swing.JFrame {
     }
 
     public Main() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         retrofit = new Retrofit.Builder().baseUrl("http://localhost:9090").addConverterFactory(GsonConverterFactory.create()).build();
         clienteApi = retrofit.create(IClienteApi.class);
+        retrofitGestion = new Retrofit.Builder().baseUrl("http://localhost:8080").addConverterFactory(GsonConverterFactory.create()).build();
+
+        clienteApiGestion = retrofitGestion.create(IClienteApiGestion.class);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                try {
+                    System.out.println("Cerrando");
+                    clienteApi.closeClient().execute().wait();
+
+                } catch (IOException | InterruptedException ex) {
+                    System.out.println("Cliente cerrado");
+                }finally {
+                    try {
+                        clienteApiGestion.cerrarGestion().execute().wait();
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (IOException ex) {
+                        System.out.println("Gestion cerrado");
+                    }
+
+                }
+            }
+        });
         graficosController.initListeners();
         initCircunscripcionesAutonomicas();
         initCircunscripcionesMunicipales();
@@ -325,6 +355,7 @@ public class Main extends javax.swing.JFrame {
 
         TablaCartones.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
+                System.out.println("AAA");
                 if (e.getClickCount() == 1) {
                     tablaMunicipios.clearSelection();
                     tablaComunidades.clearSelection();
@@ -1140,7 +1171,9 @@ public class Main extends javax.swing.JFrame {
         switch (tipoElecciones) {
             //OFICIALES MUNICIPALES
             case 1 -> {
+
                 switch (TablaCartones.getSelectedRow()) {
+
                     //RESULTADOS
                     case 0 -> {
                         if (!resultadosIn) {
@@ -1188,7 +1221,7 @@ public class Main extends javax.swing.JFrame {
                                 graficosController.entraParticipacionEspMuniDelay();
 
                             } else {
-                                graficosController.entraParticipacionEspMuni();
+                            graficosController.entraParticipacionEspMuni();
                             }
 
                             participacionEspIn = true;
@@ -1362,6 +1395,7 @@ public class Main extends javax.swing.JFrame {
             }
             //SONDEO MUNICIPALES
             case 3 -> {
+
                 switch (TablaCartones.getSelectedRow()) {
                     //RESULTADOS
                     case 0 -> {
@@ -1410,7 +1444,7 @@ public class Main extends javax.swing.JFrame {
                             if (sacarCartonAnteriorMuni()) {
                                 graficosController.entraParticipacionEspMuniDelay();
                             } else {
-                                graficosController.entraParticipacionEspMuni();
+                            graficosController.entraParticipacionEspMuni();
                             }
                             participacionEspIn = true;
                         }
@@ -1420,6 +1454,7 @@ public class Main extends javax.swing.JFrame {
                 }
                 switch (TablaFaldones.getSelectedRow()) {
                     //INFERIOR
+
                     case 0 -> {
                         if (!inferiorMuniIn && !inferiorAutoIn && !inferiorAutoSondeoIn && !inferiorMuniSondeoIn) {
                             graficosController.entraFaldonMuniSondeo();
