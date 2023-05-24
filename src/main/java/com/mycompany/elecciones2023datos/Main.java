@@ -173,11 +173,7 @@ public class Main extends javax.swing.JFrame {
 
     public void showDataTableSondeoAutonomicas(CarmenDTO carmen) {
         List<CpData> datos = CpData.fromCarmenDto(carmen);
-        try {
-            printDataEsp();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        printData(datos);
 
     }
 
@@ -244,6 +240,7 @@ public class Main extends javax.swing.JFrame {
                 return false; // establece todas las celdas no editables
             }
         };
+        CpData otros = null;
         if (!isEspana) {
             tableModel.addColumn("COD");
             tableModel.addColumn("SIGLAS");
@@ -254,14 +251,34 @@ public class Main extends javax.swing.JFrame {
             tableModel.addColumn("VOTANTES");
             if (oficiales) {
                 for (CpData cpDTO : list) {
-                    Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
-                            cpDTO.getEscanosDesde(), cpDTO.getEscanosHasta(), cpDTO.getEscanosHist(), cpDTO.getPorcentajeVoto(), cpDTO.getVotantes()};
+                    if (Objects.equals(cpDTO.getSiglas(), "OTROS")) {
+                        otros = cpDTO;
+                    } else {
+                        Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
+                                cpDTO.getEscanosDesde(), cpDTO.getEscanosHasta(), cpDTO.getEscanosHist(),
+                                cpDTO.getPorcentajeVoto(), cpDTO.getVotantes()};
+                        tableModel.addRow(rowData);
+                    }
+                }
+                if (otros != null) {
+                    Object[] rowData = {otros.getCodigo(), otros.getSiglas(),
+                            otros.getEscanosDesde(), otros.getEscanosHasta(), otros.getEscanosHist(),
+                            otros.getPorcentajeVoto(), otros.getVotantes()};
                     tableModel.addRow(rowData);
                 }
             } else {
                 for (CpData cpDTO : list) {
-                    Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
-                            cpDTO.getEscanos_desde_sondeo(), cpDTO.getEscanos_hasta_sondeo(), cpDTO.getEscanosHist(), cpDTO.getPorcentajeVotoSondeo(), cpDTO.getVotantes()};
+                    if (Objects.equals(cpDTO.getSiglas(), "OTROS")) {
+                        otros = cpDTO;
+                    } else {
+                        Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
+                                cpDTO.getEscanos_desde_sondeo(), cpDTO.getEscanos_hasta_sondeo(), cpDTO.getEscanosHist(), cpDTO.getPorcentajeVotoSondeo(), cpDTO.getVotantes()};
+                        tableModel.addRow(rowData);
+                    }
+                }
+                if(otros != null){
+                    Object[] rowData = {otros.getCodigo(), otros.getSiglas(),
+                            otros.getEscanos_desde_sondeo(), otros.getEscanos_hasta_sondeo(), otros.getEscanosHist(), otros.getPorcentajeVotoSondeo(), otros.getVotantes()};
                     tableModel.addRow(rowData);
                 }
             }
@@ -344,7 +361,6 @@ public class Main extends javax.swing.JFrame {
 
         TablaCartones.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                System.out.println("AAA");
                 if (e.getClickCount() == 1) {
                     tablaMunicipios.clearSelection();
                     tablaComunidades.clearSelection();
