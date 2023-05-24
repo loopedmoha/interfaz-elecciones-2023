@@ -23,9 +23,14 @@ public interface IClienteApi {
     @GET("/autonomicas/circunscripciones/autonomias")
     Call<List<Circunscripcion>> getAllAutonomiasAuto();
 
+    @GET("/autonomicas/circunscripciones/filtrada/{codigo}")
+    Call<List<Circunscripcion>> filtradasPorMostrarAuto(@Path("codigo") String codigo);
+
     @GET("/municipales/circunscripciones/autonomias")
     Call<List<Circunscripcion>> getAllAutonomiasMuni();
 
+    @GET("/municipales/circunscripciones/filtrada/{codigo}")
+    Call<List<Circunscripcion>> filtradasPorMostrarMuni(@Path("codigo") String codigo);
 
     //Leer autonomicas oficial y municipales oficial
     @GET("/autonomicas/carmen/oficial/{codigo}/data")
@@ -40,7 +45,7 @@ public interface IClienteApi {
     @GET("/municipales/carmen/oficial/{codigo}/data")
     Call<CarmenDTO> getCarmenDtoOficialMuni(@Path("codigo") String codigo);
 
-    //Leer municipales oficial y autonomicas oficial
+    //Leer municipales sondeo y autonomicas sondeo
     @GET("/autonomicas/carmen/sondeo/{codigo}/data")
     Call<CarmenDTO> getCarmenDtoSondeoAuto(@Path("codigo") String codigo);
 

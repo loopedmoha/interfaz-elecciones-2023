@@ -1,6 +1,7 @@
 package com.mycompany.elecciones2023datos.controllers;
 
 import com.mycompany.elecciones2023datos.DTO.CarmenDTO;
+import com.mycompany.elecciones2023datos.model.Circunscripcion;
 import com.mycompany.elecciones2023datos.model.CircunscripcionPartido;
 import com.mycompany.elecciones2023datos.model.Partido;
 import com.mycompany.elecciones2023datos.services.IClienteApi;
@@ -56,6 +57,22 @@ public class GraficosController {
     public CarmenDTO getCarmenDtoSondeoMuni(String codigo) {
         try {
             return clienteApi.getCarmenDtoSondeoMuni(codigo).execute().body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Circunscripcion> filtradasPorMostrarMuni(String codigo) {
+        try {
+            return clienteApi.filtradasPorMostrarMuni(codigo).execute().body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Circunscripcion> filtradasPorMostrarAuto(String codigo) {
+        try {
+            return clienteApi.filtradasPorMostrarAuto(codigo).execute().body();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -424,7 +424,7 @@ public class Main extends javax.swing.JFrame {
         TablaFaldones = new javax.swing.JTable();
 
         jCheckBox1 = new javax.swing.JCheckBox();
-ButtonGroup buttonGroup = new ButtonGroup();
+        ButtonGroup buttonGroup = new ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
         lblEscrutado = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -1139,15 +1139,23 @@ ButtonGroup buttonGroup = new ButtonGroup();
             }
         };
         tableModel.addColumn("CIRCUNSCRIPCIONES");
-        var municipios = cicunscripcionesMunicipales.get(cod.replaceAll(" ", ""));
-        municipios = new ArrayList<>(municipios.stream()
-                .distinct()
-                .collect(Collectors.toMap(Circunscripcion::getCodigo, Function.identity(), (municipio1, municipio2) -> municipio1))
-                .values());
-        municipios.sort(Comparator.comparing(Circunscripcion::getCodigo));
+        List<Circunscripcion> municipios = new ArrayList<>();
+        if (!cbRegional.isSelected()) {
+            if (cicunscripcionesMunicipales.get(cod).size() != 0) {
+                String codComunidad = cicunscripcionesMunicipales.get(cod).get(0).getCodigoComunidad();
+                municipios = graficosController.filtradasPorMostrarMuni(codComunidad);
+            }
+        } else {
+            municipios = cicunscripcionesMunicipales.get(cod.replaceAll(" ", ""));
+            municipios = new ArrayList<>(municipios.stream()
+                    .distinct()
+                    .collect(Collectors.toMap(Circunscripcion::getCodigo, Function.identity(), (municipio1, municipio2) -> municipio1))
+                    .values());
+            municipios.sort(Comparator.comparing(Circunscripcion::getCodigo));
+        }
+
         for (Circunscripcion municipio : municipios) {
-            if (!municipio.getCodigo().endsWith("000"))
-                tableModel.addRow(new Object[]{municipio.getNombreCircunscripcion()});
+            tableModel.addRow(new Object[]{municipio.getNombreCircunscripcion()});
         }
 
         JScrollPane scrollPane = new JScrollPane(tablaMunicipios);
@@ -1470,20 +1478,21 @@ ButtonGroup buttonGroup = new ButtonGroup();
                         }
                     }
                     //PARTICIPACION
-                    case 1 -> {}
-              //          if (!participacionIn) {
-              //              if (sacarCartonAnteriorMuni()) {
-              //                  graficosController.entraParticipacionMuniDelay();
-              //              } else {
-              //                  graficosController.entraParticipacionMuni();
-              //              }
-              //              participacionIn = true;
-              //          } else if (isComunidad) {
-              //              graficosController.cambiaParticipacionComunidad();
-              //          } else if (isMunicipio) {
-              //              graficosController.cambiaParticipacionMunicipio();
-              //          }
-              //      }
+                    case 1 -> {
+                    }
+                    //          if (!participacionIn) {
+                    //              if (sacarCartonAnteriorMuni()) {
+                    //                  graficosController.entraParticipacionMuniDelay();
+                    //              } else {
+                    //                  graficosController.entraParticipacionMuni();
+                    //              }
+                    //              participacionIn = true;
+                    //          } else if (isComunidad) {
+                    //              graficosController.cambiaParticipacionComunidad();
+                    //          } else if (isMunicipio) {
+                    //              graficosController.cambiaParticipacionMunicipio();
+                    //          }
+                    //      }
                     //ARCO
                     case 2 -> {
                         if (!arcoIn) {
@@ -1538,7 +1547,6 @@ ButtonGroup buttonGroup = new ButtonGroup();
                         }
                         if (!lateralIn) {
                             graficosController.entraLateralMunicipales();
-                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
                             lateralIn = true;
                         } else {
                             if (codCCAA != null) {
@@ -1579,17 +1587,18 @@ ButtonGroup buttonGroup = new ButtonGroup();
                         }
                     }
                     //PARTICIPACION
-                    case 1 -> {}
-                  //      if (!participacionIn) {
-                  //          sacarCartonAnteriorAuto();
-                  //          graficosController.entraParticipacionAuto();
-                  //          participacionIn = true;
-                  //      } else if (isComunidad) {
-                  //          graficosController.cambiaParticipacionComunidad();
-                  //      } else if (isMunicipio) {
-                  //          graficosController.cambiaParticipacionMunicipio();
-                  //      }
-                  //  }
+                    case 1 -> {
+                    }
+                    //      if (!participacionIn) {
+                    //          sacarCartonAnteriorAuto();
+                    //          graficosController.entraParticipacionAuto();
+                    //          participacionIn = true;
+                    //      } else if (isComunidad) {
+                    //          graficosController.cambiaParticipacionComunidad();
+                    //      } else if (isMunicipio) {
+                    //          graficosController.cambiaParticipacionMunicipio();
+                    //      }
+                    //  }
                     //ARCO
                     case 2 -> {
                         if (!arcoIn) {
@@ -1638,7 +1647,6 @@ ButtonGroup buttonGroup = new ButtonGroup();
                         }
                         if (!lateralIn) {
                             graficosController.entraLateralAutonomicas();
-                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
                             lateralIn = true;
                         } else {
                             if (codCCAA != null) {
@@ -1767,7 +1775,6 @@ ButtonGroup buttonGroup = new ButtonGroup();
                     case 1 -> {
                         if (lateralIn) {
                             graficosController.saleLateralMunicipales();
-                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
                             lateralIn = false;
                         }
                     }
@@ -1816,7 +1823,6 @@ ButtonGroup buttonGroup = new ButtonGroup();
                     case 1 -> {
                         if (lateralIn) {
                             graficosController.saleLateralAutonomicas();
-                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
                             lateralIn = false;
                         }
                     }
@@ -1865,7 +1871,6 @@ ButtonGroup buttonGroup = new ButtonGroup();
                     case 1 -> {
                         if (lateralIn) {
                             graficosController.saleLateralMunicipales();
-                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
                             lateralIn = false;
                         }
                     }
@@ -1913,7 +1918,6 @@ ButtonGroup buttonGroup = new ButtonGroup();
                     case 1 -> {
                         if (lateralIn) {
                             graficosController.saleLateralAutonomicas();
-                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
                             lateralIn = false;
                         }
                     }
@@ -2075,12 +2079,10 @@ ButtonGroup buttonGroup = new ButtonGroup();
     }//GEN-LAST:event_TablaCartonesHierarchyChanged
 
     private void btnAvance1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvance1ActionPerformed
-
         resaltarBotonAvances(btnAvance1);
     }//GEN-LAST:event_btnAvance1ActionPerformed
 
     private void btnAvance2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvance2ActionPerformed
-
         resaltarBotonAvances(btnAvance2);
     }//GEN-LAST:event_btnAvance2ActionPerformed
 
