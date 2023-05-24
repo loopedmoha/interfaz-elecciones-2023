@@ -529,12 +529,10 @@ public class PactosOpcion2 extends javax.swing.JFrame {
         celdasPintadas.add(new Point(filaSeleccionada, 0));
         pintarCeldasGuardadas(tablaIzq, Color.GREEN);
 
-
         for (Point celda : celdasPintadas) {
             int fila = (int) celda.getX();
             int columna = (int) celda.getY();
             System.out.println("Fila: " + fila + ", Columna: " + columna);
-
         }
 
 
@@ -607,8 +605,8 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 //            System.out.println(x + " " + y);
 //            System.out.println(modeltablaIzq.getValueAt(x, y));
             // Realiza las operaciones que desees con cada punto
-            
-            if(tablaPactosIzq.getSelectedRow() >= 0 && x >= 0 && y >= 0) {
+
+            if (tablaPactosIzq.getSelectedRow() >= 0 && x >= 0 && y >= 0) {
                 if (modelPactosIzq.getValueAt(filaSeleccionada, 0) == modeltablaIzq.getValueAt(x, y)) {
                     System.out.println("Se eliminara:" + modeltablaIzq.getValueAt(x, y));
                     System.out.println("Se eliminara:" + modelPactosIzq.getValueAt(filaSeleccionada, 0));
@@ -724,7 +722,7 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 //            System.out.println(modeltablaIzq.getValueAt(x, y));
             // Realiza las operaciones que desees con cada punto
 
-            if(tablaPactosDcha.getSelectedRow() >= 0 && x >= 0 && y >= 0) {
+            if (tablaPactosDcha.getSelectedRow() >= 0 && x >= 0 && y >= 0) {
                 if (modelPactosDcha.getValueAt(filaSeleccionada, 0) == modeltablaDcha.getValueAt(x, y)) {
                     System.out.println("Se eliminara:" + modeltablaDcha.getValueAt(x, y));
                     System.out.println("Se eliminara:" + modelPactosDcha.getValueAt(filaSeleccionada, 0));

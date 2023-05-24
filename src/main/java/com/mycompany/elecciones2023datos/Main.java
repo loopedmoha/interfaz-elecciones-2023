@@ -60,10 +60,8 @@ public class Main extends javax.swing.JFrame {
     GraficosController graficosController = new GraficosController();
 
     boolean isEspana = false;
-
-
     private boolean oficiales = true;
-    private int tipoElecciones = 1;
+    private int tipoElecciones = 2;
     private boolean lateralIn = false;
     private boolean inferiorAutoIn = false;
     private boolean inferiorAutoSondeoIn = false;
@@ -267,20 +265,10 @@ public class Main extends javax.swing.JFrame {
                     tableModel.addRow(rowData);
                 }
             }
-            JScrollPane scrollPane = new JScrollPane(tablaDatos);
-            tablaDatos.setModel(tableModel);
-            tablaDatos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            jScrollPane1.setViewportView(tablaDatos);
         } else {
             tableModel.addColumn("ESCRUTADO");
             tableModel.addColumn("PARTICIPACION");
             tableModel.addColumn("PARTICIPACION H");
-            // tableModel.addColumn("AVANCE 1");
-            // tableModel.addColumn("AVANCE 2");
-            // tableModel.addColumn("AVANCE 3");
-            // tableModel.addColumn("AVANCE 1 H");
-            // tableModel.addColumn("AVANCE 2 H");
-            // tableModel.addColumn("AVANCE 3 H");
 
             if (oficiales) {
                 //System.out.println(list);
@@ -300,13 +288,14 @@ public class Main extends javax.swing.JFrame {
                     tableModel.addRow(rowData);
                 }
             }
-            JScrollPane scrollPane = new JScrollPane(tablaDatos);
-            tablaDatos.setModel(tableModel);
-            tablaDatos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            jScrollPane1.setViewportView(tablaDatos);
         }
+        JScrollPane scrollPane = new JScrollPane(tablaDatos);
+        tablaDatos.setModel(tableModel);
+        tablaDatos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(tablaDatos);
 
     }
+
 
     public Main() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -316,28 +305,28 @@ public class Main extends javax.swing.JFrame {
         retrofitGestion = new Retrofit.Builder().baseUrl("http://localhost:8080").addConverterFactory(GsonConverterFactory.create()).build();
 
         clienteApiGestion = retrofitGestion.create(IClienteApiGestion.class);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                try {
-                    System.out.println("Cerrando");
-                    clienteApi.closeClient().execute().wait();
-
-                } catch (IOException | InterruptedException ex) {
-                    System.out.println("Cliente cerrado");
-                } finally {
-                    try {
-                        clienteApiGestion.cerrarGestion().execute().wait();
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (IOException ex) {
-                        System.out.println("Gestion cerrado");
-                    }
-
-                }
-            }
-        });
+        // addWindowListener(new WindowAdapter() {
+        //     @Override
+        //     public void windowClosing(WindowEvent e) {
+        //         super.windowClosing(e);
+        //         try {
+        //             System.out.println("Cerrando");
+        //             clienteApi.closeClient().execute().wait();
+//
+        //         } catch (IOException | InterruptedException ex) {
+        //             System.out.println("Cliente cerrado");
+        //         } finally {
+        //             try {
+        //                 clienteApiGestion.cerrarGestion().execute().wait();
+        //             } catch (InterruptedException ex) {
+        //                 throw new RuntimeException(ex);
+        //             } catch (IOException ex) {
+        //                 System.out.println("Gestion cerrado");
+        //             }
+//
+        //         }
+        //     }
+        // });
         graficosController.initListeners();
         initCircunscripcionesAutonomicas();
         initCircunscripcionesMunicipales();
@@ -1447,7 +1436,6 @@ public class Main extends javax.swing.JFrame {
             }
             //SONDEO MUNICIPALES
             case 3 -> {
-
                 switch (TablaCartones.getSelectedRow()) {
                     //RESULTADOS
                     case 0 -> {
@@ -2085,6 +2073,18 @@ public class Main extends javax.swing.JFrame {
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         graficosController.resetIPF();
+        isEspana = false;
+        lateralIn = false;
+        inferiorAutoIn = false;
+        inferiorAutoSondeoIn = false;
+        inferiorMuniIn = false;
+        inferiorMuniSondeoIn = false;
+        participacionIn = false;
+        participacionEspIn = false;
+        resultadosIn = false;
+        votantesIn = false;
+        arcoIn = false;
+
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfigActionPerformed
