@@ -342,7 +342,7 @@ public class Main extends javax.swing.JFrame {
         initCircunscripcionesAutonomicas();
         initCircunscripcionesMunicipales();
         initComponents();
-        resaltarBoton(btnDatosMunicipales);
+        resaltarBoton(btnDatosAutonomicas);
         TablaCartones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         TablaFaldones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tablaDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -491,7 +491,7 @@ public class Main extends javax.swing.JFrame {
         };
         tableModel.addColumn("COMUNIDADES");
         tablaComunidades.setModel(tableModel);
-        rellenarCCAA(1);
+        rellenarCCAA(2);
         JScrollPane scrollPane = new JScrollPane(tablaComunidades);
         tablaComunidades.getTableHeader().setResizingAllowed(false);
         jScrollPane2.setViewportView(tablaComunidades);
