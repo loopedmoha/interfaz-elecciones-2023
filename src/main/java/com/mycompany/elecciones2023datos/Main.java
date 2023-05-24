@@ -578,7 +578,7 @@ public class Main extends javax.swing.JFrame {
                                 try {
                                     if (TablaCartones.getSelectedRow() != 3) {
                                         carmen = clienteApi.getCarmenDtoSondeoAuto(codAutonomia).execute().body();
-                                        if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
+                                        if (TablaCartones.getSelectedRow() == 2) {
                                             graficosController.selectCircunscripcionMapaSondeoAuto(codAutonomia);
                                         }
                                         if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
@@ -607,7 +607,7 @@ public class Main extends javax.swing.JFrame {
                                 try {
                                     if (TablaCartones.getSelectedRow() != 3) {
                                         carmen = clienteApi.getCarmenDtoOficialMuni(codAutonomia).execute().body();
-                                        if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
+                                        if (TablaCartones.getSelectedRow() == 2) {
                                             graficosController.selectCircunscripcionMapaOficialMuni(codAutonomia);
                                         }
                                         if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
@@ -1486,20 +1486,20 @@ public class Main extends javax.swing.JFrame {
                         }
                     }
                     //PARTICIPACION
-                    case 1 -> {
-                        if (!participacionIn) {
-                            if (sacarCartonAnteriorMuni()) {
-                                graficosController.entraParticipacionMuniDelay();
-                            } else {
-                                graficosController.entraParticipacionMuni();
-                            }
-                            participacionIn = true;
-                        } else if (isComunidad) {
-                            graficosController.cambiaParticipacionComunidad();
-                        } else if (isMunicipio) {
-                            graficosController.cambiaParticipacionMunicipio();
-                        }
-                    }
+                    case 1 -> {}
+              //          if (!participacionIn) {
+              //              if (sacarCartonAnteriorMuni()) {
+              //                  graficosController.entraParticipacionMuniDelay();
+              //              } else {
+              //                  graficosController.entraParticipacionMuni();
+              //              }
+              //              participacionIn = true;
+              //          } else if (isComunidad) {
+              //              graficosController.cambiaParticipacionComunidad();
+              //          } else if (isMunicipio) {
+              //              graficosController.cambiaParticipacionMunicipio();
+              //          }
+              //      }
                     //ARCO
                     case 2 -> {
                         if (!arcoIn) {
@@ -1595,17 +1595,17 @@ public class Main extends javax.swing.JFrame {
                         }
                     }
                     //PARTICIPACION
-                    case 1 -> {
-                        if (!participacionIn) {
-                            sacarCartonAnteriorAuto();
-                            graficosController.entraParticipacionAuto();
-                            participacionIn = true;
-                        } else if (isComunidad) {
-                            graficosController.cambiaParticipacionComunidad();
-                        } else if (isMunicipio) {
-                            graficosController.cambiaParticipacionMunicipio();
-                        }
-                    }
+                    case 1 -> {}
+                  //      if (!participacionIn) {
+                  //          sacarCartonAnteriorAuto();
+                  //          graficosController.entraParticipacionAuto();
+                  //          participacionIn = true;
+                  //      } else if (isComunidad) {
+                  //          graficosController.cambiaParticipacionComunidad();
+                  //      } else if (isMunicipio) {
+                  //          graficosController.cambiaParticipacionMunicipio();
+                  //      }
+                  //  }
                     //ARCO
                     case 2 -> {
                         if (!arcoIn) {

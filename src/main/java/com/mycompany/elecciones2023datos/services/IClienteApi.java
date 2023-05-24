@@ -446,12 +446,6 @@ public interface IClienteApi {
     @GET("/municipales/circunscripciones/selected/sondeo/mapa_mayorias/{codigo}")
     Call<String> selectCircunscripcionMapaSondeoMuni(@Path("codigo") String codigo);
 
-    @GET("/municipales/circunscripciones/selected/oficial/{codigo}")
-    Call<String> selectedMunicipalesOficiales(@Path("codigo") String codigo);
-
-    @GET("/municipales/circunscripciones/selected/sondeo/{codigo}")
-    Call<String> selectedMunicipalesSondeo(@Path("codigo") String codigo);
-
     @GET("/autonomicas/resultados/{codigo}/csv")
     Call<String> descargarResultadosCsvAuto(@Path("codigo") String codigo);
 
