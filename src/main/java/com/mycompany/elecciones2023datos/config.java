@@ -42,6 +42,11 @@ public class config extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
+        buttonGroup1.add(jRadioButton1);
+        buttonGroup1.add( jRadioButton2);
+        buttonGroup1.add(jRadioButton3);
+
+
         puertoTL = new javax.swing.JTextField();
         ip1TL = new javax.swing.JTextField();
         bd1TL = new javax.swing.JTextField();

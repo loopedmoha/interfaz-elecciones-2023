@@ -250,34 +250,16 @@ public class Main extends javax.swing.JFrame {
             tableModel.addColumn("VOTANTES");
             if (oficiales) {
                 for (CpData cpDTO : list) {
-                    if (Objects.equals(cpDTO.getSiglas(), "OTROS")) {
-                        otros = cpDTO;
-                    } else {
-                        Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
-                                cpDTO.getEscanosDesde(), cpDTO.getEscanosHasta(), cpDTO.getEscanosHist(),
-                                cpDTO.getPorcentajeVoto(), cpDTO.getVotantes()};
-                        tableModel.addRow(rowData);
-                    }
-                }
-                if (otros != null) {
-                    Object[] rowData = {otros.getCodigo(), otros.getSiglas(),
-                            otros.getEscanosDesde(), otros.getEscanosHasta(), otros.getEscanosHist(),
-                            otros.getPorcentajeVoto(), otros.getVotantes()};
+                    Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
+                            cpDTO.getEscanosDesde(), cpDTO.getEscanosHasta(), cpDTO.getEscanosHist(),
+                            cpDTO.getPorcentajeVoto(), cpDTO.getVotantes()};
                     tableModel.addRow(rowData);
                 }
+
             } else {
                 for (CpData cpDTO : list) {
-                    if (Objects.equals(cpDTO.getSiglas(), "OTROS")) {
-                        otros = cpDTO;
-                    } else {
-                        Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
-                                cpDTO.getEscanos_desde_sondeo(), cpDTO.getEscanos_hasta_sondeo(), cpDTO.getEscanosHist(), cpDTO.getPorcentajeVotoSondeo(), cpDTO.getVotantes()};
-                        tableModel.addRow(rowData);
-                    }
-                }
-                if(otros != null){
-                    Object[] rowData = {otros.getCodigo(), otros.getSiglas(),
-                            otros.getEscanos_desde_sondeo(), otros.getEscanos_hasta_sondeo(), otros.getEscanosHist(), otros.getPorcentajeVotoSondeo(), otros.getVotantes()};
+                    Object[] rowData = {cpDTO.getCodigo(), cpDTO.getSiglas(),
+                            cpDTO.getEscanos_desde_sondeo(), cpDTO.getEscanos_hasta_sondeo(), cpDTO.getEscanosHist(), cpDTO.getPorcentajeVotoSondeo(), cpDTO.getVotantes()};
                     tableModel.addRow(rowData);
                 }
             }
@@ -440,7 +422,9 @@ public class Main extends javax.swing.JFrame {
         btnDatosMunicipales = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         TablaFaldones = new javax.swing.JTable();
+
         jCheckBox1 = new javax.swing.JCheckBox();
+ButtonGroup buttonGroup = new ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
         lblEscrutado = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -456,7 +440,7 @@ public class Main extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JButton();
         lblConexion = new javax.swing.JLabel();
         cbRegional = new javax.swing.JCheckBox();
-
+//buttonGroup.add(jCheckBox1);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ELECCIONES 2023");
 
