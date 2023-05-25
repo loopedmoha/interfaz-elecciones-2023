@@ -78,6 +78,13 @@ public class GraficosController {
         }
     }
 
+    public Circunscripcion getCircunscripcionPorId(String codigo) {
+        try {
+            return clienteApi.getCircunscripcionPorId(codigo).execute().body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void entraLateralAutonomicas() {
         try {

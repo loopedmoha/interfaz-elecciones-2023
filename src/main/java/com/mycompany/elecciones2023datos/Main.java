@@ -48,7 +48,7 @@ public class Main extends javax.swing.JFrame {
 
 
     TreeMap<String, List<Circunscripcion>> circunscripcionesAutonomicas = new TreeMap<>();
-    TreeMap<String, List<Circunscripcion>> cicunscripcionesMunicipales = new TreeMap<>();
+    TreeMap<String, List<Circunscripcion>> circunscripcionesMunicipales = new TreeMap<>();
     TreeMap<String, String> nombreCodigo = new TreeMap<>();
     TreeMap<String, String> nombreCodigoAuto = new TreeMap<>();
     TreeMap<String, String> nombreCodigoMunicipal = new TreeMap<>();
@@ -97,6 +97,12 @@ public class Main extends javax.swing.JFrame {
             autonomiasAuto = clienteApi.getAllAutonomiasAuto().execute().body();
             autonomiasAuto.stream().map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> circunscripcionesAutonomicas.put(auto, null));
 
+            Circunscripcion ceuta = graficosController.getCircunscripcionPorId("1800000");
+            Circunscripcion melilla = graficosController.getCircunscripcionPorId("1900000");
+            autonomiasAuto.add(ceuta);
+            autonomiasAuto.add(melilla);
+
+
             for (Circunscripcion autonomia : autonomiasMuni) {
                 var auxList = clienteApi.getCircunscripcionesByAutonomia(autonomia.getCodigo()).execute().body();
                 auxList.sort(Comparator.comparing(Circunscripcion::getCodigo));
@@ -124,14 +130,14 @@ public class Main extends javax.swing.JFrame {
         try {
             var autonomias = clienteApi.getAllAutonomiasMuni().execute().body();
             autonomias.stream()
-                    .map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> cicunscripcionesMunicipales.put(auto.replaceAll(" ", ""), null));
+                    .map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> circunscripcionesMunicipales.put(auto.replaceAll(" ", ""), null));
             for (Circunscripcion autonomia : autonomias) {
                 var auxList = clienteApi.getMunicipiosByCodigo(autonomia.getCodigo()).execute().body();
                 auxList.sort(Comparator.comparing(Circunscripcion::getCodigo));
                 for (Circunscripcion circunscripcion : auxList) {
                     nombreCodigoMunicipal.put(circunscripcion.getNombreCircunscripcion(), circunscripcion.getCodigo());
                 }
-                cicunscripcionesMunicipales.put(autonomia.getNombreCircunscripcion().replaceAll(" ", ""), auxList);
+                circunscripcionesMunicipales.put(autonomia.getNombreCircunscripcion().replaceAll(" ", ""), auxList);
             }
 
 
@@ -303,28 +309,28 @@ public class Main extends javax.swing.JFrame {
         retrofitGestion = new Retrofit.Builder().baseUrl("http://localhost:8080").addConverterFactory(GsonConverterFactory.create()).build();
 
         clienteApiGestion = retrofitGestion.create(IClienteApiGestion.class);
-        // addWindowListener(new WindowAdapter() {
-        //     @Override
-        //     public void windowClosing(WindowEvent e) {
-        //         super.windowClosing(e);
-        //         try {
-        //             System.out.println("Cerrando");
-        //             clienteApi.closeClient().execute().wait();
-//
-        //         } catch (IOException | InterruptedException ex) {
-        //             System.out.println("Cliente cerrado");
-        //         } finally {
-        //             try {
-        //                 clienteApiGestion.cerrarGestion().execute().wait();
-        //             } catch (InterruptedException ex) {
-        //                 throw new RuntimeException(ex);
-        //             } catch (IOException ex) {
-        //                 System.out.println("Gestion cerrado");
-        //             }
-//
-        //         }
-        //     }
-        // });
+        addWindowListener(new WindowAdapter() {
+            //      @Override
+            //      public void windowClosing(WindowEvent e) {
+            //          super.windowClosing(e);
+            //          try {
+            //              System.out.println("Cerrando");
+            //              clienteApi.closeClient().execute().wait();
+
+            //          } catch (IOException | InterruptedException ex) {
+            //              System.out.println("Cliente cerrado");
+            //          } finally {
+            //              try {
+            //                  clienteApiGestion.cerrarGestion().execute().wait();
+            //              } catch (InterruptedException ex) {
+            //                  throw new RuntimeException(ex);
+            //              } catch (IOException ex) {
+            //                  System.out.println("Gestion cerrado");
+            //              }
+
+            //          }
+            //      }
+        });
         graficosController.initListeners();
         initCircunscripcionesAutonomicas();
         initCircunscripcionesMunicipales();
@@ -1141,12 +1147,12 @@ public class Main extends javax.swing.JFrame {
         tableModel.addColumn("CIRCUNSCRIPCIONES");
         List<Circunscripcion> municipios = new ArrayList<>();
         if (!cbRegional.isSelected()) {
-            if (cicunscripcionesMunicipales.get(cod).size() != 0) {
-                String codComunidad = cicunscripcionesMunicipales.get(cod).get(0).getCodigoComunidad();
+            if (circunscripcionesMunicipales.get(cod).size() != 0) {
+                String codComunidad = circunscripcionesMunicipales.get(cod).get(0).getCodigoComunidad();
                 municipios = graficosController.filtradasPorMostrarMuni(codComunidad);
             }
         } else {
-            municipios = cicunscripcionesMunicipales.get(cod.replaceAll(" ", ""));
+            municipios = circunscripcionesMunicipales.get(cod.replaceAll(" ", ""));
             municipios = new ArrayList<>(municipios.stream()
                     .distinct()
                     .collect(Collectors.toMap(Circunscripcion::getCodigo, Function.identity(), (municipio1, municipio2) -> municipio1))
@@ -1981,7 +1987,7 @@ public class Main extends javax.swing.JFrame {
         switch (tipo) {
             case 1, 3 -> {
                 DefaultTableModel tableModel = (DefaultTableModel) tablaComunidades.getModel();
-                List<String> ccaa = cicunscripcionesMunicipales.keySet().stream().filter(x -> !x.endsWith("00000")).toList();
+                List<String> ccaa = circunscripcionesMunicipales.keySet().stream().filter(x -> !x.endsWith("00000")).toList();
                 ccaa = ccaa.subList(0, ccaa.size() - 1);
                 for (String s : ccaa) {
                     tableModel.addRow(new Object[]{s});
@@ -1990,7 +1996,8 @@ public class Main extends javax.swing.JFrame {
             }
             case 2, 4 -> {
                 DefaultTableModel tableModel = (DefaultTableModel) tablaComunidades.getModel();
-                var lista = nombreCodigoAuto.keySet().stream().toList().subList(0, nombreCodigoAuto.keySet().stream().toList().size() - 1);
+                List<String> lista = new ArrayList<>(nombreCodigoAuto.keySet().stream().toList().subList(0, nombreCodigoAuto.keySet().stream().toList().size() - 1).stream().toList());
+
                 for (String s : lista) {
                     tableModel.addRow(new Object[]{s});
                 }
