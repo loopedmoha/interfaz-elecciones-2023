@@ -969,6 +969,14 @@ public class GraficosController {
         }
     }
 
+    public void selectCircunscripcionMunicipioSondeoMuni(String codigo) {
+        try {
+            clienteApi.selectCircunscripcionMunicipioSondeoMuni(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void selectCircunscripcionMapaSondeoAuto(String codigo) {
         try {
             clienteApi.selectCircunscripcionMapaSondeoAuto(codigo).execute();
@@ -996,6 +1004,14 @@ public class GraficosController {
     public void selectCircunscripcionAutnomiaSondeoMuni(String codigo) {
         try {
             clienteApi.selectCircunscripcionAutnomiaSondeoMuni(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void selectCircunscripcionAutnomiaOficialMuni(String codigo) {
+        try {
+            clienteApi.selectCircunscripcionAutnomiaOficialMuni(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
