@@ -438,6 +438,7 @@ public interface IClienteApi {
 
     @GET("/municipales/circunscripciones/selected/sondeo/f_autonomicas/{codigo}")
     Call<String> selectCircunscripcionMunicipioSondeoMuni(@Path("codigo") String codigo);
+
     @GET("/autonomicas/circunscripciones/selected/sondeo/mapa_mayorias/{codigo}")
     Call<String> selectCircunscripcionMapaSondeoAuto(@Path("codigo") String codigo);
 
@@ -449,6 +450,7 @@ public interface IClienteApi {
 
     @GET("/municipales/circunscripciones/selected/sondeo/f_autonomicas/{codigo}")
     Call<String> selectCircunscripcionAutnomiaSondeoMuni(@Path("codigo") String codigo);
+
     @GET("/municipales/circunscripciones/selected/oficial/f_autonomicas/{codigo}")
     Call<String> selectCircunscripcionAutnomiaOficialMuni(@Path("codigo") String codigo);
 
@@ -463,6 +465,12 @@ public interface IClienteApi {
 
     @GET("/municipales/sedes/{codigo}/csv")
     Call<String> descargarSedesCsv(@Path("codigo") String codigo);
+
+    @GET("/autonomicas/carmen/sondeo/especial/{codigo}/csv")
+    Call<String> descargarSondeoEspecialCsvAuto(@Path("codigo") String codigo);
+
+    @GET("/municipales/carmen/sondeo/especial/{codigo}/csv")
+    Call<String> descargarSondeoEspecialCsvMuni(@Path("codigo") String codigo);
 
     //RESET
     @GET("/municipales/reset")

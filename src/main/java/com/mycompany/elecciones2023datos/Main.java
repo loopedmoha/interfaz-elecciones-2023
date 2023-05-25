@@ -107,7 +107,7 @@ public class Main extends javax.swing.JFrame {
                 circunscripcionesAutonomicas.put(autonomia.getNombreCircunscripcion(), auxList);
             }
             for (Circunscripcion autonomia : autonomiasAuto) {
-                if(autonomia!= null) {
+                if (autonomia != null) {
                     var auxList = clienteApi.getCircunscripcionesByAutonomia(autonomia.getCodigo()).execute().body();
                     auxList.sort(Comparator.comparing(Circunscripcion::getCodigo));
                     nombreCodigoAuto.put(autonomia.getNombreCircunscripcion(), autonomia.getCodigo());
@@ -551,6 +551,7 @@ public class Main extends javax.swing.JFrame {
                                                 String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
                                                 String codigo = nombreCodigoAuto.get(nombreCCAA);
                                                 graficosController.descargarResultadosCsvAuto(codigo);
+                                                graficosController.selectCircunscripcionMapaOficialAuto(codigo);
                                             }
                                         }
                                     } else {
@@ -575,6 +576,7 @@ public class Main extends javax.swing.JFrame {
                                                 String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
                                                 String codigo = nombreCodigoAuto.get(nombreCCAA);
                                                 graficosController.descargarResultadosCsvAuto(codigo);
+                                                graficosController.selectCircunscripcionMapaSondeoAuto(codigo);
                                             }
                                         }
                                     } else {
@@ -594,16 +596,16 @@ public class Main extends javax.swing.JFrame {
                                     if (TablaCartones.getSelectedRow() != 3) {
                                         carmen = clienteApi.getCarmenDtoOficialMuni(codAutonomia).execute().body();
                                         if (TablaCartones.getSelectedRow() == 2) {
-                                          //  graficosController.selectCircunscripcionMapaOficialMuni(codAutonomia);
+                                            //  graficosController.selectCircunscripcionMapaOficialMuni(codAutonomia);
                                         }
                                         if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
-                                        //    graficosController.selectCircunscripcionAutonomiaOficialMuni(codAutonomia);
+                                            //    graficosController.selectCircunscripcionAutonomiaOficialMuni(codAutonomia);
                                         }
                                         if (TablaCartones.getSelectedRow() == 0) {
                                             if (tablaComunidades.getSelectedRow() != -1) {
-                                                String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
-                                                String codigo = nombreCodigo.get(nombreCCAA);
-                                                graficosController.descargarResultadosCsvMuni(codigo);
+                                                //String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
+                                                //String codigo = nombreCodigo.get(nombreCCAA);
+                                                //graficosController.descargarResultadosCsvMuni(codigo);
                                             }
                                         }
                                     } else {
@@ -625,9 +627,9 @@ public class Main extends javax.swing.JFrame {
                                         }
                                         if (TablaCartones.getSelectedRow() == 0) {
                                             if (tablaComunidades.getSelectedRow() != -1) {
-                                                String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
-                                                String codigo = nombreCodigo.get(nombreCCAA);
-                                                graficosController.descargarResultadosCsvMuni(codigo);
+                                                // String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
+                                                // String codigo = nombreCodigo.get(nombreCCAA);
+                                                // graficosController.descargarResultadosCsvMuni(codigo);
                                             }
                                         }
                                     } else {
@@ -638,7 +640,7 @@ public class Main extends javax.swing.JFrame {
                                     throw new RuntimeException(ex);
                                 }
                             }
-                            showDataTable(carmen);
+                            //showDataTable(carmen);
                         }
 
                         lblEscrutado.setText(carmen.getCircunscripcion().getEscrutado() + "");
@@ -1111,8 +1113,8 @@ public class Main extends javax.swing.JFrame {
                             }
                         } else {
                             try {
-                                graficosController.selectCircunscripcionMapaSondeoMuni(codMunicipio);
                                 carmen = clienteApi.getCarmenDtoSondeoMuni(codMunicipio).execute().body();
+                                graficosController.selectCircunscripcionMapaSondeoMuni(codMunicipio);
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
@@ -1246,439 +1248,454 @@ public class Main extends javax.swing.JFrame {
         });
     }
 
+    private boolean dejoEntrar() {
+        boolean valido = false;
+        int rowComunidad = tablaComunidades.getSelectedRow();
+        if (rowComunidad != 1) {
+            if (tablaMunicipios.getSelectedRow() != -1 || tipoElecciones == 2 || tipoElecciones == 4 || nombreCodigo.get(tablaComunidades.getValueAt(rowComunidad, 0)).equals("1800000") || nombreCodigo.get(tablaComunidades.getValueAt(rowComunidad, 0)).equals("1900000")) {
+                valido = true;
+            }
+        }
+        return valido;
+    }
+
     private void btnEntraActionPerformed(java.awt.event.ActionEvent evt) {
-        switch (tipoElecciones) {
-            //OFICIALES MUNICIPALES
-            case 1 -> {
-                switch (TablaCartones.getSelectedRow()) {
-                    //RESULTADOS
-                    case 0 -> {
-                        if (!resultadosIn) {
-                            if (sacarCartonAnteriorMuni()) {
-                                graficosController.entraResultadosMuniDelay();
-                            } else {
-                                graficosController.entraResultadosMuni();
+        if (dejoEntrar()) {
+            switch (tipoElecciones) {
+                //OFICIALES MUNICIPALES
+                case 1 -> {
+                    switch (TablaCartones.getSelectedRow()) {
+                        //RESULTADOS
+                        case 0 -> {
+                            if (!resultadosIn) {
+                                if (sacarCartonAnteriorMuni()) {
+                                    graficosController.entraResultadosMuniDelay();
+                                } else {
+                                    graficosController.entraResultadosMuni();
+                                }
+                                resultadosIn = true;
+                            } else if (isComunidad) {
+                                graficosController.cambiaResultadosComunidad();
+                            } else if (isMunicipio) {
+                                graficosController.cambiaResultadosMunicipio();
                             }
-                            resultadosIn = true;
-                        } else if (isComunidad) {
-                            graficosController.cambiaResultadosComunidad();
-                        } else if (isMunicipio) {
-                            graficosController.cambiaResultadosMunicipio();
                         }
-                    }
-                    //PARTICIPACION
-                    case 1 -> {
-                        if (!participacionIn) {
-                            if (sacarCartonAnteriorMuni()) {
-                                graficosController.entraParticipacionMuniDelay();
-                            } else {
-                                graficosController.entraParticipacionMuni();
+                        //PARTICIPACION
+                        case 1 -> {
+                            if (!participacionIn) {
+                                if (sacarCartonAnteriorMuni()) {
+                                    graficosController.entraParticipacionMuniDelay();
+                                } else {
+                                    graficosController.entraParticipacionMuni();
+                                }
+                                participacionIn = true;
+                            } else if (isComunidad) {
+                                graficosController.cambiaParticipacionComunidad();
+                            } else if (isMunicipio) {
+                                graficosController.cambiaParticipacionMunicipio();
                             }
-                            participacionIn = true;
-                        } else if (isComunidad) {
-                            graficosController.cambiaParticipacionComunidad();
-                        } else if (isMunicipio) {
-                            graficosController.cambiaParticipacionMunicipio();
                         }
-                    }
-                    //ARCO
-                    case 2 -> {
-                        if (!arcoIn) {
-                            if (sacarCartonAnteriorMuni()) {
-                                graficosController.entraArcoMuniDelay();
-                            } else {
-                                graficosController.entraArcoMuni();
+                        //ARCO
+                        case 2 -> {
+                            if (!arcoIn) {
+                                if (sacarCartonAnteriorMuni()) {
+                                    graficosController.entraArcoMuniDelay();
+                                } else {
+                                    graficosController.entraArcoMuni();
+                                }
+                                arcoIn = true;
                             }
-                            arcoIn = true;
                         }
-                    }
-                    case 3 -> {
-                        if (!participacionEspIn) {
-                            if (sacarCartonAnteriorMuni()) {
-                                graficosController.entraParticipacionEspMuniDelay();
+                        case 3 -> {
+                            if (!participacionEspIn) {
+                                if (sacarCartonAnteriorMuni()) {
+                                    graficosController.entraParticipacionEspMuniDelay();
 
-                            } else {
-                                graficosController.entraParticipacionEspMuni();
+                                } else {
+                                    graficosController.entraParticipacionEspMuni();
+                                }
+
+                                participacionEspIn = true;
                             }
 
-                            participacionEspIn = true;
                         }
-
+                        default -> System.out.print("");
                     }
-                    default -> System.out.print("");
+                    switch (TablaFaldones.getSelectedRow()) {
+                        //INFERIOR
+                        case 0 -> {
+                            if (!inferiorMuniIn && !inferiorAutoIn && !inferiorAutoSondeoIn && !inferiorMuniSondeoIn) {
+                                graficosController.entraFaldonMuni();
+                                inferiorMuniIn = true;
+                            } else if (inferiorAutoIn) {
+                                graficosController.deAutoaMuniFaldonAuto();
+                                inferiorMuniIn = true;
+                                inferiorAutoIn = false;
+                            } else if (inferiorMuniIn) {
+                                graficosController.encadenaFaldonMuni();
+                            } else if (inferiorAutoSondeoIn) {
+                                graficosController.deAutoSondeoAMuni();
+                                inferiorAutoSondeoIn = false;
+                                inferiorMuniIn = true;
+                            } else if (inferiorMuniSondeoIn) {
+                                graficosController.deMuniSondeoAMuni();
+                                inferiorMuniSondeoIn = false;
+                                inferiorMuniIn = true;
+                            }
+                        }
+                        //LATERAL
+                        case 1 -> {
+                            String codCCAA = null;
+                            if (tablaComunidades.getSelectedRow() != -1) {
+                                codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+                                graficosController.actualizaLateralMunicipales(codCCAA);
+                            }
+                            if (!lateralIn) {
+                                graficosController.entraLateralMunicipales();
+                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                                lateralIn = true;
+                            } else {
+                                if (codCCAA != null) {
+                                    graficosController.despliegaLateralMunicipales(codCCAA);
+                                }
+                            }
+                        }
+                        //SEDES
+                        case 2 -> graficosController.faldonSedesEntra();
+                        //VOTOS MILLONES
+                        case 3 -> {
+                            if (votantesIn) {
+                                graficosController.faldonVotantesHistEntra();
+                            } else {
+                                graficosController.faldonVotantesEntra();
+                                votantesIn = true;
+                            }
+                        }
+                        default -> System.out.print("");
+                    }
                 }
-                switch (TablaFaldones.getSelectedRow()) {
-                    //INFERIOR
-                    case 0 -> {
-                        if (!inferiorMuniIn && !inferiorAutoIn && !inferiorAutoSondeoIn && !inferiorMuniSondeoIn) {
-                            graficosController.entraFaldonMuni();
-                            inferiorMuniIn = true;
-                        } else if (inferiorAutoIn) {
-                            graficosController.deAutoaMuniFaldonAuto();
-                            inferiorMuniIn = true;
-                            inferiorAutoIn = false;
-                        } else if (inferiorMuniIn) {
-                            graficosController.encadenaFaldonMuni();
-                        } else if (inferiorAutoSondeoIn) {
-                            graficosController.deAutoSondeoAMuni();
-                            inferiorAutoSondeoIn = false;
-                            inferiorMuniIn = true;
-                        } else if (inferiorMuniSondeoIn) {
-                            graficosController.deMuniSondeoAMuni();
-                            inferiorMuniSondeoIn = false;
-                            inferiorMuniIn = true;
-                        }
-                    }
-                    //LATERAL
-                    case 1 -> {
-                        String codCCAA = null;
-                        if (tablaComunidades.getSelectedRow() != -1) {
-                            codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
-                            graficosController.actualizaLateralMunicipales(codCCAA);
-                        }
-                        if (!lateralIn) {
-                            graficosController.entraLateralMunicipales();
-                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
-                            lateralIn = true;
-                        } else {
-                            if (codCCAA != null) {
-                                graficosController.despliegaLateralMunicipales(codCCAA);
+                //OFICIALES AUTONOMICAS
+                case 2 -> {
+                    switch (TablaCartones.getSelectedRow()) {
+                        //RESULTADOS
+                        case 0 -> {
+                            if (!resultadosIn) {
+                                if (sacarCartonAnteriorAuto()) {
+                                    graficosController.entraResultadosAutoDelay();
+                                } else {
+                                    graficosController.entraResultadosAuto();
+                                }
+                                resultadosIn = true;
+                            } else if (isComunidad) {
+                                graficosController.cambiaResultadosComunidad();
+                            } else if (isMunicipio) {
+                                graficosController.cambiaResultadosMunicipio();
                             }
                         }
-                    }
-                    //SEDES
-                    case 2 -> graficosController.faldonSedesEntra();
-                    //VOTOS MILLONES
-                    case 3 -> {
-                        if (votantesIn) {
-                            graficosController.faldonVotantesHistEntra();
-                        } else {
-                            graficosController.faldonVotantesEntra();
-                            votantesIn = true;
+                        //PARTICIPACION
+                        case 1 -> {
+                            if (!participacionIn) {
+                                if (sacarCartonAnteriorAuto()) {
+                                    graficosController.entraParticipacionAutoDelay();
+                                } else {
+                                    graficosController.entraParticipacionAuto();
+                                }
+                                participacionIn = true;
+                            } else if (isComunidad) {
+                                graficosController.cambiaParticipacionComunidad();
+                            } else if (isMunicipio) {
+                                graficosController.cambiaParticipacionMunicipio();
+                            }
                         }
+                        //ARCO
+                        case 2 -> {
+                            if (!arcoIn) {
+                                if (sacarCartonAnteriorAuto()) {
+                                    graficosController.entraArcoAutoDelay();
+                                } else {
+                                    graficosController.entraArcoAuto();
+                                }
+                                arcoIn = true;
+                            }
+                        }
+
+                        case 3 -> {
+                            if (!participacionEspIn) {
+                                if (sacarCartonAnteriorMuni()) {
+                                    graficosController.entraParticipacionEspAutoDelay();
+                                } else {
+                                    graficosController.entraParticipacionEspAuto();
+                                }
+                                participacionEspIn = true;
+                            }
+                        }
+                        default -> System.out.print("");
                     }
-                    default -> System.out.print("");
+                    switch (TablaFaldones.getSelectedRow()) {
+                        //INFERIOR
+                        case 0 -> {
+                            if (!inferiorMuniIn && !inferiorAutoIn && !inferiorAutoSondeoIn && !inferiorMuniSondeoIn) {
+                                graficosController.entraFaldonAuto();
+                                inferiorAutoIn = true;
+                            } else if (inferiorMuniIn) {
+                                graficosController.deMuniaAutoFaldonMuni();
+                                inferiorMuniIn = false;
+                                inferiorAutoIn = true;
+                            } else if (inferiorAutoIn) {
+                                graficosController.encadenaFaldonAuto();
+                            } else if (inferiorAutoSondeoIn) {
+                                graficosController.deAutoSondeoAAuto();
+                                inferiorAutoSondeoIn = false;
+                                inferiorAutoIn = true;
+                            } else if (inferiorMuniSondeoIn) {
+                                graficosController.deMuniSondeoAAuto();
+                                inferiorMuniSondeoIn = false;
+                                inferiorAutoIn = true;
+                            }
+                        }
+                        //LATERAL
+                        case 1 -> {
+                            String codCCAA = null;
+                            if (tablaComunidades.getSelectedRow() != -1) {
+                                codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+                                graficosController.actualizaLateralAutonomicas(codCCAA);
+                            }
+                            if (!lateralIn) {
+                                graficosController.entraLateralAutonomicas();
+                                //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
+                                lateralIn = true;
+                            } else {
+                                if (codCCAA != null) {
+                                    graficosController.despliegaLateralAutonomicas(codCCAA);
+                                }
+                            }
+                        }
+                        //SEDES
+                        case 2 -> graficosController.faldonSedesEntra();
+                        //VOTOS MILLONES
+                        case 3 -> {
+                            if (votantesIn) {
+                                graficosController.faldonVotantesHistEntra();
+                            } else {
+                                graficosController.faldonVotantesEntra();
+                                votantesIn = true;
+                            }
+                        }
+                        default -> System.out.print("");
+                    }
+                }
+                //SONDEO MUNICIPALES
+                case 3 -> {
+                    switch (TablaCartones.getSelectedRow()) {
+                        //RESULTADOS
+                        case 0 -> {
+                            if (!resultadosIn) {
+                                if (sacarCartonAnteriorMuni()) {
+                                    graficosController.entraSondeoResultadosMuniDelay();
+                                } else {
+                                    graficosController.entraSondeoResultadosMuni();
+                                }
+                                resultadosIn = true;
+                            } else if (isComunidad) {
+                                graficosController.cambiaSondeoResultadosComunidad();
+                            } else if (isMunicipio) {
+                                graficosController.cambiaSondeoResultadosMunicipio();
+                            }
+                        }
+                        //PARTICIPACION
+                        case 1 -> {
+                        }
+                        //          if (!participacionIn) {
+                        //              if (sacarCartonAnteriorMuni()) {
+                        //                  graficosController.entraParticipacionMuniDelay();
+                        //              } else {
+                        //                  graficosController.entraParticipacionMuni();
+                        //              }
+                        //              participacionIn = true;
+                        //          } else if (isComunidad) {
+                        //              graficosController.cambiaParticipacionComunidad();
+                        //          } else if (isMunicipio) {
+                        //              graficosController.cambiaParticipacionMunicipio();
+                        //          }
+                        //      }
+                        //ARCO
+                        case 2 -> {
+                            if (!arcoIn) {
+                                if (sacarCartonAnteriorMuni()) {
+                                    graficosController.entraArcoMuniSondeoDelay();
+                                } else {
+                                    graficosController.entraArcoMuniSondeo();
+                                }
+
+                                arcoIn = true;
+                            }
+                        }
+                        case 3 -> {
+                            if (!participacionEspIn) {
+                                if (sacarCartonAnteriorMuni()) {
+                                    graficosController.entraParticipacionEspMuniDelay();
+                                } else {
+                                    graficosController.entraParticipacionEspMuni();
+                                }
+                                participacionEspIn = true;
+                            }
+
+                        }
+                        default -> System.out.print("");
+                    }
+                    switch (TablaFaldones.getSelectedRow()) {
+                        //INFERIOR
+
+                        case 0 -> {
+                            if (!inferiorMuniIn && !inferiorAutoIn && !inferiorAutoSondeoIn && !inferiorMuniSondeoIn) {
+                                graficosController.entraFaldonMuniSondeo();
+                                inferiorMuniSondeoIn = true;
+                            } else if (inferiorAutoSondeoIn) {
+                                graficosController.deAutoSondeoAMuniSondeo();
+                                inferiorMuniSondeoIn = true;
+                                inferiorAutoSondeoIn = false;
+                            } else if (inferiorMuniSondeoIn) {
+                                graficosController.encadenaFaldonMunicipalesSondeo();
+                            } else if (inferiorMuniIn || inferiorAutoIn) {
+                                inferiorMuniSondeoIn = true;
+                                graficosController.entraFaldonMuniSondeo();
+                                inferiorMuniIn = false;
+                                inferiorAutoIn = false;
+                            }
+                        }
+                        //LATERAL
+                        case 1 -> {
+                            String codCCAA = null;
+                            if (tablaComunidades.getSelectedRow() != -1) {
+                                codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+                                graficosController.actualizaLateralMunicipales(codCCAA);
+                            }
+                            if (!lateralIn) {
+                                graficosController.entraLateralMunicipales();
+                                lateralIn = true;
+                            } else {
+                                if (codCCAA != null) {
+                                    graficosController.despliegaLateralMunicipales(codCCAA);
+                                }
+                            }
+                        }
+                        //SEDES
+                        case 2 -> graficosController.faldonSedesEntra();
+                        //VOTOS MILLONES
+                        case 3 -> {
+                            if (votantesIn) {
+                                graficosController.faldonVotantesHistEntra();
+                            } else {
+                                graficosController.faldonVotantesEntra();
+                                votantesIn = true;
+                            }
+                        }
+                        default -> System.out.print("");
+                    }
+                }
+                //SONDEO AUTONOMICAS
+                case 4 -> {
+                    switch (TablaCartones.getSelectedRow()) {
+                        //RESULTADOS
+                        case 0 -> {
+                            if (!resultadosIn) {
+                                if (sacarCartonAnteriorAuto()) {
+                                    graficosController.entraSondeoResultadosAutoDelay();
+                                } else {
+                                    graficosController.entraSondeoResultadosAuto();
+                                }
+                                resultadosIn = true;
+                            } else if (isComunidad) {
+                                graficosController.cambiaSondeoResultadosComunidad();
+                            } else if (isMunicipio) {
+                                graficosController.cambiaSondeoResultadosMunicipio();
+                            }
+                        }
+                        //PARTICIPACION
+                        case 1 -> {
+                        }
+                        //      if (!participacionIn) {
+                        //          sacarCartonAnteriorAuto();
+                        //          graficosController.entraParticipacionAuto();
+                        //          participacionIn = true;
+                        //      } else if (isComunidad) {
+                        //          graficosController.cambiaParticipacionComunidad();
+                        //      } else if (isMunicipio) {
+                        //          graficosController.cambiaParticipacionMunicipio();
+                        //      }
+                        //  }
+                        //ARCO
+                        case 2 -> {
+                            if (!arcoIn) {
+                                sacarCartonAnteriorAuto();
+                                graficosController.entraArcoAutoSondeo();
+                                arcoIn = true;
+                            }
+                        }
+                        case 3 -> {
+                            if (!participacionEspIn) {
+                                if (sacarCartonAnteriorMuni()) {
+                                    graficosController.entraParticipacionEspAutoDelay();
+                                } else {
+                                    graficosController.entraParticipacionEspAuto();
+                                }
+                                participacionEspIn = true;
+                            }
+                        }
+                        default -> System.out.print("");
+                    }
+                    switch (TablaFaldones.getSelectedRow()) {
+                        //INFERIOR
+                        case 0 -> {
+                            if (!inferiorMuniIn && !inferiorAutoIn && !inferiorAutoSondeoIn && !inferiorMuniSondeoIn) {
+                                graficosController.entraFaldonAutoSondeo();
+                                inferiorAutoSondeoIn = true;
+                            } else if (inferiorMuniSondeoIn) {
+                                graficosController.deMuniSondeoAAutoSondeo();
+                                inferiorMuniSondeoIn = false;
+                                inferiorAutoSondeoIn = true;
+                            } else if (inferiorAutoSondeoIn) {
+                                graficosController.encadenaFaldonAutonomicasSondeo();
+                            } else if (inferiorMuniIn || inferiorAutoIn) {
+                                inferiorAutoSondeoIn = true;
+                                graficosController.entraFaldonAutoSondeo();
+                                inferiorMuniIn = false;
+                                inferiorAutoIn = false;
+                            }
+                        }
+                        //LATERAL
+                        case 1 -> {
+                            String codCCAA = null;
+                            if (tablaComunidades.getSelectedRow() != -1) {
+                                codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
+                                graficosController.actualizaLateralAutonomicas(codCCAA);
+                            }
+                            if (!lateralIn) {
+                                graficosController.entraLateralAutonomicas();
+                                lateralIn = true;
+                            } else {
+                                if (codCCAA != null) {
+                                    graficosController.despliegaLateralAutonomicas(codCCAA);
+                                }
+                            }
+                        }
+                        //SEDES
+                        case 2 -> graficosController.faldonSedesEntra();
+                        //VOTOS MILLONES
+                        case 3 -> {
+                            if (votantesIn) {
+                                graficosController.faldonVotantesHistEntra();
+                            } else {
+                                graficosController.faldonVotantesEntra();
+                                votantesIn = true;
+                            }
+                        }
+                        default -> System.out.print("");
+                    }
                 }
             }
-            //OFICIALES AUTONOMICAS
-            case 2 -> {
-                switch (TablaCartones.getSelectedRow()) {
-                    //RESULTADOS
-                    case 0 -> {
-                        if (!resultadosIn) {
-                            if (sacarCartonAnteriorAuto()) {
-                                graficosController.entraResultadosAutoDelay();
-                            } else {
-                                graficosController.entraResultadosAuto();
-                            }
-                            resultadosIn = true;
-                        } else if (isComunidad) {
-                            graficosController.cambiaResultadosComunidad();
-                        } else if (isMunicipio) {
-                            graficosController.cambiaResultadosMunicipio();
-                        }
-                    }
-                    //PARTICIPACION
-                    case 1 -> {
-                        if (!participacionIn) {
-                            if (sacarCartonAnteriorAuto()) {
-                                graficosController.entraParticipacionAutoDelay();
-                            } else {
-                                graficosController.entraParticipacionAuto();
-                            }
-                            participacionIn = true;
-                        } else if (isComunidad) {
-                            graficosController.cambiaParticipacionComunidad();
-                        } else if (isMunicipio) {
-                            graficosController.cambiaParticipacionMunicipio();
-                        }
-                    }
-                    //ARCO
-                    case 2 -> {
-                        if (!arcoIn) {
-                            if (sacarCartonAnteriorAuto()) {
-                                graficosController.entraArcoAutoDelay();
-                            } else {
-                                graficosController.entraArcoAuto();
-                            }
-                            arcoIn = true;
-                        }
-                    }
-
-                    case 3 -> {
-                        if (!participacionEspIn) {
-                            if (sacarCartonAnteriorMuni()) {
-                                graficosController.entraParticipacionEspAutoDelay();
-                            } else {
-                                graficosController.entraParticipacionEspAuto();
-                            }
-                            participacionEspIn = true;
-                        }
-                    }
-                    default -> System.out.print("");
-                }
-                switch (TablaFaldones.getSelectedRow()) {
-                    //INFERIOR
-                    case 0 -> {
-                        if (!inferiorMuniIn && !inferiorAutoIn && !inferiorAutoSondeoIn && !inferiorMuniSondeoIn) {
-                            graficosController.entraFaldonAuto();
-                            inferiorAutoIn = true;
-                        } else if (inferiorMuniIn) {
-                            graficosController.deMuniaAutoFaldonMuni();
-                            inferiorMuniIn = false;
-                            inferiorAutoIn = true;
-                        } else if (inferiorAutoIn) {
-                            graficosController.encadenaFaldonAuto();
-                        } else if (inferiorAutoSondeoIn) {
-                            graficosController.deAutoSondeoAAuto();
-                            inferiorAutoSondeoIn = false;
-                            inferiorAutoIn = true;
-                        } else if (inferiorMuniSondeoIn) {
-                            graficosController.deMuniSondeoAAuto();
-                            inferiorMuniSondeoIn = false;
-                            inferiorAutoIn = true;
-                        }
-                    }
-                    //LATERAL
-                    case 1 -> {
-                        String codCCAA = null;
-                        if (tablaComunidades.getSelectedRow() != -1) {
-                            codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
-                            graficosController.actualizaLateralAutonomicas(codCCAA);
-                        }
-                        if (!lateralIn) {
-                            graficosController.entraLateralAutonomicas();
-                            //TODO:Poner lateralIN =false en el sale o al pasar a otro gráfico compatible
-                            lateralIn = true;
-                        } else {
-                            if (codCCAA != null) {
-                                graficosController.despliegaLateralAutonomicas(codCCAA);
-                            }
-                        }
-                    }
-                    //SEDES
-                    case 2 -> graficosController.faldonSedesEntra();
-                    //VOTOS MILLONES
-                    case 3 -> {
-                        if (votantesIn) {
-                            graficosController.faldonVotantesHistEntra();
-                        } else {
-                            graficosController.faldonVotantesEntra();
-                            votantesIn = true;
-                        }
-                    }
-                    default -> System.out.print("");
-                }
-            }
-            //SONDEO MUNICIPALES
-            case 3 -> {
-                switch (TablaCartones.getSelectedRow()) {
-                    //RESULTADOS
-                    case 0 -> {
-                        if (!resultadosIn) {
-                            if (sacarCartonAnteriorMuni()) {
-                                graficosController.entraSondeoResultadosMuniDelay();
-                            } else {
-                                graficosController.entraSondeoResultadosMuni();
-                            }
-                            resultadosIn = true;
-                        } else if (isComunidad) {
-                            graficosController.cambiaSondeoResultadosComunidad();
-                        } else if (isMunicipio) {
-                            graficosController.cambiaSondeoResultadosMunicipio();
-                        }
-                    }
-                    //PARTICIPACION
-                    case 1 -> {
-                    }
-                    //          if (!participacionIn) {
-                    //              if (sacarCartonAnteriorMuni()) {
-                    //                  graficosController.entraParticipacionMuniDelay();
-                    //              } else {
-                    //                  graficosController.entraParticipacionMuni();
-                    //              }
-                    //              participacionIn = true;
-                    //          } else if (isComunidad) {
-                    //              graficosController.cambiaParticipacionComunidad();
-                    //          } else if (isMunicipio) {
-                    //              graficosController.cambiaParticipacionMunicipio();
-                    //          }
-                    //      }
-                    //ARCO
-                    case 2 -> {
-                        if (!arcoIn) {
-                            if (sacarCartonAnteriorMuni()) {
-                                graficosController.entraArcoMuniSondeoDelay();
-                            } else {
-                                graficosController.entraArcoMuniSondeo();
-                            }
-
-                            arcoIn = true;
-                        }
-                    }
-                    case 3 -> {
-                        if (!participacionEspIn) {
-                            if (sacarCartonAnteriorMuni()) {
-                                graficosController.entraParticipacionEspMuniDelay();
-                            } else {
-                                graficosController.entraParticipacionEspMuni();
-                            }
-                            participacionEspIn = true;
-                        }
-
-                    }
-                    default -> System.out.print("");
-                }
-                switch (TablaFaldones.getSelectedRow()) {
-                    //INFERIOR
-
-                    case 0 -> {
-                        if (!inferiorMuniIn && !inferiorAutoIn && !inferiorAutoSondeoIn && !inferiorMuniSondeoIn) {
-                            graficosController.entraFaldonMuniSondeo();
-                            inferiorMuniSondeoIn = true;
-                        } else if (inferiorAutoSondeoIn) {
-                            graficosController.deAutoSondeoAMuniSondeo();
-                            inferiorMuniSondeoIn = true;
-                            inferiorAutoSondeoIn = false;
-                        } else if (inferiorMuniSondeoIn) {
-                            graficosController.encadenaFaldonMunicipalesSondeo();
-                        } else if (inferiorMuniIn || inferiorAutoIn) {
-                            inferiorMuniSondeoIn = true;
-                            graficosController.entraFaldonMuniSondeo();
-                            inferiorMuniIn = false;
-                            inferiorAutoIn = false;
-                        }
-                    }
-                    //LATERAL
-                    case 1 -> {
-                        String codCCAA = null;
-                        if (tablaComunidades.getSelectedRow() != -1) {
-                            codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
-                            graficosController.actualizaLateralMunicipales(codCCAA);
-                        }
-                        if (!lateralIn) {
-                            graficosController.entraLateralMunicipales();
-                            lateralIn = true;
-                        } else {
-                            if (codCCAA != null) {
-                                graficosController.despliegaLateralMunicipales(codCCAA);
-                            }
-                        }
-                    }
-                    //SEDES
-                    case 2 -> graficosController.faldonSedesEntra();
-                    //VOTOS MILLONES
-                    case 3 -> {
-                        if (votantesIn) {
-                            graficosController.faldonVotantesHistEntra();
-                        } else {
-                            graficosController.faldonVotantesEntra();
-                            votantesIn = true;
-                        }
-                    }
-                    default -> System.out.print("");
-                }
-            }
-            //SONDEO AUTONOMICAS
-            case 4 -> {
-                switch (TablaCartones.getSelectedRow()) {
-                    //RESULTADOS
-                    case 0 -> {
-                        if (!resultadosIn) {
-                            if (sacarCartonAnteriorAuto()) {
-                                graficosController.entraSondeoResultadosAutoDelay();
-                            } else {
-                                graficosController.entraSondeoResultadosAuto();
-                            }
-                            resultadosIn = true;
-                        } else if (isComunidad) {
-                            graficosController.cambiaSondeoResultadosComunidad();
-                        } else if (isMunicipio) {
-                            graficosController.cambiaSondeoResultadosMunicipio();
-                        }
-                    }
-                    //PARTICIPACION
-                    case 1 -> {
-                    }
-                    //      if (!participacionIn) {
-                    //          sacarCartonAnteriorAuto();
-                    //          graficosController.entraParticipacionAuto();
-                    //          participacionIn = true;
-                    //      } else if (isComunidad) {
-                    //          graficosController.cambiaParticipacionComunidad();
-                    //      } else if (isMunicipio) {
-                    //          graficosController.cambiaParticipacionMunicipio();
-                    //      }
-                    //  }
-                    //ARCO
-                    case 2 -> {
-                        if (!arcoIn) {
-                            sacarCartonAnteriorAuto();
-                            graficosController.entraArcoAutoSondeo();
-                            arcoIn = true;
-                        }
-                    }
-                    case 3 -> {
-                        if (!participacionEspIn) {
-                            if (sacarCartonAnteriorMuni()) {
-                                graficosController.entraParticipacionEspAutoDelay();
-                            } else {
-                                graficosController.entraParticipacionEspAuto();
-                            }
-                            participacionEspIn = true;
-                        }
-                    }
-                    default -> System.out.print("");
-                }
-                switch (TablaFaldones.getSelectedRow()) {
-                    //INFERIOR
-                    case 0 -> {
-                        if (!inferiorMuniIn && !inferiorAutoIn && !inferiorAutoSondeoIn && !inferiorMuniSondeoIn) {
-                            graficosController.entraFaldonAutoSondeo();
-                            inferiorAutoSondeoIn = true;
-                        } else if (inferiorMuniSondeoIn) {
-                            graficosController.deMuniSondeoAAutoSondeo();
-                            inferiorMuniSondeoIn = false;
-                            inferiorAutoSondeoIn = true;
-                        } else if (inferiorAutoSondeoIn) {
-                            graficosController.encadenaFaldonAutonomicasSondeo();
-                        } else if (inferiorMuniIn || inferiorAutoIn) {
-                            inferiorAutoSondeoIn = true;
-                            graficosController.entraFaldonAutoSondeo();
-                            inferiorMuniIn = false;
-                            inferiorAutoIn = false;
-                        }
-                    }
-                    //LATERAL
-                    case 1 -> {
-                        String codCCAA = null;
-                        if (tablaComunidades.getSelectedRow() != -1) {
-                            codCCAA = nombreCodigoMunicipal.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0)).substring(0, 2);
-                            graficosController.actualizaLateralAutonomicas(codCCAA);
-                        }
-                        if (!lateralIn) {
-                            graficosController.entraLateralAutonomicas();
-                            lateralIn = true;
-                        } else {
-                            if (codCCAA != null) {
-                                graficosController.despliegaLateralAutonomicas(codCCAA);
-                            }
-                        }
-                    }
-                    //SEDES
-                    case 2 -> graficosController.faldonSedesEntra();
-                    //VOTOS MILLONES
-                    case 3 -> {
-                        if (votantesIn) {
-                            graficosController.faldonVotantesHistEntra();
-                        } else {
-                            graficosController.faldonVotantesEntra();
-                            votantesIn = true;
-                        }
-                    }
-                    default -> System.out.print("");
-                }
-            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pueden introducir datos de CCAA en elecciones municipales", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }
 

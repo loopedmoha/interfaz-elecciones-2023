@@ -94,6 +94,22 @@ public class GraficosController {
         }
     }
 
+    public void descargarSondeoEspecialCsvAuto(String codigo) {
+        try {
+            clienteApi.descargarSondeoEspecialCsvAuto(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void descargarSondeoEspecialCsvMuni(String codigo) {
+        try {
+            clienteApi.descargarSondeoEspecialCsvMuni(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void entraLateralMunicipales() {
         try {
             clienteApi.entraLateralMunicipales().execute();
