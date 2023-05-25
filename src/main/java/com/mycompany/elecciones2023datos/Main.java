@@ -1176,11 +1176,23 @@ public class Main extends javax.swing.JFrame {
                 municipios = graficosController.filtradasPorMostrarMuni(codComunidad);
             }
         } else {
-            municipios = circunscripcionesMunicipales.get(cod.replaceAll(" ", "")).stream().filter(s -> s.getCodigo().endsWith("000")).toList();
+            // municipios = circunscripcionesMunicipales.get(cod.replaceAll(" ", "")).stream().filter(s -> s.getCodigo().endsWith("000")).toList();
+            municipios = circunscripcionesMunicipales.get(cod.replaceAll(" ", "")).stream().toList();
             municipios = new ArrayList<>(municipios.stream()
                     .distinct()
                     .collect(Collectors.toMap(Circunscripcion::getCodigo, Function.identity(), (municipio1, municipio2) -> municipio1))
                     .values());
+
+            List<Circunscripcion> municipiosSinDuplicados = new ArrayList<>();
+            Set<String> nombresUnicos = new HashSet<>();
+            for (Circunscripcion municipio : municipios) {
+                String nombre = municipio.getNombreCircunscripcion();
+                if (!nombresUnicos.contains(nombre)) {
+                    nombresUnicos.add(nombre);
+                    municipiosSinDuplicados.add(municipio);
+                }
+            }
+            municipios = municipiosSinDuplicados;
             municipios.sort(Comparator.comparing(Circunscripcion::getCodigo));
         }
 
