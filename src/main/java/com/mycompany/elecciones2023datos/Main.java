@@ -1289,7 +1289,7 @@ public class Main extends javax.swing.JFrame {
     private boolean dejoEntrar() {
         boolean valido = false;
         int rowComunidad = tablaComunidades.getSelectedRow();
-        if (rowComunidad != 1) {
+        if (rowComunidad != -1) {
             if (tablaMunicipios.getSelectedRow() != -1 || tipoElecciones == 2 || tipoElecciones == 4 || nombreCodigo.get(tablaComunidades.getValueAt(rowComunidad, 0)).equals("1800000") || nombreCodigo.get(tablaComunidades.getValueAt(rowComunidad, 0)).equals("1900000")) {
                 valido = true;
             }
@@ -1738,9 +1738,10 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void btnPactosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPactosActionPerformed
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        int screenWidth = gd.getDisplayMode().getWidth();
-        int screenHeight = gd.getDisplayMode().getHeight();
+        if (dejoEntrar()) {
+            GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+            int screenWidth = gd.getDisplayMode().getWidth();
+            int screenHeight = gd.getDisplayMode().getHeight();
 
         /*JFrame pactometroFin = new PactometroFin();
         pactometroFin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -1751,43 +1752,45 @@ public class Main extends javax.swing.JFrame {
         pactometro2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pactometro2.setLocation(screenWidth/4, screenHeight/9);
         pactometro2.setVisible(true);*/
-        JFrame pactos = null;
-        int arcoOFaldon = 0;
-        if (TablaCartones.getSelectedRow() == 2) {
-            arcoOFaldon = 1;
-        }
-        if (TablaFaldones.getSelectedRow() == 0) {
-            arcoOFaldon = 2;
-        }
-        switch (tipoElecciones) {
-            case 1, 3 -> {
-                String codigo;
-                if (tablaMunicipios.getSelectedRow() != -1) {
-                    codigo = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(tablaMunicipios.getSelectedRow(), 0).toString());
-                } else if (tablaComunidades.getSelectedRow() != -1) {
-                    codigo = nombreCodigo.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString());
-                } else {
-                    codigo = null;
-                }
-                pactos = new PactosOpcion2(arcoOFaldon, codigo, tipoElecciones, oficiales);
+            JFrame pactos = null;
+            int arcoOFaldon = 0;
+            if (TablaCartones.getSelectedRow() == 2) {
+                arcoOFaldon = 1;
             }
-
-            case 2, 4 -> {
-                String codigo;
-                if (tablaMunicipios.getSelectedRow() != -1) {
-                    codigo = nombreCodigoAutonomicas.get(tablaMunicipios.getValueAt(tablaMunicipios.getSelectedRow(), 0).toString());
-                } else if (tablaComunidades.getSelectedRow() != -1) {
-                    codigo = nombreCodigoAutonomicas.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString());
-                } else {
-                    codigo = null;
-                }
-                pactos = new PactosOpcion2(arcoOFaldon, codigo, tipoElecciones, oficiales);
+            if (TablaFaldones.getSelectedRow() == 0) {
+                arcoOFaldon = 2;
             }
-        }
-        pactos.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        pactos.setLocation(screenWidth / 4, screenHeight / 2);
-        pactos.setVisible(true);
+            switch (tipoElecciones) {
+                case 1, 3 -> {
+                    String codigo;
+                    if (tablaMunicipios.getSelectedRow() != -1) {
+                        codigo = nombreCodigoMunicipal.get(tablaMunicipios.getValueAt(tablaMunicipios.getSelectedRow(), 0).toString());
+                    } else if (tablaComunidades.getSelectedRow() != -1) {
+                        codigo = nombreCodigo.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString());
+                    } else {
+                        codigo = null;
+                    }
+                    pactos = new PactosOpcion2(arcoOFaldon, codigo, tipoElecciones, oficiales);
+                }
 
+                case 2, 4 -> {
+                    String codigo;
+                    if (tablaMunicipios.getSelectedRow() != -1) {
+                        codigo = nombreCodigoAutonomicas.get(tablaMunicipios.getValueAt(tablaMunicipios.getSelectedRow(), 0).toString());
+                    } else if (tablaComunidades.getSelectedRow() != -1) {
+                        codigo = nombreCodigoAutonomicas.get(tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString());
+                    } else {
+                        codigo = null;
+                    }
+                    pactos = new PactosOpcion2(arcoOFaldon, codigo, tipoElecciones, oficiales);
+                }
+            }
+            pactos.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            pactos.setLocation(screenWidth / 4, screenHeight / 2);
+            pactos.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Pactos con datos de CCAA en elecciones municipales no válidos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnPactosActionPerformed
 
     private void btnReplegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReplegarActionPerformed
