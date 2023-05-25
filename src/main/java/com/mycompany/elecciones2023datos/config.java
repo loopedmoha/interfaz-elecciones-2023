@@ -24,6 +24,8 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 public class config extends javax.swing.JFrame {
 
+    public static String conexionBD = "";
+
     GraficosController graficosController = new GraficosController();
 
     public config() throws IOException {
@@ -43,7 +45,7 @@ public class config extends javax.swing.JFrame {
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
         buttonGroup1.add(jRadioButton1);
-        buttonGroup1.add( jRadioButton2);
+        buttonGroup1.add(jRadioButton2);
         buttonGroup1.add(jRadioButton3);
 
 
@@ -239,14 +241,17 @@ public class config extends javax.swing.JFrame {
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         graficosController.conectPrincipal();
+        conexionBD = "BD PRINCIPAL";
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         graficosController.conectReserva();
+        conexionBD = "BD RESERVA";
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         graficosController.conectLocal();
+        conexionBD = "BD LOCAL";
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -338,6 +343,7 @@ public class config extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        dondeEstoy();
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -372,6 +378,18 @@ public class config extends javax.swing.JFrame {
                 }
             }
         });
+    }
+
+    private static void dondeEstoy() {
+        //TODO:poner en check dónde estamos además de cambiar el lbl
+        int conexion = 4;
+        switch (conexion) {
+            case 1 -> conexionBD = "BD PRINCIPAL";
+            case 2 -> conexionBD = "BD RESERVA";
+            case 3 -> conexionBD = "BD LOCAL";
+            default -> conexionBD = "BD NO IDENTIFICADA";
+        }
+        ;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
