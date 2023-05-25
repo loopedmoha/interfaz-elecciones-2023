@@ -3,8 +3,10 @@ package com.mycompany.elecciones2023datos.controllers;
 import com.mycompany.elecciones2023datos.DTO.CarmenDTO;
 import com.mycompany.elecciones2023datos.model.Circunscripcion;
 import com.mycompany.elecciones2023datos.model.CircunscripcionPartido;
+import com.mycompany.elecciones2023datos.model.DbActualResponse;
 import com.mycompany.elecciones2023datos.model.Partido;
 import com.mycompany.elecciones2023datos.services.IClienteApi;
+import com.mycompany.elecciones2023datos.services.IClienteApiGestion;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -13,13 +15,21 @@ import java.util.List;
 
 public class GraficosController {
     Retrofit retrofit;
+
+    Retrofit retrofit2;
     IClienteApi clienteApi;
+
+    IClienteApiGestion clienteApiGestion;
 
     public GraficosController() {
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://localhost:9090")
                 .addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit2 = new Retrofit.Builder()
+                .baseUrl("http://localhost:8080")
+                .addConverterFactory(GsonConverterFactory.create()).build();
         clienteApi = retrofit.create(IClienteApi.class);
+        clienteApiGestion = retrofit2.create(IClienteApiGestion.class);
     }
 
     public void initListeners() {
@@ -81,6 +91,14 @@ public class GraficosController {
     public Circunscripcion getCircunscripcionPorId(String codigo) {
         try {
             return clienteApi.getCircunscripcionPorId(codigo).execute().body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public DbActualResponse getDbActual() {
+        try {
+            return clienteApiGestion.getDbActual().execute().body();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

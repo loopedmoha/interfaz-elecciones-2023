@@ -76,6 +76,8 @@ public class Main extends javax.swing.JFrame {
     private boolean isMunicipio = false;
 
     private boolean arcoIn = false;
+
+    private int avance = 0;
     private static final String CONFIG_FILE_PATH = "C:\\Elecciones2023\\config.properties";
 
 
@@ -331,6 +333,7 @@ public class Main extends javax.swing.JFrame {
         initCircunscripcionesAutonomicas();
         initCircunscripcionesMunicipales();
         initComponents();
+        lblConexion.setText(graficosController.getDbActual().getResultado());
         resaltarBoton(btnDatosAutonomicas);
         TablaCartones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         TablaFaldones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -2150,14 +2153,17 @@ public class Main extends javax.swing.JFrame {
 
     private void btnAvance1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvance1ActionPerformed
         resaltarBotonAvances(btnAvance1);
+        avance = 1;
     }//GEN-LAST:event_btnAvance1ActionPerformed
 
     private void btnAvance2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvance2ActionPerformed
         resaltarBotonAvances(btnAvance2);
+        avance = 2;
     }//GEN-LAST:event_btnAvance2ActionPerformed
 
     private void btnAvance3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvance3ActionPerformed
         resaltarBotonAvances(btnAvance3);
+        avance = 3;
     }//GEN-LAST:event_btnAvance3ActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
@@ -2191,7 +2197,7 @@ public class Main extends javax.swing.JFrame {
             //System.out.println("existe");
             JFrame config;
             try {
-                config = new config();
+                config = new config(lblConexion);
                 config.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 config.setLocation(screenWidth / 4, screenHeight / 4);
                 config.setVisible(true);

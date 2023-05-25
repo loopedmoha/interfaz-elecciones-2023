@@ -12,7 +12,6 @@ public class ClienteApiGestion {
     private ClienteApiGestion() {
         retrofit = new Retrofit.Builder().baseUrl("http://localhost:8080").build();
         clienteApi = retrofit.create(IClienteApiGestion.class);
-
     }
 
     public static ClienteApiGestion getInstance() {

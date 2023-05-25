@@ -4,19 +4,13 @@
  */
 package com.mycompany.elecciones2023datos;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import com.mycompany.elecciones2023datos.controllers.GraficosController;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -25,12 +19,16 @@ import org.apache.commons.lang3.StringEscapeUtils;
 public class config extends javax.swing.JFrame {
 
     public static String conexionBD = "";
+    private JLabel labelTemp;
 
     GraficosController graficosController = new GraficosController();
 
-    public config() throws IOException {
+    public config(JLabel lblConexion) throws IOException {
         initComponents();
         cargarIni();
+        labelTemp = lblConexion;
+        conexionBD = graficosController.getDbActual().getResultado();
+        dondeEstoy();
     }
 
     @SuppressWarnings("unchecked")
@@ -242,16 +240,19 @@ public class config extends javax.swing.JFrame {
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         graficosController.conectPrincipal();
         conexionBD = "BD PRINCIPAL";
+        labelTemp.setText(conexionBD);
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         graficosController.conectReserva();
         conexionBD = "BD RESERVA";
+        labelTemp.setText(conexionBD);
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         graficosController.conectLocal();
         conexionBD = "BD LOCAL";
+        labelTemp.setText(conexionBD);
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -343,7 +344,6 @@ public class config extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        dondeEstoy();
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -372,7 +372,7 @@ public class config extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new config().setVisible(true);
+                    new config(null).setVisible(true);
                 } catch (IOException ex) {
                     Logger.getLogger(config.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -380,14 +380,14 @@ public class config extends javax.swing.JFrame {
         });
     }
 
-    private static void dondeEstoy() {
+    private void dondeEstoy() {
         //TODO:poner en check dónde estamos además de cambiar el lbl
-        int conexion = 4;
-        switch (conexion) {
-            case 1 -> conexionBD = "BD PRINCIPAL";
-            case 2 -> conexionBD = "BD RESERVA";
-            case 3 -> conexionBD = "BD LOCAL";
-            default -> conexionBD = "BD NO IDENTIFICADA";
+        switch (conexionBD) {
+            case "BD PRINCIPAL" -> jRadioButton1.setSelected(true);
+            case "BD RESERVA" -> jRadioButton2.setSelected(true);
+            case "BD LOCAL" -> jRadioButton3.setSelected(true);
+            case "BD NO IDENTIFICADA" -> {
+            }
         }
         ;
     }
