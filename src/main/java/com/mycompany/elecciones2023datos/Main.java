@@ -97,12 +97,6 @@ public class Main extends javax.swing.JFrame {
             autonomiasAuto = clienteApi.getAllAutonomiasAuto().execute().body();
             autonomiasAuto.stream().map(Circunscripcion::getNombreCircunscripcion).forEach(auto -> circunscripcionesAutonomicas.put(auto, null));
 
-            Circunscripcion ceuta = graficosController.getCircunscripcionPorId("1800000");
-            Circunscripcion melilla = graficosController.getCircunscripcionPorId("1900000");
-            autonomiasAuto.add(ceuta);
-            autonomiasAuto.add(melilla);
-
-
             for (Circunscripcion autonomia : autonomiasMuni) {
                 var auxList = clienteApi.getCircunscripcionesByAutonomia(autonomia.getCodigo()).execute().body();
                 auxList.sort(Comparator.comparing(Circunscripcion::getCodigo));
