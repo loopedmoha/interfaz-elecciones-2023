@@ -227,7 +227,13 @@ public class Main extends javax.swing.JFrame {
                 // espCirc.getAvance1(), espCirc.getAvance2(), espCirc.getAvance3(),
                 // espCirc.getAvance1Hist(), espCirc.getAvance2Hist(), espCirc.getAvance3Hist()
         };
+        switch (selectedDb){
+            case "SM" -> graficosController.selectCircunscripcionMapaSondeoMuni("9900000");
+            case "SA" -> graficosController.selectCircunscripcionMapaSondeoAuto("9900000");
+            case "DA" -> graficosController.selectCircunscripcionMapaOficialAuto("9900000");
+            default ->   graficosController.selectCircunscripcionMapaOficialMuni("9900000");
 
+        }
         tableModel.addRow(rowData);
         tablaDatos.setModel(tableModel);
         tablaDatos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -280,6 +286,7 @@ public class Main extends javax.swing.JFrame {
                             cpDTO.getEscanosHist(), cpDTO.getPorcentajeVoto(), cpDTO.getVotantes()};
                     tableModel.addRow(rowData);
                 }
+
             } else {
                 //System.out.println(list);
 
