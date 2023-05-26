@@ -498,5 +498,7 @@ public interface IClienteApi {
 
     @GET("/autonomicas/circunscripciones/update")
     Call<String> update();
+    @GET("/municipales/circunscripciones/update/espania")
+    Call<String> updateEspania();
 
 }

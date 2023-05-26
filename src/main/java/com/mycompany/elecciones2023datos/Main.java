@@ -523,7 +523,11 @@ public class Main extends javax.swing.JFrame {
                             cpdatas.add(data);
                         });
                         printData(cpdatas);
-                    } else if (TablaFaldones.getSelectedRow() != -1) {
+                    }else if(TablaFaldones.getSelectedRow() == 3){
+                            graficosController.updateEspania();
+                            vaciarTablas();
+                    }
+                    else if (TablaFaldones.getSelectedRow() != -1) {
                         rellenarCCAA(tipoElecciones);
                     }
                 }

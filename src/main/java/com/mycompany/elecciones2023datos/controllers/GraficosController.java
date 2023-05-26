@@ -1145,5 +1145,13 @@ public class GraficosController {
         }
     }
 
+    public void updateEspania() {
+        try {
+            clienteApi.updateEspania().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
