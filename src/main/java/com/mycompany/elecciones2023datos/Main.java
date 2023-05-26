@@ -307,28 +307,26 @@ public class Main extends javax.swing.JFrame {
         retrofitGestion = new Retrofit.Builder().baseUrl("http://localhost:8080").addConverterFactory(GsonConverterFactory.create()).build();
 
         clienteApiGestion = retrofitGestion.create(IClienteApiGestion.class);
-        //  addWindowListener(new WindowAdapter() {
-        //       @Override
-        //       public void windowClosing(WindowEvent e) {
-        //           super.windowClosing(e);
-        //           try {
-        //               System.out.println("Cerrando");
-        //               clienteApi.closeClient().execute().wait();
-//
-        //           } catch (IOException | InterruptedException ex) {
-        //               System.out.println("Cliente cerrado");
-        //           } finally {
-        //               try {
-        //                   clienteApiGestion.cerrarGestion().execute().wait();
-        //               } catch (InterruptedException ex) {
-        //                   throw new RuntimeException(ex);
-        //               } catch (IOException ex) {
-        //                   System.out.println("Gestion cerrado");
-        //               }
-//
-        //           }
-        //       }
-        //    });
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                try {
+                    System.out.println("Cerrando");
+                    clienteApi.closeClient().execute().wait();
+                } catch (IOException | InterruptedException ex) {
+                    System.out.println("Cliente cerrado");
+                } finally {
+                    try {
+                        clienteApiGestion.cerrarGestion().execute().wait();
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    } catch (IOException ex) {
+                        System.out.println("Gestion cerrado");
+                    }
+                }
+            }
+        });
         graficosController.initListeners();
         initCircunscripcionesAutonomicas();
         initCircunscripcionesMunicipales();
@@ -1297,7 +1295,7 @@ public class Main extends javax.swing.JFrame {
         });
     }
 
-    private boolean dejoEntrar() {
+    private boolean dejoEntrarEntra() {
         boolean valido = false;
         int rowComunidad = tablaComunidades.getSelectedRow();
 
@@ -1312,8 +1310,20 @@ public class Main extends javax.swing.JFrame {
         return valido;
     }
 
+    private boolean dejoEntrarPactos() {
+        boolean valido = false;
+        int rowComunidad = tablaComunidades.getSelectedRow();
+
+        if (rowComunidad != -1) {
+            if (tablaMunicipios.getSelectedRow() != -1 || tipoElecciones == 2 || tipoElecciones == 4 || nombreCodigo.get(tablaComunidades.getValueAt(rowComunidad, 0)).equals("1800000") || nombreCodigo.get(tablaComunidades.getValueAt(rowComunidad, 0)).equals("1900000")) {
+                valido = true;
+            }
+        }
+        return valido;
+    }
+
     private void btnEntraActionPerformed(java.awt.event.ActionEvent evt) {
-        if (dejoEntrar()) {
+        if (dejoEntrarEntra()) {
             switch (tipoElecciones) {
                 //OFICIALES MUNICIPALES
                 case 1 -> {
@@ -1753,7 +1763,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void btnPactosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPactosActionPerformed
-        if (dejoEntrar()) {
+        if (dejoEntrarPactos()) {
             GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
             int screenWidth = gd.getDisplayMode().getWidth();
             int screenHeight = gd.getDisplayMode().getHeight();
