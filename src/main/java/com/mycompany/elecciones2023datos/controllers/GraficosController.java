@@ -377,6 +377,14 @@ public class GraficosController {
         }
     }
 
+    public void deMuniASondeoAuto() {
+        try {
+            clienteApi.deMuniASondeoAuto().execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void loadAutonomicas() {
         try {

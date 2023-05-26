@@ -1728,10 +1728,13 @@ public class Main extends javax.swing.JFrame {
                                 inferiorAutoSondeoIn = true;
                             } else if (inferiorAutoSondeoIn) {
                                 graficosController.encadenaFaldonAutonomicasSondeo();
-                            } else if (inferiorMuniIn || inferiorAutoIn) {
+                            } else if (inferiorMuniIn) {
+                                inferiorAutoSondeoIn = true;
+                                graficosController.deMuniASondeoAuto();
+                                inferiorMuniIn = false;
+                            } else if (inferiorAutoIn) {
                                 inferiorAutoSondeoIn = true;
                                 graficosController.entraFaldonAutoSondeo();
-                                inferiorMuniIn = false;
                                 inferiorAutoIn = false;
                             }
                         }

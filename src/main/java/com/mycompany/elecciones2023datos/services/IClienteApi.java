@@ -408,6 +408,10 @@ public interface IClienteApi {
     @GET("/municipales/carmen/faldon/deMuniSondeoAAuto")
     Call<String> deMuniSondeoAAuto();
 
+    @GET("/municipales/carmen/faldon/deMuniASondeoAuto")
+    Call<String> deMuniASondeoAuto();
+
+
     //PACTOS INFERIOR
 
     @GET("/autonomicas/carmen/pactos/entra")
