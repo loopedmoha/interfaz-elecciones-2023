@@ -327,6 +327,7 @@ public class Main extends javax.swing.JFrame {
         initCircunscripcionesAutonomicas();
         initCircunscripcionesMunicipales();
         initComponents();
+        jCheckBox1.setVisible(false);
         lblConexion.setText(graficosController.getDbActual().getResultado());
         resaltarBoton(btnDatosAutonomicas);
         TablaCartones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -399,6 +400,7 @@ public class Main extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaDatos = new javax.swing.JTable();
@@ -589,6 +591,7 @@ public class Main extends javax.swing.JFrame {
                         } else {
                             loadSelectedMunicipales((String) tablaComunidades.getValueAt(selectedRow, 0));
                             codAutonomia = nombreCodigo.get(((String) tablaComunidades.getValueAt(selectedRow, 0)).replaceAll(" ", ""));
+                            tablaDatos.clearSelection();
                             if (oficiales) {
                                 try {
                                     if (TablaCartones.getSelectedRow() != 3) {
