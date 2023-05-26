@@ -558,7 +558,7 @@ public class Main extends javax.swing.JFrame {
                                             if (tablaComunidades.getSelectedRow() != -1) {
                                                 String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
                                                 String codigo = nombreCodigoAuto.get(nombreCCAA);
-                                                graficosController.descargarResultadosCsvAuto(codigo);
+                                                graficosController.descargarResultadosCsvAutoOficial(codigo);
                                                 graficosController.selectCircunscripcionMapaOficialAuto(codigo);
                                             }
                                         }
@@ -583,7 +583,7 @@ public class Main extends javax.swing.JFrame {
                                             if (tablaComunidades.getSelectedRow() != -1) {
                                                 String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
                                                 String codigo = nombreCodigoAuto.get(nombreCCAA);
-                                                graficosController.descargarResultadosCsvAuto(codigo);
+                                                graficosController.descargarResultadosCsvAutoSondeo(codigo);
                                                 graficosController.selectCircunscripcionMapaSondeoAuto(codigo);
                                             }
                                         }
@@ -611,9 +611,9 @@ public class Main extends javax.swing.JFrame {
                                         }
                                         if (TablaCartones.getSelectedRow() == 0) {
                                             if (tablaComunidades.getSelectedRow() != -1) {
-                                                //String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
-                                                //String codigo = nombreCodigo.get(nombreCCAA);
-                                                //graficosController.descargarResultadosCsvMuni(codigo);
+                                                String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
+                                                String codigo = nombreCodigo.get(nombreCCAA);
+                                                graficosController.descargarResultadosCsvMuniOficial(codigo);
                                             }
                                         }
                                     } else {
@@ -635,9 +635,9 @@ public class Main extends javax.swing.JFrame {
                                         }
                                         if (TablaCartones.getSelectedRow() == 0) {
                                             if (tablaComunidades.getSelectedRow() != -1) {
-                                                // String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
-                                                // String codigo = nombreCodigo.get(nombreCCAA);
-                                                // graficosController.descargarResultadosCsvMuni(codigo);
+                                                String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
+                                                 String codigo = nombreCodigo.get(nombreCCAA);
+                                                 graficosController.descargarResultadosCsvMuniSondeo(codigo);
                                             }
                                         }
                                     } else {
@@ -1093,7 +1093,7 @@ public class Main extends javax.swing.JFrame {
                                 graficosController.selectCircunscripcionAutonomiaOficialAuto(codMunicipio);
                             }
                             if (TablaCartones.getSelectedRow() == 0) {
-                                graficosController.descargarResultadosCsvAuto(codMunicipio);
+                                graficosController.descargarResultadosCsvAutoOficial(codMunicipio);
                                 graficosController.selectCircunscripcionMapaOficialAuto(codMunicipio);
                             }
                         } else {
@@ -1109,7 +1109,7 @@ public class Main extends javax.swing.JFrame {
                                 graficosController.selectCircunscripcionAutnomiaSondeoAuto(codMunicipio);
                             }
                             if (TablaCartones.getSelectedRow() == 0) {
-                                graficosController.descargarResultadosCsvAuto(codMunicipio);
+                                graficosController.descargarResultadosCsvAutoSondeo(codMunicipio);
                                 graficosController.selectCircunscripcionMapaSondeoAuto(codMunicipio);
                             }
                         }
@@ -1128,7 +1128,7 @@ public class Main extends javax.swing.JFrame {
                                 graficosController.selectCircunscripcionAutonomiaOficialMuni(codMunicipio);
                             }
                             if (TablaCartones.getSelectedRow() == 0) {
-                                graficosController.descargarResultadosCsvMuni(codMunicipio);
+                                graficosController.descargarResultadosCsvMuniOficial(codMunicipio);
                                 graficosController.selectCircunscripcionMapaOficialMuni(codMunicipio);
                             }
                         } else {
@@ -1145,7 +1145,7 @@ public class Main extends javax.swing.JFrame {
                                 graficosController.selectCircunscripcionAutnomiaSondeoMuni(codMunicipio);
                             }
                             if (TablaCartones.getSelectedRow() == 0) {
-                                graficosController.descargarResultadosCsvMuni(codMunicipio);
+                                graficosController.descargarResultadosCsvMuniSondeo(codMunicipio);
                                 graficosController.selectCircunscripcionMapaSondeoMuni(codMunicipio);
                             }
                             //graficosController.selectedMunicipalesSondeo(codMunicipio);
@@ -1231,7 +1231,7 @@ public class Main extends javax.swing.JFrame {
                                 graficosController.selectCircunscripcionAutonomiaOficialAuto(codMunicipio);
                             }
                             if (TablaCartones.getSelectedRow() == 0) {
-                                graficosController.descargarResultadosCsvAuto(codMunicipio);
+                                graficosController.descargarResultadosCsvAutoOficial(codMunicipio);
                                 graficosController.selectCircunscripcionMapaOficialAuto(codMunicipio);
                             }
                         } else {
@@ -1247,7 +1247,7 @@ public class Main extends javax.swing.JFrame {
                                 graficosController.selectCircunscripcionAutnomiaSondeoAuto(codMunicipio);
                             }
                             if (TablaCartones.getSelectedRow() == 0) {
-                                graficosController.descargarResultadosCsvAuto(codMunicipio);
+                                graficosController.descargarResultadosCsvAutoSondeo(codMunicipio);
                                 graficosController.selectCircunscripcionMapaSondeoAuto(codMunicipio);
                             }
                         }
@@ -1266,7 +1266,7 @@ public class Main extends javax.swing.JFrame {
                                 graficosController.selectCircunscripcionAutnomiaOficialMuni(codMunicipio);
                             }
                             if (TablaCartones.getSelectedRow() == 0) {
-                                graficosController.descargarResultadosCsvMuni(codMunicipio);
+                                graficosController.descargarResultadosCsvMuniOficial(codMunicipio);
                                 graficosController.selectCircunscripcionMapaOficialMuni(codMunicipio);
                             }
                         } else {
@@ -1283,7 +1283,7 @@ public class Main extends javax.swing.JFrame {
                                 graficosController.selectCircunscripcionAutnomiaSondeoMuni(codMunicipio);
                             }
                             if (TablaCartones.getSelectedRow() == 0) {
-                                graficosController.descargarResultadosCsvMuni(codMunicipio);
+                                graficosController.descargarResultadosCsvMuniSondeo(codMunicipio);
                                 graficosController.selectCircunscripcionMapaSondeoMuni(codMunicipio);
                             }
                             //graficosController.selectedMunicipalesSondeo(codMunicipio);
