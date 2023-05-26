@@ -308,7 +308,7 @@ public class Main extends javax.swing.JFrame {
 
         retrofit = new Retrofit.Builder().baseUrl("http://localhost:9090").addConverterFactory(GsonConverterFactory.create()).build();
         clienteApi = retrofit.create(IClienteApi.class);
-        retrofitGestion = new Retrofit.Builder().baseUrl("http://localhost:8080").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofitGestion = new Retrofit.Builder().baseUrl("http://172.28.51.28:8080").addConverterFactory(GsonConverterFactory.create()).build();
 
         clienteApiGestion = retrofitGestion.create(IClienteApiGestion.class);
         addWindowListener(new WindowAdapter() {
@@ -320,14 +320,6 @@ public class Main extends javax.swing.JFrame {
                     clienteApi.closeClient().execute().wait();
                 } catch (IOException | InterruptedException ex) {
                     System.out.println("Cliente cerrado");
-                } finally {
-                    try {
-                        clienteApiGestion.cerrarGestion().execute().wait();
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    } catch (IOException ex) {
-                        System.out.println("Gestion cerrado");
-                    }
                 }
             }
         });
@@ -634,8 +626,8 @@ public class Main extends javax.swing.JFrame {
                                         if (TablaCartones.getSelectedRow() == 0) {
                                             if (tablaComunidades.getSelectedRow() != -1) {
                                                 String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
-                                                 String codigo = nombreCodigo.get(nombreCCAA);
-                                                 graficosController.descargarResultadosCsvMuniSondeo(codigo);
+                                                String codigo = nombreCodigo.get(nombreCCAA);
+                                                graficosController.descargarResultadosCsvMuniSondeo(codigo);
                                             }
                                         }
                                     } else {
@@ -759,7 +751,7 @@ public class Main extends javax.swing.JFrame {
         btnSondeoAutonomicas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSondeoAutonomicasActionPerformed(evt);
-                TablaCartones.getSelectionModel().clearSelection();
+                //TablaCartones.getSelectionModel().clearSelection();
             }
         });
 
@@ -768,7 +760,7 @@ public class Main extends javax.swing.JFrame {
         btnSondeoMunicipales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSondeoMunicipalesActionPerformed(evt);
-                TablaCartones.getSelectionModel().clearSelection();
+                //TablaCartones.getSelectionModel().clearSelection();
             }
         });
 
@@ -777,7 +769,7 @@ public class Main extends javax.swing.JFrame {
         btnDatosAutonomicas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDatosAutonomicasActionPerformed(evt);
-                TablaCartones.getSelectionModel().clearSelection();
+                //TablaCartones.getSelectionModel().clearSelection();
             }
         });
 
@@ -786,7 +778,7 @@ public class Main extends javax.swing.JFrame {
         btnDatosMunicipales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDatosMunicipalesActionPerformed(evt);
-                TablaCartones.getSelectionModel().clearSelection();
+                //TablaCartones.getSelectionModel().clearSelection();
             }
         });
 
@@ -1195,6 +1187,7 @@ public class Main extends javax.swing.JFrame {
                 }
             }
             municipios = municipiosSinDuplicados;
+            municipios = municipios.stream().filter(muni -> !muni.getCodigo().endsWith("000")).collect(Collectors.toList());
             municipios.sort(Comparator.comparing(Circunscripcion::getCodigo));
         }
 
@@ -1312,6 +1305,9 @@ public class Main extends javax.swing.JFrame {
             }
         }
         if (TablaCartones.getSelectedRow() == 3 || TablaFaldones.getSelectedRow() == 3) {
+            valido = true;
+        }
+        if (TablaFaldones.getSelectedRow() == 2) {
             valido = true;
         }
         return valido;

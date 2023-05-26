@@ -12,7 +12,8 @@ public interface IClienteApiGestion {
 
     @GET("/dbactual")
     Call<DbActualResponse> getDbActual();
-    @GET("/avance/{codigo}")
+
+    @POST("/{codigo}")
     Call<String> setAvance(@Path("codigo") String codigo);
 
 }

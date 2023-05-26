@@ -3,6 +3,7 @@ package com.mycompany.elecciones2023datos.services;
 import com.mycompany.elecciones2023datos.DTO.CarmenDTO;
 import com.mycompany.elecciones2023datos.model.Circunscripcion;
 import com.mycompany.elecciones2023datos.model.CircunscripcionPartido;
+import com.mycompany.elecciones2023datos.model.Dummy;
 import com.mycompany.elecciones2023datos.model.Partido;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -14,10 +15,10 @@ import java.util.List;
 public interface IClienteApi {
     //Iniciar Listeners
     @GET("/init/listeners")
-    Call<String> initListeners();
+    Call<Dummy> initListeners();
 
     @POST("/shutdownContext")
-    Call<String> closeClient();
+    Call<Dummy> closeClient();
 
     //Leer las autonomias
     @GET("/autonomicas/circunscripciones/autonomias")
@@ -76,439 +77,441 @@ public interface IClienteApi {
      ****************LATERAL
      */
     @GET("/autonomicas/carmen/lateral/entra")
-    Call<String> entraLateralAutonomicas();
+    Call<Dummy> entraLateralAutonomicas();
 
     @GET("/municipales/carmen/lateral/entra")
-    Call<String> entraLateralMunicipales();
+    Call<Dummy> entraLateralMunicipales();
 
     @GET("/autonomicas/carmen/lateral/{codigo}/despliega")
-    Call<String> despliegaLateralAutonomicas(@Path("codigo") String codigo);
+    Call<Dummy> despliegaLateralAutonomicas(@Path("codigo") String codigo);
 
     @GET("/municipales/carmen/lateral/{codigo}/despliega")
-    Call<String> despliegaLateralMunicipales(@Path("codigo") String codigo);
+    Call<Dummy> despliegaLateralMunicipales(@Path("codigo") String codigo);
 
     @GET("/autonomicas/carmen/lateral/{codigo}/repliega")
-    Call<String> repliegaLateralAutonomicas(@Path("codigo") String codigo);
+    Call<Dummy> repliegaLateralAutonomicas(@Path("codigo") String codigo);
 
     @GET("/municipales/carmen/lateral/{codigo}/repliega")
-    Call<String> repliegaLateralMunicipales(@Path("codigo") String codigo);
+    Call<Dummy> repliegaLateralMunicipales(@Path("codigo") String codigo);
 
 
     @GET("/autonomicas/carmen/lateral/actualiza")
-    Call<String> actualizaLateralAutonomicas(@Path("codigo") String codigo);
+    Call<Dummy> actualizaLateralAutonomicas(@Path("codigo") String codigo);
 
     @GET("/municipales/carmen/lateral/actualiza")
-    Call<String> actualizaLateralMunicipales();
+    Call<Dummy> actualizaLateralMunicipales();
 
     @GET("/autonomicas/carmen/lateral/{codigo}/actualiza")
-    Call<String> actualizaUnoLateralAutonomicas(@Path("codigo") String codigo);
+    Call<Dummy> actualizaUnoLateralAutonomicas(@Path("codigo") String codigo);
 
     @GET("/municipales/carmen/lateral/{codigo}/actualiza")
-    Call<String> actualizaUnoLateralMunicipales(@Path("codigo") String codigo);
+    Call<Dummy> actualizaUnoLateralMunicipales(@Path("codigo") String codigo);
 
 
     @GET("/autonomicas/carmen/lateral/sale")
-    Call<String> saleLateralAutonomicas();
+    Call<Dummy> saleLateralAutonomicas();
 
     @GET("/municipales/carmen/lateral/sale")
-    Call<String> saleLateralMunicipales();
+    Call<Dummy> saleLateralMunicipales();
 
     /*
      ****************CARTON PARTICIPACION
      */
 
     @GET("/autonomicas/participacion/entra")
-    Call<String> entraParticipacionAuto();
+    Call<Dummy> entraParticipacionAuto();
 
     @GET("/autonomicas/participacion/entra/delay")
-    Call<String> entraParticipacionAutoDelay();
+    Call<Dummy> entraParticipacionAutoDelay();
 
     @GET("/municipales/participacion/entra")
-    Call<String> entraParticipacionMuni();
+    Call<Dummy> entraParticipacionMuni();
 
     @GET("/municipales/participacion/entra/delay")
-    Call<String> entraParticipacionMuniDelay();
+    Call<Dummy> entraParticipacionMuniDelay();
 
     @GET("/autonomicas/participacion/cambia")
-    Call<String> cambiaParticipacionComunidad();
+    Call<Dummy> cambiaParticipacionComunidad();
 
     @GET("/municipales/participacion/cambia")
-    Call<String> cambiaParticipacionMunicipio();
+    Call<Dummy> cambiaParticipacionMunicipio();
 
     @GET("/autonomicas/participacion/sale")
-    Call<String> saleParticipacionAuto();
+    Call<Dummy> saleParticipacionAuto();
 
     @GET("/municipales/participacion/sale")
-    Call<String> saleParticipacionMuni();
+    Call<Dummy> saleParticipacionMuni();
 
     @GET("/autonomicas/participacion/entra/esp")
-    Call<String> entraParticipacionEspAuto();
+    Call<Dummy> entraParticipacionEspAuto();
 
     @GET("/autonomicas/participacion/entra/esp/delay")
-    Call<String> entraParticipacionEspAutoDelay();
+    Call<Dummy> entraParticipacionEspAutoDelay();
 
     @GET("/municipales/participacion/entra/esp")
-    Call<String> entraParticipacionEspMuni();
+    Call<Dummy> entraParticipacionEspMuni();
 
     @GET("/municipales/participacion/entra/esp/delay")
-    Call<String> entraParticipacionEspMuniDelay();
+    Call<Dummy> entraParticipacionEspMuniDelay();
 
     @GET("/autonomicas/participacion/sale/esp")
-    Call<String> saleParticipacionEspAuto();
+    Call<Dummy> saleParticipacionEspAuto();
 
     @GET("/municipales/participacion/sale/esp")
-    Call<String> saleParticipacionEspMuni();
+    Call<Dummy> saleParticipacionEspMuni();
 
     /*
      ****************CARTON RESULTADOS
      */
 
     @GET("/autonomicas/resultados/entra")
-    Call<String> entraResultadosAuto();
+    Call<Dummy> entraResultadosAuto();
 
     @GET("/autonomicas/resultados/entra/delay")
-    Call<String> entraResultadosAutoDelay();
+    Call<Dummy> entraResultadosAutoDelay();
 
     @GET("/municipales/resultados/entra")
-    Call<String> entraResultadosMuni();
+    Call<Dummy> entraResultadosMuni();
 
     @GET("/municipales/resultados/entra/delay")
-    Call<String> entraResultadosMuniDelay();
+    Call<Dummy> entraResultadosMuniDelay();
 
     @GET("/autonomicas/resultados/cambia")
-    Call<String> cambiaResultadosComunidad();
+    Call<Dummy> cambiaResultadosComunidad();
 
     @GET("/municipales/resultados/cambia")
-    Call<String> cambiaResultadosMunicipio();
+    Call<Dummy> cambiaResultadosMunicipio();
 
     @GET("/autonomicas/resultados/sale")
-    Call<String> saleResultadosAuto();
+    Call<Dummy> saleResultadosAuto();
 
     @GET("/municipales/resultados/sale")
-    Call<String> saleResultadosMuni();
+    Call<Dummy> saleResultadosMuni();
 
     //Sondeo
     @GET("/autonomicas/resultados/sondeo/entra")
-    Call<String> entraSondeoResultadosAuto();
+    Call<Dummy> entraSondeoResultadosAuto();
 
     @GET("/autonomicas/resultados/sondeo/entra/delay")
-    Call<String> entraSondeoResultadosAutoDelay();
+    Call<Dummy> entraSondeoResultadosAutoDelay();
 
     @GET("/municipales/resultados/sondeo/entra")
-    Call<String> entraSondeoResultadosMuni();
+    Call<Dummy> entraSondeoResultadosMuni();
 
     @GET("/municipales/resultados/sondeo/entra/delay")
-    Call<String> entraSondeoResultadosMuniDelay();
+    Call<Dummy> entraSondeoResultadosMuniDelay();
 
     @GET("/autonomicas/resultados/sondeo/cambia")
-    Call<String> cambiaSondeoResultadosComunidad();
+    Call<Dummy> cambiaSondeoResultadosComunidad();
 
     @GET("/municipales/resultados/sondeo/cambia")
-    Call<String> cambiaSondeoResultadosMunicipio();
+    Call<Dummy> cambiaSondeoResultadosMunicipio();
 
     @GET("/autonomicas/resultados/sondeo/sale")
-    Call<String> saleSondeoResultadosAuto();
+    Call<Dummy> saleSondeoResultadosAuto();
 
     @GET("/municipales/resultados/sondeo/sale")
-    Call<String> saleSondeoResultadosMuni();
+    Call<Dummy> saleSondeoResultadosMuni();
 
     /*
      **************** CARTONES ARCOS
      */
     @GET("/autonomicas/load")
-    Call<String> loadAutonomicas();
+    Call<Dummy> loadAutonomicas();
 
     @GET("/autonomicas/arco/entra")
-    Call<String> arcoEntraAuto();
+    Call<Dummy> arcoEntraAuto();
 
     @GET("/autonomicas/arco/entra/delay")
-    Call<String> arcoEntraAutoDelay();
+    Call<Dummy> arcoEntraAutoDelay();
 
     @GET("/autonomicas/arco/sale")
-    Call<String> arcoSaleAuto();
+    Call<Dummy> arcoSaleAuto();
 
     @GET("/autonomicas/arco/pactos")
-    Call<String> arcoPactosAuto();
+    Call<Dummy> arcoPactosAuto();
 
     @GET("/autonomicas/arco/sondeo/entra")
-    Call<String> arcoSondeoEntraAuto();
+    Call<Dummy> arcoSondeoEntraAuto();
 
     @GET("/autonomicas/arco/sondeo/entra/delay")
-    Call<String> arcoSondeoEntraAutoDelay();
+    Call<Dummy> arcoSondeoEntraAutoDelay();
 
     @GET("/autonomicas/arco/sondeo/sale")
-    Call<String> arcoSondeoSaleAuto();
+    Call<Dummy> arcoSondeoSaleAuto();
 
     @GET("/autonomicas/arco/sondeo/pactos")
-    Call<String> arcoSondeoPactosAuto();
+    Call<Dummy> arcoSondeoPactosAuto();
 
     @GET("/municipales/load")
-    Call<String> loadMunicipales();
+    Call<Dummy> loadMunicipales();
 
     @GET("/autonomicas/arco/entra")
-    Call<String> arcoEntraMuni();
+    Call<Dummy> arcoEntraMuni();
 
     @GET("/autonomicas/arco/entra/delay")
-    Call<String> arcoEntraMuniDelay();
+    Call<Dummy> arcoEntraMuniDelay();
 
     @GET("/autonomicas/arco/sale")
-    Call<String> arcoSaleMuni();
+    Call<Dummy> arcoSaleMuni();
 
     @GET("/autonomicas/arco/pactos")
-    Call<String> arcoPactosMuni();
+    Call<Dummy> arcoPactosMuni();
 
     @GET("/autonomicas/arco/sondeo/entra")
-    Call<String> arcoSondeoEntraMuni();
+    Call<Dummy> arcoSondeoEntraMuni();
 
     @GET("/autonomicas/arco/sondeo/entra/delay")
-    Call<String> arcoSondeoEntraMuniDelay();
+    Call<Dummy> arcoSondeoEntraMuniDelay();
 
     @GET("/autonomicas/arco/sondeo/sale")
-    Call<String> arcoSondeoSaleMuni();
+    Call<Dummy> arcoSondeoSaleMuni();
 
     @GET("/autonomicas/arco/sondeo/pactos")
-    Call<String> arcoSondeoPactosMuni();
+    Call<Dummy> arcoSondeoPactosMuni();
 
     @GET("/autonomicas/arco/reset")
-    Call<String> resetArcoAuto();
+    Call<Dummy> resetArcoAuto();
 
     @GET("/municipales/arco/reset")
-    Call<String> resetArcoMuni();
+    Call<Dummy> resetArcoMuni();
 
     //ENTRADA Y SALIDA DE PARTIDOS
     @GET("/autonomicas/arco/oficial/{circunscripcion}/{partido}/entraIzq")
-    Call<String> entraPartidoIzqOficialAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+    Call<Dummy> entraPartidoIzqOficialAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
     @GET("/autonomicas/arco/principales/{circunscripcion}/{partido}/entraIzq")
-    Call<String> entraPartidoIzqPrincipalesAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+    Call<Dummy> entraPartidoIzqPrincipalesAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
     @GET("/autonomicas/arco/sondeo/{circunscripcion}/{partido}/entraIzq")
-    Call<String> entraPartidoIzqSondeoAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+    Call<Dummy> entraPartidoIzqSondeoAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
     @GET("/municipales/arco/oficial/{circunscripcion}/{partido}/entraIzq")
-    Call<String> entraPartidoIzqOficialMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+    Call<Dummy> entraPartidoIzqOficialMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
     @GET("/municipales/arco/principales/{circunscripcion}/{partido}/entraIzq")
-    Call<String> entraPartidoIzqPrincipalesMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+    Call<Dummy> entraPartidoIzqPrincipalesMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
     @GET("/municipales/arco/sondeo/{circunscripcion}/{partido}/entraIzq")
-    Call<String> entraPartidoIzqSondeoMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+    Call<Dummy> entraPartidoIzqSondeoMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
     @GET("/autonomicas/arco/oficial/{circunscripcion}/{partido}/entraDer")
-    Call<String> entraPartidoDerOficialAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+    Call<Dummy> entraPartidoDerOficialAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
     @GET("/autonomicas/arco/principales/{circunscripcion}/{partido}/entraDer")
-    Call<String> entraPartidoDerPrincipalesAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+    Call<Dummy> entraPartidoDerPrincipalesAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
     @GET("/autonomicas/arco/sondeo/{circunscripcion}/{partido}/entraDer")
-    Call<String> entraPartidoDerSondeoAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+    Call<Dummy> entraPartidoDerSondeoAuto(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
     @GET("/municipales/arco/oficial/{circunscripcion}/{partido}/entraDer")
-    Call<String> entraPartidoDerOficialMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+    Call<Dummy> entraPartidoDerOficialMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
     @GET("/municipales/arco/principales/{circunscripcion}/{partido}/entraDer")
-    Call<String> entraPartidoDerPrincipalesMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+    Call<Dummy> entraPartidoDerPrincipalesMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
     @GET("/municipales/arco/sondeo/{circunscripcion}/{partido}/entraDer")
-    Call<String> entraPartidoDerSondeoMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
+    Call<Dummy> entraPartidoDerSondeoMuni(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido);
 
     @GET("/autonomicas/arco/{circunscripcion}/{partido}/{tipoArco}/{izquierda}/borrar")
-    Call<String> borrarPartido(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido, @Path("tipoArco") int tipoArco, @Path("izquierda") int izquierda);
+    Call<Dummy> borrarPartido(@Path("circunscripcion") String circunscripcion, @Path("partido") String partido, @Path("tipoArco") int tipoArco, @Path("izquierda") int izquierda);
 
 
     /*
      **************** FALDON SEDES
      */
     @GET("/autonomicas/carmen/sedes/entra")
-    Call<String> faldonSedesEntra();
+    Call<Dummy> faldonSedesEntra();
 
     @GET("/autonomicas/carmen/sedes/sale")
-    Call<String> faldonSedesSale();
+    Call<Dummy> faldonSedesSale();
 
     /*
      **************** FALDON VOTANTES
      */
 
     @GET("/municipales/carmen/votantes/entra")
-    Call<String> faldonVotantesEntra();
+    Call<Dummy> faldonVotantesEntra();
 
     @GET("/municipales/carmen/votantes/historico")
-    Call<String> faldonVotantesHistEntra();
+    Call<Dummy> faldonVotantesHistEntra();
 
     @GET("/municipales/carmen/votantes/sale")
-    Call<String> faldonVotantesSale();
+    Call<Dummy> faldonVotantesSale();
 
 
     /*
      **************** FALDON INFERIOR
      */
     @GET("/autonomicas/carmen/faldon/entra")
-    Call<String> entraFaldonAutonomicas();
+    Call<Dummy> entraFaldonAutonomicas();
 
     @GET("/autonomicas/carmen/faldon/sondeo/entra")
-    Call<String> entraFaldonAutonomicasSondeo();
+    Call<Dummy> entraFaldonAutonomicasSondeo();
 
     @GET("/autonomicas/carmen/faldon/sale")
-    Call<String> saleFaldonAutonomicas();
+    Call<Dummy> saleFaldonAutonomicas();
 
     @GET("/autonomicas/carmen/faldon/sondeo/sale")
-    Call<String> saleFaldonAutonomicasSondeo();
+    Call<Dummy> saleFaldonAutonomicasSondeo();
 
     @GET("/autonomicas/carmen/faldon/actualiza")
-    Call<String> actualizaFaldonAutonomicas();
+    Call<Dummy> actualizaFaldonAutonomicas();
 
     @GET("/autonomicas/carmen/faldon/encadena")
-    Call<String> encadenaFaldonAutonomicas();
+    Call<Dummy> encadenaFaldonAutonomicas();
 
     @GET("/autonomicas/carmen/faldon/sondeo/encadena")
-    Call<String> encadenaFaldonSondeoAutonomicas();
+    Call<Dummy> encadenaFaldonSondeoAutonomicas();
 
     @GET("/autonomicas/carmen/faldon/deAutoaMuni")
-    Call<String> deAutoaMuniFaldonAutonomicas();
+    Call<Dummy> deAutoaMuniFaldonAutonomicas();
 
     @GET("/autonomicas/carmen/faldon/deAutoSondeoAMuniSondeo")
-    Call<String> deAutoSondeoAMuniSondeo();
+    Call<Dummy> deAutoSondeoAMuniSondeo();
 
     @GET("/autonomicas/carmen/faldon/deAutoSondeoAMuni")
-    Call<String> deAutoSondeoAMuni();
+    Call<Dummy> deAutoSondeoAMuni();
 
     @GET("/autonomicas/carmen/faldon/deAutoSondeoAAuto")
-    Call<String> deAutoSondeoAAuto();
+    Call<Dummy> deAutoSondeoAAuto();
 
     @GET("/municipales/carmen/faldon/entra")
-    Call<String> entraFaldonMunicipales();
+    Call<Dummy> entraFaldonMunicipales();
 
     @GET("/municipales/carmen/faldon/sondeo/entra")
-    Call<String> entraFaldonMunicipalesSondeo();
+    Call<Dummy> entraFaldonMunicipalesSondeo();
 
     @GET("/municipales/carmen/faldon/sale")
-    Call<String> saleFaldonMunicipales();
+    Call<Dummy> saleFaldonMunicipales();
 
     @GET("/municipales/carmen/faldon/sondeo/sale")
-    Call<String> saleFaldonMunicipalesSondeo();
+    Call<Dummy> saleFaldonMunicipalesSondeo();
 
     @GET("/municipales/carmen/faldon/actualiza")
-    Call<String> actualizaFaldonMunicipales();
+    Call<Dummy> actualizaFaldonMunicipales();
 
     @GET("/municipales/carmen/faldon/encadena")
-    Call<String> encadenaFaldonMunicipales();
+    Call<Dummy> encadenaFaldonMunicipales();
 
     @GET("/municipales/carmen/faldon/sondeo/encadena")
-    Call<String> encadenaFaldonMunicipalesSondeo();
+    Call<Dummy> encadenaFaldonMunicipalesSondeo();
 
     @GET("/municipales/carmen/faldon/deMuniaAuto")
-    Call<String> deMuniaAutoFaldonMunicipales();
+    Call<Dummy> deMuniaAutoFaldonMunicipales();
 
     @GET("/municipales/carmen/faldon/deMuniSondeoAAutoSondeo")
-    Call<String> deMuniSondeoAAutoSondeo();
+    Call<Dummy> deMuniSondeoAAutoSondeo();
 
     @GET("/municipales/carmen/faldon/deMuniSondeoAMuni")
-    Call<String> deMuniSondeoAMuni();
+    Call<Dummy> deMuniSondeoAMuni();
 
     @GET("/municipales/carmen/faldon/deMuniSondeoAAuto")
-    Call<String> deMuniSondeoAAuto();
+    Call<Dummy> deMuniSondeoAAuto();
 
     @GET("/municipales/carmen/faldon/deMuniASondeoAuto")
-    Call<String> deMuniASondeoAuto();
+    Call<Dummy> deMuniASondeoAuto();
 
 
     //PACTOS INFERIOR
 
     @GET("/autonomicas/carmen/pactos/entra")
-    Call<String> entraPactos();
+    Call<Dummy> entraPactos();
 
     @GET("/autonomicas/carmen/pactos/sale")
-    Call<String> salePactos();
+    Call<Dummy> salePactos();
 
     @GET("/autonomicas/carmen/pactos/reinicio")
-    Call<String> reinicioPactos();
+    Call<Dummy> reinicioPactos();
 
     @GET("/autonomicas/carmen/pactos/{posicion}/entraIzq")
-    Call<String> entraIzqPactos(@Path("posicion") int posicion);
+    Call<Dummy> entraIzqPactos(@Path("posicion") int posicion);
 
     @GET("/autonomicas/carmen/pactos/{posicion}/entraDer")
-    Call<String> entraDerPactos(@Path("posicion") int posicion);
+    Call<Dummy> entraDerPactos(@Path("posicion") int posicion);
 
     //DESCARGA DE ARCHIVOS
     @GET("/autonomicas/circunscripciones/selected/oficial/f_autonomicas/{codigo}")
-    Call<String> selectCircunscripcionAutonomiaOficialAuto(@Path("codigo") String codigo);
+    Call<Dummy> selectCircunscripcionAutonomiaOficialAuto(@Path("codigo") String codigo);
 
     @GET("/autonomicas/circunscripciones/selected/oficial/mapa_mayorias/{codigo}")
-    Call<String> selectCircunscripcionMapaOficialAuto(@Path("codigo") String codigo);
+    Call<Dummy> selectCircunscripcionMapaOficialAuto(@Path("codigo") String codigo);
 
     @GET("/autonomicas/circunscripciones/selected/sondeo/f_autonomicas/{codigo}")
-    Call<String> selectCircunscripcionAutnomiaSondeoAuto(@Path("codigo") String codigo);
+    Call<Dummy> selectCircunscripcionAutnomiaSondeoAuto(@Path("codigo") String codigo);
 
 
     @GET("/municipales/circunscripciones/selected/sondeo/f_autonomicas/{codigo}")
-    Call<String> selectCircunscripcionMunicipioSondeoMuni(@Path("codigo") String codigo);
+    Call<Dummy> selectCircunscripcionMunicipioSondeoMuni(@Path("codigo") String codigo);
 
     @GET("/autonomicas/circunscripciones/selected/sondeo/mapa_mayorias/{codigo}")
-    Call<String> selectCircunscripcionMapaSondeoAuto(@Path("codigo") String codigo);
+    Call<Dummy> selectCircunscripcionMapaSondeoAuto(@Path("codigo") String codigo);
 
     @GET("/municipales/circunscripciones/selected/oficial/f_autonomicas/{codigo}")
-    Call<String> selectCircunscripcionAutonomiaOficialMuni(@Path("codigo") String codigo);
+    Call<Dummy> selectCircunscripcionAutonomiaOficialMuni(@Path("codigo") String codigo);
 
     @GET("/municipales/circunscripciones/selected/oficial/mapa_mayorias/{codigo}")
-    Call<String> selectCircunscripcionMapaOficialMuni(@Path("codigo") String codigo);
+    Call<Dummy> selectCircunscripcionMapaOficialMuni(@Path("codigo") String codigo);
 
     @GET("/municipales/circunscripciones/selected/sondeo/f_autonomicas/{codigo}")
-    Call<String> selectCircunscripcionAutnomiaSondeoMuni(@Path("codigo") String codigo);
+    Call<Dummy> selectCircunscripcionAutnomiaSondeoMuni(@Path("codigo") String codigo);
 
     @GET("/municipales/circunscripciones/selected/oficial/f_autonomicas/{codigo}")
-    Call<String> selectCircunscripcionAutnomiaOficialMuni(@Path("codigo") String codigo);
+    Call<Dummy> selectCircunscripcionAutnomiaOficialMuni(@Path("codigo") String codigo);
 
     @GET("/municipales/circunscripciones/selected/sondeo/mapa_mayorias/{codigo}")
-    Call<String> selectCircunscripcionMapaSondeoMuni(@Path("codigo") String codigo);
+    Call<Dummy> selectCircunscripcionMapaSondeoMuni(@Path("codigo") String codigo);
 
     @GET("/autonomicas/resultados/oficial/{codigo}/csv")
-    Call<String> descargarResultadosCsvAutoOficial(@Path("codigo") String codigo);
+    Call<Dummy> descargarResultadosCsvAutoOficial(@Path("codigo") String codigo);
 
 
     @GET("/autonomicas/resultados/sondeo/{codigo}/csv")
-    Call<String> descargarResultadosCsvAutoSondeo(@Path("codigo") String codigo);
+    Call<Dummy> descargarResultadosCsvAutoSondeo(@Path("codigo") String codigo);
 
     @GET("/municipales/resultados/oficial/{codigo}/csv")
-    Call<String> descargarResultadosCsvMuniOficial(@Path("codigo") String codigo);
+    Call<Dummy> descargarResultadosCsvMuniOficial(@Path("codigo") String codigo);
 
     @GET("/municipales/resultados/sondeo/{codigo}/csv")
-    Call<String> descargarResultadosCsvMuniSondeo(@Path("codigo") String codigo);
+    Call<Dummy> descargarResultadosCsvMuniSondeo(@Path("codigo") String codigo);
+
     @GET("/municipales/sedes/{codigo}/csv")
-    Call<String> descargarSedesCsv(@Path("codigo") String codigo);
+    Call<Dummy> descargarSedesCsv(@Path("codigo") String codigo);
 
     @GET("/autonomicas/carmen/sondeo/especial/{codigo}/csv")
-    Call<String> descargarSondeoEspecialCsvAuto(@Path("codigo") String codigo);
+    Call<Dummy> descargarSondeoEspecialCsvAuto(@Path("codigo") String codigo);
 
     @GET("/municipales/carmen/sondeo/especial/{codigo}/csv")
-    Call<String> descargarSondeoEspecialCsvMuni(@Path("codigo") String codigo);
+    Call<Dummy> descargarSondeoEspecialCsvMuni(@Path("codigo") String codigo);
 
     //RESET
     @GET("/municipales/reset")
-    Call<String> resetIPFMuni();
+    Call<Dummy> resetIPFMuni();
 
     @GET("/autonomicas/reset")
-    Call<String> resetIPFAuto();
+    Call<Dummy> resetIPFAuto();
 
     /*
      * CAMBIO ENTRE BD PRINCIPAL, RESERVA, LOCAL
      */
 
     @GET("/bd/principal")
-    Call<String> conectPrincipal();
+    Call<Dummy> conectPrincipal();
 
     @GET("/bd/reserva")
-    Call<String> conectReserva();
+    Call<Dummy> conectReserva();
 
     @GET("/bd/local")
-    Call<String> conectLocal();
+    Call<Dummy> conectLocal();
 
     /*
      * UPDATE
      */
 
     @GET("/autonomicas/circunscripciones/update")
-    Call<String> update();
+    Call<Dummy> update();
+
     @GET("/municipales/circunscripciones/update/espania")
-    Call<String> updateEspania();
+    Call<Dummy> updateEspania();
 
 }

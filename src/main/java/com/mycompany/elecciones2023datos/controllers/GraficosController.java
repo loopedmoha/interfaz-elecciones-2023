@@ -26,7 +26,7 @@ public class GraficosController {
                 .baseUrl("http://localhost:9090")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         retrofit2 = new Retrofit.Builder()
-                .baseUrl("http://localhost:8080")
+                .baseUrl("http://172.28.51.28:8080")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         clienteApi = retrofit.create(IClienteApi.class);
         clienteApiGestion = retrofit2.create(IClienteApiGestion.class);
