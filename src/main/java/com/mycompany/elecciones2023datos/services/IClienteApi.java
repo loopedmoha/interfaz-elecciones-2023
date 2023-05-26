@@ -496,7 +496,7 @@ public interface IClienteApi {
      * UPDATE
      */
 
-    @GET("/autonomicas/update")
+    @GET("/autonomicas/circunscripciones/update")
     Call<String> update();
 
 }

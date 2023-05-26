@@ -352,7 +352,6 @@ public class Main extends javax.swing.JFrame {
                     tablaComunidades.clearSelection();
                     tablaDatos.clearSelection();
                     TablaFaldones.clearSelection();
-                    System.out.println(TablaCartones.getValueAt(TablaCartones.getSelectedRow(), 0));
                 }
             }
         });
@@ -363,7 +362,6 @@ public class Main extends javax.swing.JFrame {
                     tablaMunicipios.clearSelection();
                     tablaDatos.clearSelection();
                     TablaCartones.clearSelection();
-                    System.out.println(TablaFaldones.getValueAt(TablaFaldones.getSelectedRow(), 0));
                 }
             }
         });
@@ -1176,7 +1174,6 @@ public class Main extends javax.swing.JFrame {
                 municipios = graficosController.filtradasPorMostrarMuni(codComunidad);
             }
         } else {
-            // municipios = circunscripcionesMunicipales.get(cod.replaceAll(" ", "")).stream().filter(s -> s.getCodigo().endsWith("000")).toList();
             municipios = circunscripcionesMunicipales.get(cod.replaceAll(" ", "")).stream().toList();
             municipios = new ArrayList<>(municipios.stream()
                     .distinct()
@@ -1207,7 +1204,6 @@ public class Main extends javax.swing.JFrame {
             if (!e.getValueIsAdjusting()) {
                 int selectedRow = tablaMunicipios.getSelectedRow();
                 if (selectedRow != -1) {
-                    System.out.println("hola");
                     String nombreMunicipio = (String) tablaMunicipios.getValueAt(selectedRow, 0);
                     String codMunicipio;
                     CarmenDTO carmen = null;
@@ -1304,10 +1300,14 @@ public class Main extends javax.swing.JFrame {
     private boolean dejoEntrar() {
         boolean valido = false;
         int rowComunidad = tablaComunidades.getSelectedRow();
+
         if (rowComunidad != -1) {
             if (tablaMunicipios.getSelectedRow() != -1 || tipoElecciones == 2 || tipoElecciones == 4 || nombreCodigo.get(tablaComunidades.getValueAt(rowComunidad, 0)).equals("1800000") || nombreCodigo.get(tablaComunidades.getValueAt(rowComunidad, 0)).equals("1900000")) {
                 valido = true;
             }
+        }
+        if (TablaCartones.getSelectedRow() == 3 || TablaFaldones.getSelectedRow() == 3) {
+            valido = true;
         }
         return valido;
     }
@@ -1748,7 +1748,7 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No se pueden introducir datos de CCAA en elecciones municipales", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "La selección no es válida para hacer ENTRA", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -1804,7 +1804,7 @@ public class Main extends javax.swing.JFrame {
             pactos.setLocation(screenWidth / 4, screenHeight / 2);
             pactos.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "Pactos con datos de CCAA en elecciones municipales no válidos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Pactos no válido con la selección actual", "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnPactosActionPerformed
 
@@ -2206,7 +2206,6 @@ public class Main extends javax.swing.JFrame {
 
         if (configFile.exists()) {
             // El archivo ya existe
-            //System.out.println("existe");
             JFrame config;
             try {
                 config = new config(lblConexion);
