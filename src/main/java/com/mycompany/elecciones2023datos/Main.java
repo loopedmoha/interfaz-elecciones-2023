@@ -59,16 +59,15 @@ public class Main extends javax.swing.JFrame {
 
     GraficosController graficosController = new GraficosController();
 
+    private int tipoElecciones = 2;
     boolean isEspana = false;
     private boolean oficiales = true;
-    private int tipoElecciones = 2;
     private boolean lateralIn = false;
     private boolean inferiorAutoIn = false;
     private boolean inferiorAutoSondeoIn = false;
     private boolean inferiorMuniIn = false;
     private boolean inferiorMuniSondeoIn = false;
     private boolean participacionIn = false;
-
     private boolean participacionEspIn = false;
     private boolean resultadosIn = false;
     private boolean votantesIn = false;
@@ -227,11 +226,11 @@ public class Main extends javax.swing.JFrame {
                 // espCirc.getAvance1(), espCirc.getAvance2(), espCirc.getAvance3(),
                 // espCirc.getAvance1Hist(), espCirc.getAvance2Hist(), espCirc.getAvance3Hist()
         };
-        switch (selectedDb){
+        switch (selectedDb) {
             case "SM" -> graficosController.selectCircunscripcionMapaSondeoMuni("9900000");
             case "SA" -> graficosController.selectCircunscripcionMapaSondeoAuto("9900000");
             case "DA" -> graficosController.selectCircunscripcionMapaOficialAuto("9900000");
-            default ->   graficosController.selectCircunscripcionMapaOficialMuni("9900000");
+            default -> graficosController.selectCircunscripcionMapaOficialMuni("9900000");
 
         }
         tableModel.addRow(rowData);
@@ -523,11 +522,10 @@ public class Main extends javax.swing.JFrame {
                             cpdatas.add(data);
                         });
                         printData(cpdatas);
-                    }else if(TablaFaldones.getSelectedRow() == 3){
-                            graficosController.updateEspania();
-                            vaciarTablas();
-                    }
-                    else if (TablaFaldones.getSelectedRow() != -1) {
+                    } else if (TablaFaldones.getSelectedRow() == 3) {
+                        graficosController.updateEspania();
+                        vaciarTablas();
+                    } else if (TablaFaldones.getSelectedRow() != -1) {
                         rellenarCCAA(tipoElecciones);
                     }
                 }
@@ -2079,6 +2077,8 @@ public class Main extends javax.swing.JFrame {
         ((javax.swing.table.DefaultTableModel) tablaComunidades.getModel()).setRowCount(0);
         ((javax.swing.table.DefaultTableModel) tablaMunicipios.getModel()).setRowCount(0);
         ((javax.swing.table.DefaultTableModel) tablaDatos.getModel()).setRowCount(0);
+        isComunidad = false;
+        isMunicipio = false;
     }
 
     private void rellenarCCAA(int tipo) {
@@ -2201,8 +2201,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         graficosController.resetIPF();
-        isEspana = false;
-        lateralIn = false;
+        vaciarTablas();
         inferiorAutoIn = false;
         inferiorAutoSondeoIn = false;
         inferiorMuniIn = false;
