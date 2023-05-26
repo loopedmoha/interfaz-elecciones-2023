@@ -1075,17 +1075,34 @@ public class GraficosController {
         }
     }
 
-    public void descargarResultadosCsvAuto(String codigo) {
+    public void descargarResultadosCsvAutoOficial(String codigo) {
         try {
-            clienteApi.descargarResultadosCsvAuto(codigo).execute();
+            clienteApi.descargarResultadosCsvAutoOficial(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void descargarResultadosCsvMuni(String codigo) {
+    public void descargarResultadosCsvAutoSondeo(String codigo) {
         try {
-            clienteApi.descargarResultadosCsvMuni(codigo).execute();
+            clienteApi.descargarResultadosCsvAutoSondeo(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void descargarResultadosCsvMuniOficial(String codigo) {
+        try {
+            clienteApi.descargarResultadosCsvMuniOficial(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void descargarResultadosCsvMuniSondeo(String codigo) {
+        try {
+            clienteApi.descargarResultadosCsvMuniSondeo(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

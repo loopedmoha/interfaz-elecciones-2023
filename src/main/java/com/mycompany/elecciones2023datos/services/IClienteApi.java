@@ -461,12 +461,18 @@ public interface IClienteApi {
     @GET("/municipales/circunscripciones/selected/sondeo/mapa_mayorias/{codigo}")
     Call<String> selectCircunscripcionMapaSondeoMuni(@Path("codigo") String codigo);
 
-    @GET("/autonomicas/resultados/{codigo}/csv")
-    Call<String> descargarResultadosCsvAuto(@Path("codigo") String codigo);
+    @GET("/autonomicas/resultados/oficial/{codigo}/csv")
+    Call<String> descargarResultadosCsvAutoOficial(@Path("codigo") String codigo);
 
-    @GET("/municipales/resultados/{codigo}/csv")
-    Call<String> descargarResultadosCsvMuni(@Path("codigo") String codigo);
 
+    @GET("/autonomicas/resultados/sondeo/{codigo}/csv")
+    Call<String> descargarResultadosCsvAutoSondeo(@Path("codigo") String codigo);
+
+    @GET("/municipales/resultados/oficial/{codigo}/csv")
+    Call<String> descargarResultadosCsvMuniOficial(@Path("codigo") String codigo);
+
+    @GET("/municipales/resultados/sondeo/{codigo}/csv")
+    Call<String> descargarResultadosCsvMuniSondeo(@Path("codigo") String codigo);
     @GET("/municipales/sedes/{codigo}/csv")
     Call<String> descargarSedesCsv(@Path("codigo") String codigo);
 
