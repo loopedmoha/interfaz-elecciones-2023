@@ -104,6 +104,14 @@ public class GraficosController {
         }
     }
 
+    public void setAvance(String codigo) {
+        try {
+            clienteApiGestion.setAvance(codigo).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void entraLateralAutonomicas() {
         try {
             clienteApi.entraLateralAutonomicas().execute();

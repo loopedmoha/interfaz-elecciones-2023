@@ -73,10 +73,8 @@ public class Main extends javax.swing.JFrame {
     private boolean votantesIn = false;
     private boolean isComunidad = false;
     private boolean isMunicipio = false;
-
     private boolean arcoIn = false;
 
-    private int avance = 0;
     private static final String CONFIG_FILE_PATH = "C:\\Elecciones2023\\config.properties";
 
 
@@ -2189,17 +2187,17 @@ public class Main extends javax.swing.JFrame {
 
     private void btnAvance1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvance1ActionPerformed
         resaltarBotonAvances(btnAvance1);
-        avance = 1;
+        graficosController.setAvance("1");
     }//GEN-LAST:event_btnAvance1ActionPerformed
 
     private void btnAvance2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvance2ActionPerformed
         resaltarBotonAvances(btnAvance2);
-        avance = 2;
+        graficosController.setAvance("2");
     }//GEN-LAST:event_btnAvance2ActionPerformed
 
     private void btnAvance3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvance3ActionPerformed
         resaltarBotonAvances(btnAvance3);
-        avance = 3;
+        graficosController.setAvance("3");
     }//GEN-LAST:event_btnAvance3ActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
