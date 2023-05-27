@@ -470,10 +470,10 @@ public interface IClienteApi {
     Call<Dummy> descargarResultadosCsvAutoSondeo(@Path("codigo") String codigo);
 
 
-    @GET("/municipales/resultados/oficial/{codigo}/{avance}/csv")
+    @GET("/municipales/resultados/oficial/{codigo}/csv")
     Call<Dummy> descargarResultadosCsvMuniOficial(@Path("codigo") String codigo, @Path("avance") String avance);
 
-    @GET("/municipales/resultados/sondeo/{codigo}/{avance}/csv")
+    @GET("/municipales/resultados/sondeo/{codigo}/csv")
     Call<Dummy> descargarResultadosCsvMuniSondeo(@Path("codigo") String codigo, @Path("avance") String avance);
 
     @GET("/municipales/sedes/{codigo}/csv")
