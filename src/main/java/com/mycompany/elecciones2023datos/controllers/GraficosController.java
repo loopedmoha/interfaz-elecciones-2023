@@ -1,10 +1,7 @@
 package com.mycompany.elecciones2023datos.controllers;
 
 import com.mycompany.elecciones2023datos.DTO.CarmenDTO;
-import com.mycompany.elecciones2023datos.model.Circunscripcion;
-import com.mycompany.elecciones2023datos.model.CircunscripcionPartido;
-import com.mycompany.elecciones2023datos.model.DbActualResponse;
-import com.mycompany.elecciones2023datos.model.Partido;
+import com.mycompany.elecciones2023datos.model.*;
 import com.mycompany.elecciones2023datos.services.IClienteApi;
 import com.mycompany.elecciones2023datos.services.IClienteApiGestion;
 import retrofit2.Retrofit;
@@ -40,33 +37,33 @@ public class GraficosController {
         }
     }
 
-    public CarmenDTO getCarmenDtoOficialAuto(String codigo) {
+    public CarmenDTO getCarmenDtoOficialAuto(String codigo, String avance) {
         try {
-            return clienteApi.getCarmenDtoOficialAuto(codigo).execute().body();
+            return clienteApi.getCarmenDtoOficialAuto(codigo, avance).execute().body();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public CarmenDTO getCarmenDtoOficialMuni(String codigo) {
+    public CarmenDTO getCarmenDtoOficialMuni(String codigo, String avance) {
         try {
-            return clienteApi.getCarmenDtoOficialMuni(codigo).execute().body();
+            return clienteApi.getCarmenDtoOficialMuni(codigo, avance).execute().body();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public CarmenDTO getCarmenDtoSondeoAuto(String codigo) {
+    public CarmenDTO getCarmenDtoSondeoAuto(String codigo, String avance) {
         try {
-            return clienteApi.getCarmenDtoSondeoAuto(codigo).execute().body();
+            return clienteApi.getCarmenDtoSondeoAuto(codigo, avance).execute().body();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public CarmenDTO getCarmenDtoSondeoMuni(String codigo) {
+    public CarmenDTO getCarmenDtoSondeoMuni(String codigo, String avance) {
         try {
-            return clienteApi.getCarmenDtoSondeoMuni(codigo).execute().body();
+            return clienteApi.getCarmenDtoSondeoMuni(codigo, avance).execute().body();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -104,14 +101,6 @@ public class GraficosController {
         }
     }
 
-    public void setAvance(String codigo) {
-        try {
-            clienteApiGestion.setAvance(codigo).execute();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void entraLateralAutonomicas() {
         try {
             clienteApi.entraLateralAutonomicas().execute();
@@ -120,17 +109,17 @@ public class GraficosController {
         }
     }
 
-    public void descargarSondeoEspecialCsvAuto(String codigo) {
+    public void descargarSondeoEspecialCsvAuto(String codigo, String avance) {
         try {
-            clienteApi.descargarSondeoEspecialCsvAuto(codigo).execute();
+            clienteApi.descargarSondeoEspecialCsvAuto(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void descargarSondeoEspecialCsvMuni(String codigo) {
+    public void descargarSondeoEspecialCsvMuni(String codigo, String avance) {
         try {
-            clienteApi.descargarSondeoEspecialCsvMuni(codigo).execute();
+            clienteApi.descargarSondeoEspecialCsvMuni(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -995,114 +984,114 @@ public class GraficosController {
 
     //SELECTED
 
-    public void selectCircunscripcionAutonomiaOficialAuto(String codigo) {
+    public void selectCircunscripcionAutonomiaOficialAuto(String codigo, String avance) {
         try {
-            clienteApi.selectCircunscripcionAutonomiaOficialAuto(codigo).execute();
+            clienteApi.selectCircunscripcionAutonomiaOficialAuto(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void selectCircunscripcionMapaOficialAuto(String codigo) {
+    public void selectCircunscripcionMapaOficialAuto(String codigo, String avance) {
         try {
-            clienteApi.selectCircunscripcionMapaOficialAuto(codigo).execute();
+            clienteApi.selectCircunscripcionMapaOficialAuto(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void selectCircunscripcionAutnomiaSondeoAuto(String codigo) {
+    public void selectCircunscripcionAutnomiaSondeoAuto(String codigo, String avance) {
         try {
-            clienteApi.selectCircunscripcionAutnomiaSondeoAuto(codigo).execute();
+            clienteApi.selectCircunscripcionAutnomiaSondeoAuto(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void selectCircunscripcionMunicipioSondeoMuni(String codigo) {
+    public void selectCircunscripcionMunicipioSondeoMuni(String codigo, String avance) {
         try {
-            clienteApi.selectCircunscripcionMunicipioSondeoMuni(codigo).execute();
+            clienteApi.selectCircunscripcionMunicipioSondeoMuni(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void selectCircunscripcionMapaSondeoAuto(String codigo) {
+    public void selectCircunscripcionMapaSondeoAuto(String codigo, String avance) {
         try {
-            clienteApi.selectCircunscripcionMapaSondeoAuto(codigo).execute();
+            clienteApi.selectCircunscripcionMapaSondeoAuto(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void selectCircunscripcionAutonomiaOficialMuni(String codigo) {
+    public void selectCircunscripcionAutonomiaOficialMuni(String codigo, String avance) {
         try {
-            clienteApi.selectCircunscripcionAutonomiaOficialMuni(codigo).execute();
+            clienteApi.selectCircunscripcionAutonomiaOficialMuni(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void selectCircunscripcionMapaOficialMuni(String codigo) {
+    public void selectCircunscripcionMapaOficialMuni(String codigo, String avance) {
         try {
-            clienteApi.selectCircunscripcionMapaOficialMuni(codigo).execute();
+            clienteApi.selectCircunscripcionMapaOficialMuni(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void selectCircunscripcionAutnomiaSondeoMuni(String codigo) {
+    public void selectCircunscripcionAutnomiaSondeoMuni(String codigo, String avance) {
         try {
-            clienteApi.selectCircunscripcionAutnomiaSondeoMuni(codigo).execute();
+            clienteApi.selectCircunscripcionAutnomiaSondeoMuni(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void selectCircunscripcionAutnomiaOficialMuni(String codigo) {
+    public void selectCircunscripcionAutnomiaOficialMuni(String codigo, String avance) {
         try {
-            clienteApi.selectCircunscripcionAutnomiaOficialMuni(codigo).execute();
+            clienteApi.selectCircunscripcionAutnomiaOficialMuni(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void selectCircunscripcionMapaSondeoMuni(String codigo) {
+    public void selectCircunscripcionMapaSondeoMuni(String codigo, String avance) {
         try {
-            clienteApi.selectCircunscripcionMapaSondeoMuni(codigo).execute();
+            clienteApi.selectCircunscripcionMapaSondeoMuni(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void descargarResultadosCsvAutoOficial(String codigo) {
+    public void descargarResultadosCsvAutoOficial(String codigo, String avance) {
         try {
-            clienteApi.descargarResultadosCsvAutoOficial(codigo).execute();
+            clienteApi.descargarResultadosCsvAutoOficial(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void descargarResultadosCsvAutoSondeo(String codigo) {
+    public void descargarResultadosCsvAutoSondeo(String codigo, String avance) {
         try {
-            clienteApi.descargarResultadosCsvAutoSondeo(codigo).execute();
+            clienteApi.descargarResultadosCsvAutoSondeo(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void descargarResultadosCsvMuniOficial(String codigo) {
+    public void descargarResultadosCsvMuniOficial(String codigo, String avance) {
         try {
-            clienteApi.descargarResultadosCsvMuniOficial(codigo).execute();
+            clienteApi.descargarResultadosCsvMuniOficial(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
 
-    public void descargarResultadosCsvMuniSondeo(String codigo) {
+    public void descargarResultadosCsvMuniSondeo(String codigo, String avance) {
         try {
-            clienteApi.descargarResultadosCsvMuniSondeo(codigo).execute();
+            clienteApi.descargarResultadosCsvMuniSondeo(codigo, avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -1178,9 +1167,9 @@ public class GraficosController {
         }
     }
 
-    public void updateEspania() {
+    public void updateEspania(String avance) {
         try {
-            clienteApi.updateEspania().execute();
+            clienteApi.updateEspania(avance).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

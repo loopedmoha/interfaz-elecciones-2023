@@ -53,7 +53,10 @@ public class PactosOpcion2 extends javax.swing.JFrame {
     private CarmenDTO dto;
     boolean pactosIn = false;
 
+    private String avance;
+
     public PactosOpcion2() {
+        this.avance = avance;
         initComponents();
         tablaIzq.setModel(modeltablaIzq);
         tablaDcha.setModel(modeltablaDcha);
@@ -66,7 +69,8 @@ public class PactosOpcion2 extends javax.swing.JFrame {
 
     }
 
-    public PactosOpcion2(int arcoOFaldon, String codigo, int tipoElecciones, boolean oficiales) {
+    public PactosOpcion2(int arcoOFaldon, String codigo, int tipoElecciones, boolean oficiales, String avance) {
+        this.avance = avance;
         initComponents();
         this.codigo = codigo;
         this.tipoElecciones = tipoElecciones;
@@ -174,10 +178,10 @@ public class PactosOpcion2 extends javax.swing.JFrame {
             modeltablaIzq.addColumn("PARTIDOS IZQ");
             modeltablaDcha.addColumn("PARTIDOS DCHA");
             dto = switch (tipoElecciones) {
-                case 1 -> graficosController.getCarmenDtoOficialMuni(codigo);
-                case 2 -> graficosController.getCarmenDtoOficialAuto(codigo);
-                case 3 -> graficosController.getCarmenDtoSondeoMuni(codigo);
-                case 4 -> graficosController.getCarmenDtoSondeoAuto(codigo);
+                case 1 -> graficosController.getCarmenDtoOficialMuni(codigo, avance);
+                case 2 -> graficosController.getCarmenDtoOficialAuto(codigo, avance);
+                case 3 -> graficosController.getCarmenDtoSondeoMuni(codigo, avance);
+                case 4 -> graficosController.getCarmenDtoSondeoAuto(codigo, avance);
                 default -> null;
             };
             lblNombreCircunscripcion.setText(dto.getCircunscripcion().getNombreCircunscripcion());

@@ -24,7 +24,7 @@ public interface IClienteApi {
     @GET("/autonomicas/circunscripciones/autonomias")
     Call<List<Circunscripcion>> getAllAutonomiasAuto();
 
-    @GET("/autonomicas/circunscripciones/filtrada/{codigo}")
+    @GET("/autonomicas/circunscripciones/filtrada")
     Call<List<Circunscripcion>> filtradasPorMostrarAuto(@Path("codigo") String codigo);
 
     @GET("/municipales/circunscripciones/autonomias")
@@ -37,24 +37,24 @@ public interface IClienteApi {
     Call<Circunscripcion> getCircunscripcionPorId(@Path("codigo") String codigo);
 
     //Leer autonomicas oficial y municipales oficial
-    @GET("/autonomicas/carmen/oficial/{codigo}/data")
-    Call<CarmenDTO> getCarmenDtoOficialAuto(@Path("codigo") String codigo);
+    @GET("/autonomicas/carmen/oficial/{codigo}/{avance}/data")
+    Call<CarmenDTO> getCarmenDtoOficialAuto(@Path("codigo") String codigo, @Path("avance") String avance);
 
-    @GET("/autonomicas/carmen/oficial/9900000/data")
-    Call<CarmenDTO> getCarmenDtoEspAuto();
+    @GET("/autonomicas/carmen/oficial/9900000/{avance}/data")
+    Call<CarmenDTO> getCarmenDtoEspAuto(@Path("avance") String avance);
 
-    @GET("/municipales/carmen/oficial/9900000/data")
-    Call<CarmenDTO> getCarmenDtoEspMuni();
+    @GET("/municipales/carmen/oficial/9900000/{avance}/data")
+    Call<CarmenDTO> getCarmenDtoEspMuni(@Path("avance") String avance);
 
-    @GET("/municipales/carmen/oficial/{codigo}/data")
-    Call<CarmenDTO> getCarmenDtoOficialMuni(@Path("codigo") String codigo);
+    @GET("/municipales/carmen/oficial/{codigo}/{avance}/data")
+    Call<CarmenDTO> getCarmenDtoOficialMuni(@Path("codigo") String codigo, @Path("avance") String avance);
 
     //Leer municipales sondeo y autonomicas sondeo
-    @GET("/autonomicas/carmen/sondeo/{codigo}/data")
-    Call<CarmenDTO> getCarmenDtoSondeoAuto(@Path("codigo") String codigo);
+    @GET("/autonomicas/carmen/sondeo/{codigo}/{avance}/data")
+    Call<CarmenDTO> getCarmenDtoSondeoAuto(@Path("codigo") String codigo, @Path("avance") String avance);
 
-    @GET("/municipales/carmen/sondeo/{codigo}/data")
-    Call<CarmenDTO> getCarmenDtoSondeoMuni(@Path("codigo") String codigo);
+    @GET("/municipales/carmen/sondeo/{codigo}/{avance}/data")
+    Call<CarmenDTO> getCarmenDtoSondeoMuni(@Path("codigo") String codigo, @Path("avance") String avance);
 
     @GET("/autonomicas/circunscripciones/autonomias/{codigo}")
     Call<List<Circunscripcion>> getCircunscripcionesByAutonomia(@Path("codigo") String codigo);
@@ -431,58 +431,58 @@ public interface IClienteApi {
     Call<Dummy> entraDerPactos(@Path("posicion") int posicion);
 
     //DESCARGA DE ARCHIVOS
-    @GET("/autonomicas/circunscripciones/selected/oficial/f_autonomicas/{codigo}")
-    Call<Dummy> selectCircunscripcionAutonomiaOficialAuto(@Path("codigo") String codigo);
+    @GET("/autonomicas/circunscripciones/selected/oficial/f_autonomicas/{codigo}/{avance}")
+    Call<Dummy> selectCircunscripcionAutonomiaOficialAuto(@Path("codigo") String codigo, @Path("avance") String avance);
 
-    @GET("/autonomicas/circunscripciones/selected/oficial/mapa_mayorias/{codigo}")
-    Call<Dummy> selectCircunscripcionMapaOficialAuto(@Path("codigo") String codigo);
+    @GET("/autonomicas/circunscripciones/selected/oficial/mapa_mayorias/{codigo}/{avance}")
+    Call<Dummy> selectCircunscripcionMapaOficialAuto(@Path("codigo") String codigo, @Path("avance") String avance);
 
-    @GET("/autonomicas/circunscripciones/selected/sondeo/f_autonomicas/{codigo}")
-    Call<Dummy> selectCircunscripcionAutnomiaSondeoAuto(@Path("codigo") String codigo);
-
-
-    @GET("/municipales/circunscripciones/selected/sondeo/f_autonomicas/{codigo}")
-    Call<Dummy> selectCircunscripcionMunicipioSondeoMuni(@Path("codigo") String codigo);
-
-    @GET("/autonomicas/circunscripciones/selected/sondeo/mapa_mayorias/{codigo}")
-    Call<Dummy> selectCircunscripcionMapaSondeoAuto(@Path("codigo") String codigo);
-
-    @GET("/municipales/circunscripciones/selected/oficial/f_autonomicas/{codigo}")
-    Call<Dummy> selectCircunscripcionAutonomiaOficialMuni(@Path("codigo") String codigo);
-
-    @GET("/municipales/circunscripciones/selected/oficial/mapa_mayorias/{codigo}")
-    Call<Dummy> selectCircunscripcionMapaOficialMuni(@Path("codigo") String codigo);
-
-    @GET("/municipales/circunscripciones/selected/sondeo/f_autonomicas/{codigo}")
-    Call<Dummy> selectCircunscripcionAutnomiaSondeoMuni(@Path("codigo") String codigo);
-
-    @GET("/municipales/circunscripciones/selected/oficial/f_autonomicas/{codigo}")
-    Call<Dummy> selectCircunscripcionAutnomiaOficialMuni(@Path("codigo") String codigo);
-
-    @GET("/municipales/circunscripciones/selected/sondeo/mapa_mayorias/{codigo}")
-    Call<Dummy> selectCircunscripcionMapaSondeoMuni(@Path("codigo") String codigo);
-
-    @GET("/autonomicas/resultados/oficial/{codigo}/csv")
-    Call<Dummy> descargarResultadosCsvAutoOficial(@Path("codigo") String codigo);
+    @GET("/autonomicas/circunscripciones/selected/sondeo/f_autonomicas/{codigo}/{avance}")
+    Call<Dummy> selectCircunscripcionAutnomiaSondeoAuto(@Path("codigo") String codigo, @Path("avance") String avance);
 
 
-    @GET("/autonomicas/resultados/sondeo/{codigo}/csv")
-    Call<Dummy> descargarResultadosCsvAutoSondeo(@Path("codigo") String codigo);
+    @GET("/municipales/circunscripciones/selected/sondeo/f_autonomicas/{codigo}/{avance}")
+    Call<Dummy> selectCircunscripcionMunicipioSondeoMuni(@Path("codigo") String codigo, @Path("avance") String avance);
 
-    @GET("/municipales/resultados/oficial/{codigo}/csv")
-    Call<Dummy> descargarResultadosCsvMuniOficial(@Path("codigo") String codigo);
+    @GET("/autonomicas/circunscripciones/selected/sondeo/mapa_mayorias/{codigo}/{avance}")
+    Call<Dummy> selectCircunscripcionMapaSondeoAuto(@Path("codigo") String codigo, @Path("avance") String avance);
 
-    @GET("/municipales/resultados/sondeo/{codigo}/csv")
-    Call<Dummy> descargarResultadosCsvMuniSondeo(@Path("codigo") String codigo);
+    @GET("/municipales/circunscripciones/selected/oficial/f_autonomicas/{codigo}/{avance}")
+    Call<Dummy> selectCircunscripcionAutonomiaOficialMuni(@Path("codigo") String codigo, @Path("avance") String avance);
+
+    @GET("/municipales/circunscripciones/selected/oficial/mapa_mayorias/{codigo}/{avance}")
+    Call<Dummy> selectCircunscripcionMapaOficialMuni(@Path("codigo") String codigo, @Path("avance") String avance);
+
+    @GET("/municipales/circunscripciones/selected/sondeo/f_autonomicas/{codigo}/{avance}")
+    Call<Dummy> selectCircunscripcionAutnomiaSondeoMuni(@Path("codigo") String codigo, @Path("avance") String avance);
+
+    @GET("/municipales/circunscripciones/selected/oficial/f_autonomicas/{codigo}/{avance}")
+    Call<Dummy> selectCircunscripcionAutnomiaOficialMuni(@Path("codigo") String codigo, @Path("avance") String avance);
+
+    @GET("/municipales/circunscripciones/selected/sondeo/mapa_mayorias/{codigo}/{avance}")
+    Call<Dummy> selectCircunscripcionMapaSondeoMuni(@Path("codigo") String codigo, @Path("avance") String avance);
+
+    @GET("/autonomicas/resultados/oficial/{codigo}/{avance}/csv")
+    Call<Dummy> descargarResultadosCsvAutoOficial(@Path("codigo") String codigo, @Path("avance") String avance);
+
+
+    @GET("/autonomicas/resultados/sondeo/{codigo}/{avance}/csv")
+    Call<Dummy> descargarResultadosCsvAutoSondeo(@Path("codigo") String codigo, @Path("avance") String avance);
+
+    @GET("/municipales/resultados/oficial/{codigo}/{avance}/csv")
+    Call<Dummy> descargarResultadosCsvMuniOficial(@Path("codigo") String codigo, @Path("avance") String avance);
+
+    @GET("/municipales/resultados/sondeo/{codigo}/{avance}/csv")
+    Call<Dummy> descargarResultadosCsvMuniSondeo(@Path("codigo") String codigo, @Path("avance") String avance);
 
     @GET("/municipales/sedes/{codigo}/csv")
     Call<Dummy> descargarSedesCsv(@Path("codigo") String codigo);
 
-    @GET("/autonomicas/carmen/sondeo/especial/{codigo}/csv")
-    Call<Dummy> descargarSondeoEspecialCsvAuto(@Path("codigo") String codigo);
+    @GET("/autonomicas/carmen/sondeo/especial/{codigo}/{avance}/csv")
+    Call<Dummy> descargarSondeoEspecialCsvAuto(@Path("codigo") String codigo, @Path("avance") String avance);
 
-    @GET("/municipales/carmen/sondeo/especial/{codigo}/csv")
-    Call<Dummy> descargarSondeoEspecialCsvMuni(@Path("codigo") String codigo);
+    @GET("/municipales/carmen/sondeo/especial/{codigo}/{avance}/csv")
+    Call<Dummy> descargarSondeoEspecialCsvMuni(@Path("codigo") String codigo, @Path("avance") String avance);
 
     //RESET
     @GET("/municipales/reset")
@@ -511,7 +511,7 @@ public interface IClienteApi {
     @GET("/autonomicas/circunscripciones/update")
     Call<Dummy> update();
 
-    @GET("/municipales/circunscripciones/update/espania")
-    Call<Dummy> updateEspania();
+    @GET("/municipales/circunscripciones/update/espania/{avance}")
+    Call<Dummy> updateEspania(@Path("avance") String avance);
 
 }
