@@ -248,20 +248,19 @@ public class Main extends javax.swing.JFrame {
             }
         };
 
-        CarmenDTO esp = null;
-
+        tableModel.addColumn("CODIGO");
+        tableModel.addColumn("PARTIDO");
         tableModel.addColumn("VOTANTES");
-        tableModel.addColumn("PARTICIPACION");
-        tableModel.addColumn("PARTICIPACION H");
 
 
         tablaDatos.setModel(tableModel);
+        CarmenDTO votantesDTO = graficosController.getCarmenDtoOficialMuni("9900000", avance);
+        var list = votantesDTO.getCpDTO();
+        list.forEach(cpDTO -> {
+            Object[] rowData = {cpDTO.getCodigoPartido(), cpDTO.getSiglas(), cpDTO.getNumVotantes()};
+            tableModel.addRow(rowData);
+        });
 
-        CircunscripcionDTO espCirc = esp.getCircunscripcion();
-        Object[] rowData = {espCirc.getEscrutado(), espCirc.getParticipacion(), espCirc.getParticipacionHist(),
-
-        };
-        tableModel.addRow(rowData);
         tablaDatos.setModel(tableModel);
         tablaDatos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tablaDatos);
@@ -550,6 +549,7 @@ public class Main extends javax.swing.JFrame {
                     } else if (TablaFaldones.getSelectedRow() == 3) {
                         graficosController.updateEspania(avance);
                         vaciarTablas();
+                        printDataVotantes();
                     } else if (TablaFaldones.getSelectedRow() != -1) {
                         rellenarCCAA(tipoElecciones);
                     }
