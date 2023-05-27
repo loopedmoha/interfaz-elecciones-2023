@@ -543,7 +543,6 @@ public class Main extends javax.swing.JFrame {
                             loadSelectedAutonomicas((String) tablaComunidades.getValueAt(selectedRow, 0));
                             codAutonomia = nombreCodigo.get(((String) tablaComunidades.getValueAt(selectedRow, 0)).replaceAll(" ", ""));
                             if (codAutonomia.equals("1800000") || codAutonomia.equals("1900000")) {
-                                ///////
                                 if (oficiales) {
                                     try {
                                         if (TablaCartones.getSelectedRow() != 3) {
@@ -586,7 +585,6 @@ public class Main extends javax.swing.JFrame {
                                     }
                                 }
                                 showDataTable(carmen);
-                                //////
                             } else {
                                 if (oficiales) {
                                     try {
@@ -1252,6 +1250,8 @@ public class Main extends javax.swing.JFrame {
                     .distinct()
                     .collect(Collectors.toMap(Circunscripcion::getCodigo, Function.identity(), (municipio1, municipio2) -> municipio1))
                     .values());
+            municipios = municipios.stream().filter(muni -> !muni.getCodigo().endsWith("000")).collect(Collectors.toList());
+            municipios.sort(Comparator.comparing(Circunscripcion::getCodigo));
 
             List<Circunscripcion> municipiosSinDuplicados = new ArrayList<>();
             Set<String> nombresUnicos = new HashSet<>();
@@ -1263,8 +1263,6 @@ public class Main extends javax.swing.JFrame {
                 }
             }
             municipios = municipiosSinDuplicados;
-            municipios = municipios.stream().filter(muni -> !muni.getCodigo().endsWith("000")).collect(Collectors.toList());
-            municipios.sort(Comparator.comparing(Circunscripcion::getCodigo));
         }
 
         for (Circunscripcion municipio : municipios) {
