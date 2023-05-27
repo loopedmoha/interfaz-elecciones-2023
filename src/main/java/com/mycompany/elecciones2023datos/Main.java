@@ -2593,6 +2593,8 @@ public class Main extends javax.swing.JFrame {
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         graficosController.resetIPF();
         vaciarTablas();
+        TablaFaldones.clearSelection();
+        TablaCartones.clearSelection();
         inferiorAutoIn = false;
         inferiorAutoSondeoIn = false;
         inferiorMuniIn = false;
