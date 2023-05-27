@@ -627,7 +627,7 @@ public class Main extends javax.swing.JFrame {
                                                 if (tablaComunidades.getSelectedRow() != -1) {
                                                     String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
                                                     String codigo = nombreCodigoAuto.get(nombreCCAA);
-                                                    graficosController.descargarResultadosCsvAutoOficial(codigo, avance);
+                                                    graficosController.descargarResultadosCsvAutoOficial(codigo);
                                                     graficosController.selectCircunscripcionMapaOficialAuto(codigo, avance);
                                                 }
                                             }
@@ -652,7 +652,7 @@ public class Main extends javax.swing.JFrame {
                                                 if (tablaComunidades.getSelectedRow() != -1) {
                                                     String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
                                                     String codigo = nombreCodigoAuto.get(nombreCCAA);
-                                                    graficosController.descargarResultadosCsvAutoSondeo(codigo, avance);
+                                                    graficosController.descargarResultadosCsvAutoSondeo(codigo);
                                                     graficosController.selectCircunscripcionMapaSondeoAuto(codigo, avance);
                                                 }
                                             }
@@ -1184,7 +1184,7 @@ public class Main extends javax.swing.JFrame {
                                 graficosController.selectCircunscripcionAutonomiaOficialAuto(codMunicipio, avance);
                             }
                             if (TablaCartones.getSelectedRow() == 0) {
-                                graficosController.descargarResultadosCsvAutoOficial(codMunicipio, avance);
+                                graficosController.descargarResultadosCsvAutoOficial(codMunicipio);
                                 graficosController.selectCircunscripcionMapaOficialAuto(codMunicipio, avance);
                             }
                         } else {
@@ -1200,7 +1200,7 @@ public class Main extends javax.swing.JFrame {
                                 graficosController.selectCircunscripcionAutnomiaSondeoAuto(codMunicipio, avance);
                             }
                             if (TablaCartones.getSelectedRow() == 0) {
-                                graficosController.descargarResultadosCsvAutoSondeo(codMunicipio, avance);
+                                graficosController.descargarResultadosCsvAutoSondeo(codMunicipio);
                                 graficosController.selectCircunscripcionMapaSondeoAuto(codMunicipio, avance);
                             }
                         }
@@ -1323,7 +1323,7 @@ public class Main extends javax.swing.JFrame {
                                 graficosController.selectCircunscripcionAutonomiaOficialAuto(codMunicipio, avance);
                             }
                             if (TablaCartones.getSelectedRow() == 0) {
-                                graficosController.descargarResultadosCsvAutoOficial(codMunicipio, avance);
+                                graficosController.descargarResultadosCsvAutoOficial(codMunicipio);
                                 graficosController.selectCircunscripcionMapaOficialAuto(codMunicipio, avance);
                             }
                         } else {
@@ -1339,7 +1339,7 @@ public class Main extends javax.swing.JFrame {
                                 graficosController.selectCircunscripcionAutnomiaSondeoAuto(codMunicipio, avance);
                             }
                             if (TablaCartones.getSelectedRow() == 0) {
-                                graficosController.descargarResultadosCsvAutoSondeo(codMunicipio, avance);
+                                graficosController.descargarResultadosCsvAutoSondeo(codMunicipio);
                                 graficosController.selectCircunscripcionMapaSondeoAuto(codMunicipio, avance);
                             }
                         }

@@ -1074,17 +1074,17 @@ public class GraficosController {
         }
     }
 
-    public void descargarResultadosCsvAutoOficial(String codigo, String avance) {
+    public void descargarResultadosCsvAutoOficial(String codigo) {
         try {
-            clienteApi.descargarResultadosCsvAutoOficial(codigo, avance).execute();
+            clienteApi.descargarResultadosCsvAutoOficial(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void descargarResultadosCsvAutoSondeo(String codigo, String avance) {
+    public void descargarResultadosCsvAutoSondeo(String codigo) {
         try {
-            clienteApi.descargarResultadosCsvAutoSondeo(codigo, avance).execute();
+            clienteApi.descargarResultadosCsvAutoSondeo(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -462,12 +462,13 @@ public interface IClienteApi {
     @GET("/municipales/circunscripciones/selected/sondeo/mapa_mayorias/{codigo}/{avance}")
     Call<Dummy> selectCircunscripcionMapaSondeoMuni(@Path("codigo") String codigo, @Path("avance") String avance);
 
-    @GET("/autonomicas/resultados/oficial/{codigo}/{avance}/csv")
-    Call<Dummy> descargarResultadosCsvAutoOficial(@Path("codigo") String codigo, @Path("avance") String avance);
 
+    @GET("/autonomicas/resultados/oficial/{codigo}/csv")
+    Call<Dummy> descargarResultadosCsvAutoOficial(@Path("codigo") String codigo);
 
-    @GET("/autonomicas/resultados/sondeo/{codigo}/{avance}/csv")
-    Call<Dummy> descargarResultadosCsvAutoSondeo(@Path("codigo") String codigo, @Path("avance") String avance);
+    @GET("/autonomicas/resultados/sondeo/{codigo}/csv")
+    Call<Dummy> descargarResultadosCsvAutoSondeo(@Path("codigo") String codigo);
+
 
     @GET("/municipales/resultados/oficial/{codigo}/{avance}/csv")
     Call<Dummy> descargarResultadosCsvMuniOficial(@Path("codigo") String codigo, @Path("avance") String avance);
