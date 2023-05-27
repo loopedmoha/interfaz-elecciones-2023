@@ -471,10 +471,10 @@ public interface IClienteApi {
 
 
     @GET("/municipales/resultados/oficial/{codigo}/csv")
-    Call<Dummy> descargarResultadosCsvMuniOficial(@Path("codigo") String codigo, @Path("avance") String avance);
+    Call<Dummy> descargarResultadosCsvMuniOficial(@Path("codigo") String codigo);
 
     @GET("/municipales/resultados/sondeo/{codigo}/csv")
-    Call<Dummy> descargarResultadosCsvMuniSondeo(@Path("codigo") String codigo, @Path("avance") String avance);
+    Call<Dummy> descargarResultadosCsvMuniSondeo(@Path("codigo") String codigo);
 
     @GET("/municipales/sedes/{codigo}/csv")
     Call<Dummy> descargarSedesCsv(@Path("codigo") String codigo);

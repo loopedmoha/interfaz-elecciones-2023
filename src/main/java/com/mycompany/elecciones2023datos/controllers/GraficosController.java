@@ -1090,18 +1090,18 @@ public class GraficosController {
         }
     }
 
-    public void descargarResultadosCsvMuniOficial(String codigo, String avance) {
+    public void descargarResultadosCsvMuniOficial(String codigo) {
         try {
-            clienteApi.descargarResultadosCsvMuniOficial(codigo, avance).execute();
+            clienteApi.descargarResultadosCsvMuniOficial(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
 
-    public void descargarResultadosCsvMuniSondeo(String codigo, String avance) {
+    public void descargarResultadosCsvMuniSondeo(String codigo) {
         try {
-            clienteApi.descargarResultadosCsvMuniSondeo(codigo, avance).execute();
+            clienteApi.descargarResultadosCsvMuniSondeo(codigo).execute();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
