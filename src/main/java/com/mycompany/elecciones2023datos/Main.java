@@ -240,6 +240,33 @@ public class Main extends javax.swing.JFrame {
 
     }
 
+    public void printDataVotantes() {
+        DefaultTableModel tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // establece todas las celdas no editables
+            }
+        };
+
+        CarmenDTO esp = null;
+
+        tableModel.addColumn("VOTANTES");
+        tableModel.addColumn("PARTICIPACION");
+        tableModel.addColumn("PARTICIPACION H");
+
+
+        tablaDatos.setModel(tableModel);
+
+        CircunscripcionDTO espCirc = esp.getCircunscripcion();
+        Object[] rowData = {espCirc.getEscrutado(), espCirc.getParticipacion(), espCirc.getParticipacionHist(),
+
+        };
+        tableModel.addRow(rowData);
+        tablaDatos.setModel(tableModel);
+        tablaDatos.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(tablaDatos);
+    }
+
     public void printData(List<CpData> list) {
         isEspana = (TablaCartones.getSelectedRow() == 3);
         DefaultTableModel tableModel = new DefaultTableModel() {
