@@ -9,6 +9,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
+
+import static com.mycompany.elecciones2023datos.config.cargarConfiguracion;
 
 public class GraficosController {
     Retrofit retrofit;
@@ -19,11 +22,18 @@ public class GraficosController {
     IClienteApiGestion clienteApiGestion;
 
     public GraficosController() {
+        Properties propiedades = null;
+        try {
+            propiedades = cargarConfiguracion();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String ipServer = propiedades.getProperty("ipServer");
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://localhost:9090")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         retrofit2 = new Retrofit.Builder()
-                .baseUrl("http://172.28.51.28:8080")
+                .baseUrl("http://" + ipServer + ":8080")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         clienteApi = retrofit.create(IClienteApi.class);
         clienteApiGestion = retrofit2.create(IClienteApiGestion.class);

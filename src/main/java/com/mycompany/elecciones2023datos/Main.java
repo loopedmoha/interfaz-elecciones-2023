@@ -507,6 +507,9 @@ public class Main extends javax.swing.JFrame {
         TablaFaldones.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 if (TablaFaldones.getSelectedRow() != -1) {
+                    if (TablaFaldones.getSelectedRow() == 1) {
+                        graficosController.update();
+                    }
                     if (TablaFaldones.getSelectedRow() == 2) {
                         vaciarTablas();
                         List<CircunscripcionPartido> cps = graficosController.getCpsEspania();
@@ -538,61 +541,6 @@ public class Main extends javax.swing.JFrame {
                     if (selectedRow != -1) {
                         if (tipoElecciones == 2 || tipoElecciones == 4) {
                             loadSelectedAutonomicas((String) tablaComunidades.getValueAt(selectedRow, 0));
-                            codAutonomia = nombreCodigo.get(((String) tablaComunidades.getValueAt(selectedRow, 0)).replaceAll(" ", ""));
-                            if (oficiales) {
-                                try {
-                                    if (TablaCartones.getSelectedRow() != 3) {
-                                        carmen = clienteApi.getCarmenDtoOficialAuto(codAutonomia, avance).execute().body();
-                                        if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
-                                            graficosController.selectCircunscripcionMapaOficialAuto(codAutonomia, avance);
-                                        }
-                                        if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
-                                            graficosController.selectCircunscripcionAutonomiaOficialAuto(codAutonomia, avance);
-                                        }
-                                        if (TablaCartones.getSelectedRow() == 0) {
-                                            if (tablaComunidades.getSelectedRow() != -1) {
-                                                String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
-                                                String codigo = nombreCodigoAuto.get(nombreCCAA);
-                                                graficosController.descargarResultadosCsvAutoOficial(codigo, avance);
-                                                graficosController.selectCircunscripcionMapaOficialAuto(codigo, avance);
-                                            }
-                                        }
-                                    } else {
-                                        carmen = clienteApi.getCarmenDtoOficialAuto("9900000", avance).execute().body();
-                                        graficosController.selectCircunscripcionMapaOficialAuto("9900000", avance);
-                                    }
-                                } catch (IOException ex) {
-                                    throw new RuntimeException(ex);
-                                }
-                            } else {
-                                try {
-                                    if (TablaCartones.getSelectedRow() != 3) {
-                                        carmen = clienteApi.getCarmenDtoSondeoAuto(codAutonomia, avance).execute().body();
-                                        if (TablaCartones.getSelectedRow() == 2) {
-                                            graficosController.selectCircunscripcionMapaSondeoAuto(codAutonomia, avance);
-                                        }
-                                        if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
-                                            graficosController.selectCircunscripcionAutnomiaSondeoAuto(codAutonomia, avance);
-                                        }
-                                        if (TablaCartones.getSelectedRow() == 0) {
-                                            if (tablaComunidades.getSelectedRow() != -1) {
-                                                String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
-                                                String codigo = nombreCodigoAuto.get(nombreCCAA);
-                                                graficosController.descargarResultadosCsvAutoSondeo(codigo, avance);
-                                                graficosController.selectCircunscripcionMapaSondeoAuto(codigo, avance);
-                                            }
-                                        }
-                                    } else {
-                                        carmen = clienteApi.getCarmenDtoSondeoAuto("9900000", avance).execute().body();
-                                        graficosController.selectCircunscripcionMapaSondeoAuto("9900000", avance);
-                                    }
-                                } catch (IOException ex) {
-                                    throw new RuntimeException(ex);
-                                }
-                            }
-                            showDataTable(carmen);
-                        } else {
-                            loadSelectedMunicipales((String) tablaComunidades.getValueAt(selectedRow, 0));
                             codAutonomia = nombreCodigo.get(((String) tablaComunidades.getValueAt(selectedRow, 0)).replaceAll(" ", ""));
                             if (codAutonomia.equals("1800000") || codAutonomia.equals("1900000")) {
                                 ///////
@@ -640,28 +588,27 @@ public class Main extends javax.swing.JFrame {
                                 showDataTable(carmen);
                                 //////
                             } else {
-                                ((javax.swing.table.DefaultTableModel) tablaDatos.getModel()).setRowCount(0);
-
                                 if (oficiales) {
                                     try {
                                         if (TablaCartones.getSelectedRow() != 3) {
-                                            carmen = clienteApi.getCarmenDtoOficialMuni(codAutonomia, avance).execute().body();
-                                            if (TablaCartones.getSelectedRow() == 2) {
-                                                //  graficosController.selectCircunscripcionMapaOficialMuni(codAutonomia);
+                                            carmen = clienteApi.getCarmenDtoOficialAuto(codAutonomia, avance).execute().body();
+                                            if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
+                                                graficosController.selectCircunscripcionMapaOficialAuto(codAutonomia, avance);
                                             }
                                             if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
-                                                //    graficosController.selectCircunscripcionAutonomiaOficialMuni(codAutonomia);
+                                                graficosController.selectCircunscripcionAutonomiaOficialAuto(codAutonomia, avance);
                                             }
                                             if (TablaCartones.getSelectedRow() == 0) {
                                                 if (tablaComunidades.getSelectedRow() != -1) {
                                                     String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
-                                                    String codigo = nombreCodigo.get(nombreCCAA);
-                                                    graficosController.descargarResultadosCsvMuniOficial(codigo, avance);
+                                                    String codigo = nombreCodigoAuto.get(nombreCCAA);
+                                                    graficosController.descargarResultadosCsvAutoOficial(codigo, avance);
+                                                    graficosController.selectCircunscripcionMapaOficialAuto(codigo, avance);
                                                 }
                                             }
                                         } else {
-                                            carmen = clienteApi.getCarmenDtoOficialMuni("9900000", avance).execute().body();
-                                            graficosController.selectCircunscripcionMapaOficialMuni("9900000", avance);
+                                            carmen = clienteApi.getCarmenDtoOficialAuto("9900000", avance).execute().body();
+                                            graficosController.selectCircunscripcionMapaOficialAuto("9900000", avance);
                                         }
                                     } catch (IOException ex) {
                                         throw new RuntimeException(ex);
@@ -669,27 +616,82 @@ public class Main extends javax.swing.JFrame {
                                 } else {
                                     try {
                                         if (TablaCartones.getSelectedRow() != 3) {
-                                            carmen = clienteApi.getCarmenDtoSondeoMuni(codAutonomia, avance).execute().body();
-                                            if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
-                                                //graficosController.selectCircunscripcionMapaSondeoMuni(codAutonomia);
+                                            carmen = clienteApi.getCarmenDtoSondeoAuto(codAutonomia, avance).execute().body();
+                                            if (TablaCartones.getSelectedRow() == 2) {
+                                                graficosController.selectCircunscripcionMapaSondeoAuto(codAutonomia, avance);
                                             }
                                             if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
-                                                //graficosController.selectCircunscripcionAutnomiaSondeoMuni(codAutonomia);
+                                                graficosController.selectCircunscripcionAutnomiaSondeoAuto(codAutonomia, avance);
                                             }
                                             if (TablaCartones.getSelectedRow() == 0) {
                                                 if (tablaComunidades.getSelectedRow() != -1) {
                                                     String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
-                                                    String codigo = nombreCodigo.get(nombreCCAA);
-                                                    graficosController.descargarResultadosCsvMuniSondeo(codigo, avance);
+                                                    String codigo = nombreCodigoAuto.get(nombreCCAA);
+                                                    graficosController.descargarResultadosCsvAutoSondeo(codigo, avance);
+                                                    graficosController.selectCircunscripcionMapaSondeoAuto(codigo, avance);
                                                 }
                                             }
                                         } else {
-                                            carmen = clienteApi.getCarmenDtoSondeoMuni("9900000", avance).execute().body();
-                                            graficosController.selectCircunscripcionMapaSondeoMuni("9900000", avance);
+                                            carmen = clienteApi.getCarmenDtoSondeoAuto("9900000", avance).execute().body();
+                                            graficosController.selectCircunscripcionMapaSondeoAuto("9900000", avance);
                                         }
                                     } catch (IOException ex) {
                                         throw new RuntimeException(ex);
                                     }
+                                }
+                                showDataTable(carmen);
+                            }
+                        } else {
+                            loadSelectedMunicipales((String) tablaComunidades.getValueAt(selectedRow, 0));
+                            codAutonomia = nombreCodigo.get(((String) tablaComunidades.getValueAt(selectedRow, 0)).replaceAll(" ", ""));
+                            ((javax.swing.table.DefaultTableModel) tablaDatos.getModel()).setRowCount(0);
+                            if (oficiales) {
+                                try {
+                                    if (TablaCartones.getSelectedRow() != 3) {
+                                        carmen = clienteApi.getCarmenDtoOficialMuni(codAutonomia, avance).execute().body();
+                                        if (TablaCartones.getSelectedRow() == 2) {
+                                            //  graficosController.selectCircunscripcionMapaOficialMuni(codAutonomia);
+                                        }
+                                        if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
+                                            //    graficosController.selectCircunscripcionAutonomiaOficialMuni(codAutonomia);
+                                        }
+                                        if (TablaCartones.getSelectedRow() == 0) {
+                                            if (tablaComunidades.getSelectedRow() != -1) {
+                                                String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
+                                                String codigo = nombreCodigo.get(nombreCCAA);
+                                                graficosController.descargarResultadosCsvMuniOficial(codigo, avance);
+                                            }
+                                        }
+                                    } else {
+                                        carmen = clienteApi.getCarmenDtoOficialMuni("9900000", avance).execute().body();
+                                        graficosController.selectCircunscripcionMapaOficialMuni("9900000", avance);
+                                    }
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                            } else {
+                                try {
+                                    if (TablaCartones.getSelectedRow() != 3) {
+                                        carmen = clienteApi.getCarmenDtoSondeoMuni(codAutonomia, avance).execute().body();
+                                        if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
+                                            //graficosController.selectCircunscripcionMapaSondeoMuni(codAutonomia);
+                                        }
+                                        if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
+                                            //graficosController.selectCircunscripcionAutnomiaSondeoMuni(codAutonomia);
+                                        }
+                                        if (TablaCartones.getSelectedRow() == 0) {
+                                            if (tablaComunidades.getSelectedRow() != -1) {
+                                                String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
+                                                String codigo = nombreCodigo.get(nombreCCAA);
+                                                graficosController.descargarResultadosCsvMuniSondeo(codigo, avance);
+                                            }
+                                        }
+                                    } else {
+                                        carmen = clienteApi.getCarmenDtoSondeoMuni("9900000", avance).execute().body();
+                                        graficosController.selectCircunscripcionMapaSondeoMuni("9900000", avance);
+                                    }
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
                                 }
                             }
                         }
@@ -2472,8 +2474,10 @@ public class Main extends javax.swing.JFrame {
         switch (tipo) {
             case 1, 3 -> {
                 DefaultTableModel tableModel = (DefaultTableModel) tablaComunidades.getModel();
-                List<String> ccaa = circunscripcionesMunicipales.keySet().stream().filter(x -> !x.endsWith("00000")).toList();
+                List<String> ccaa = circunscripcionesMunicipales.keySet().stream().filter(x -> !x.endsWith("00000")).collect(Collectors.toList());
                 ccaa = ccaa.subList(0, ccaa.size() - 1);
+                ccaa.remove("Ceuta");
+                ccaa.remove("Melilla");
                 for (String s : ccaa) {
                     tableModel.addRow(new Object[]{s});
                 }
@@ -2482,7 +2486,8 @@ public class Main extends javax.swing.JFrame {
             case 2, 4 -> {
                 DefaultTableModel tableModel = (DefaultTableModel) tablaComunidades.getModel();
                 List<String> lista = new ArrayList<>(nombreCodigoAuto.keySet().stream().toList().subList(0, nombreCodigoAuto.keySet().stream().toList().size() - 1).stream().toList());
-
+                lista.add("Ceuta");
+                lista.add("Melilla");
                 for (String s : lista) {
                     tableModel.addRow(new Object[]{s});
                 }
