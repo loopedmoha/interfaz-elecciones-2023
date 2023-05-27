@@ -11,7 +11,7 @@ import com.mycompany.elecciones2023datos.model.Circunscripcion;
 import com.mycompany.elecciones2023datos.model.CircunscripcionPartido;
 import com.mycompany.elecciones2023datos.model.CpData;
 import com.mycompany.elecciones2023datos.services.IClienteApi;
-import com.mycompany.elecciones2023datos.services.IClienteApiGestion;
+//import com.mycompany.elecciones2023datos.services.IClienteApiGestion;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -44,7 +44,7 @@ public class Main extends javax.swing.JFrame {
     Retrofit retrofit;
     Retrofit retrofitGestion;
     IClienteApi clienteApi;
-    IClienteApiGestion clienteApiGestion;
+    //IClienteApiGestion clienteApiGestion;
 
 
     TreeMap<String, List<Circunscripcion>> circunscripcionesAutonomicas = new TreeMap<>();
@@ -310,9 +310,9 @@ public class Main extends javax.swing.JFrame {
 
         retrofit = new Retrofit.Builder().baseUrl("http://localhost:9090").addConverterFactory(GsonConverterFactory.create()).build();
         clienteApi = retrofit.create(IClienteApi.class);
-        retrofitGestion = new Retrofit.Builder().baseUrl("http://172.28.51.28:8080").addConverterFactory(GsonConverterFactory.create()).build();
+        // retrofitGestion = new Retrofit.Builder().baseUrl("http://172.28.51.28:8080").addConverterFactory(GsonConverterFactory.create()).build();
 
-        clienteApiGestion = retrofitGestion.create(IClienteApiGestion.class);
+        // clienteApiGestion = retrofitGestion.create(IClienteApiGestion.class);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
