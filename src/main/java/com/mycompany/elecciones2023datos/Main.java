@@ -675,7 +675,9 @@ public class Main extends javax.swing.JFrame {
                                     if (TablaCartones.getSelectedRow() != 3) {
                                         carmen = clienteApi.getCarmenDtoOficialMuni(codAutonomia, avance).execute().body();
                                         if (TablaCartones.getSelectedRow() == 2) {
-                                            //  graficosController.selectCircunscripcionMapaOficialMuni(codAutonomia);
+                                            String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
+                                            String codigo = nombreCodigo.get(nombreCCAA);
+                                            graficosController.selectCircunscripcionMapaOficialMuni(codigo, avance);
                                         }
                                         if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
                                             //    graficosController.selectCircunscripcionAutonomiaOficialMuni(codAutonomia);
@@ -698,8 +700,10 @@ public class Main extends javax.swing.JFrame {
                                 try {
                                     if (TablaCartones.getSelectedRow() != 3) {
                                         carmen = clienteApi.getCarmenDtoSondeoMuni(codAutonomia, avance).execute().body();
-                                        if (TablaCartones.getSelectedRow() == 1 || TablaCartones.getSelectedRow() == 2) {
-                                            //graficosController.selectCircunscripcionMapaSondeoMuni(codAutonomia);
+                                        if (TablaCartones.getSelectedRow() == 1) {
+                                            String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
+                                            String codigo = nombreCodigo.get(nombreCCAA);
+                                            graficosController.selectCircunscripcionMapaSondeoMuni(codigo, avance);
                                         }
                                         if (TablaFaldones.getSelectedRow() == 0 || TablaFaldones.getSelectedRow() == 3) {
                                             //graficosController.selectCircunscripcionAutnomiaSondeoMuni(codAutonomia);
