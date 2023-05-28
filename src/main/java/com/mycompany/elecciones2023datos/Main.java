@@ -674,7 +674,7 @@ public class Main extends javax.swing.JFrame {
                                 try {
                                     if (TablaCartones.getSelectedRow() != 3) {
                                         carmen = clienteApi.getCarmenDtoOficialMuni(codAutonomia, avance).execute().body();
-                                        if (TablaCartones.getSelectedRow() == 2) {
+                                        if (TablaCartones.getSelectedRow() == 1) {
                                             String nombreCCAA = tablaComunidades.getValueAt(tablaComunidades.getSelectedRow(), 0).toString();
                                             String codigo = nombreCodigo.get(nombreCCAA);
                                             graficosController.selectCircunscripcionMapaOficialMuni(codigo, avance);
@@ -1405,11 +1405,14 @@ public class Main extends javax.swing.JFrame {
         int rowComunidad = tablaComunidades.getSelectedRow();
 
         if (rowComunidad != -1) {
-            if (tablaMunicipios.getSelectedRow() != -1 || tipoElecciones == 2 || tipoElecciones == 4 || nombreCodigo.get(tablaComunidades.getValueAt(rowComunidad, 0)).equals("1800000") || nombreCodigo.get(tablaComunidades.getValueAt(rowComunidad, 0)).equals("1900000")) {
+            if (tablaMunicipios.getSelectedRow() != -1 || TablaCartones.getSelectedRow() == 1 || tipoElecciones == 2 || tipoElecciones == 4 || nombreCodigo.get(tablaComunidades.getValueAt(rowComunidad, 0)).equals("1800000") || nombreCodigo.get(tablaComunidades.getValueAt(rowComunidad, 0)).equals("1900000")) {
                 valido = true;
             }
         }
-        if (TablaCartones.getSelectedRow() == 3 || TablaFaldones.getSelectedRow() == 3 || TablaFaldones.getSelectedRow() == 2 || TablaCartones.getSelectedRow() == 1) {
+        if (TablaCartones.getSelectedRow() == 3 || TablaFaldones.getSelectedRow() == 3) {
+            valido = true;
+        }
+        if (TablaFaldones.getSelectedRow() == 2) {
             valido = true;
         }
         return valido;
