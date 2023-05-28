@@ -1409,10 +1409,7 @@ public class Main extends javax.swing.JFrame {
                 valido = true;
             }
         }
-        if (TablaCartones.getSelectedRow() == 3 || TablaFaldones.getSelectedRow() == 3) {
-            valido = true;
-        }
-        if (TablaFaldones.getSelectedRow() == 2) {
+        if (TablaCartones.getSelectedRow() == 3 || TablaFaldones.getSelectedRow() == 3 || TablaFaldones.getSelectedRow() == 2 || TablaCartones.getSelectedRow() == 1) {
             valido = true;
         }
         return valido;
